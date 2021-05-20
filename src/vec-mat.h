@@ -287,6 +287,13 @@ typedef MatrizCG<double,4> Matriz4d ;
 
 // *********************************************************************
 
+
+inline void test_vec_mat()
+{
+   using namespace std ;
+   cout << "test_vec_mat" << endl ;
+}
+
 } // end namespace figs_gen 
 
 #endif // end of FIGS_GEN_VEC_MAT_H
