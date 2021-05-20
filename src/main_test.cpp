@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <vec-mat.h>
+#include <vec_mat.h>
 
 
 int main( int argc, char * argv[] )
