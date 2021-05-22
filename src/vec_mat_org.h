@@ -19,8 +19,8 @@
 //
 
 
-#ifndef VECMAT_H
-#define VECMAT_H
+#ifndef FIGS_GEN_VECMAT_H
+#define FIGS_GEN_VECMAT_H
 
 #include <cmath>
 #include <cassert>
@@ -32,7 +32,7 @@
 #define M_PI 3.1415926535897932384626433832795028841971693993751
 #endif
 
-namespace vec_mat
+namespace figs_gen 
 {
     
 // constantes para acceder a las componentes de las tuplas
@@ -51,7 +51,7 @@ typedef unsigned int uint ;
 
 // *********************************************************************
 //
-// plantilla de clase: VecTmpl
+// plantilla de clase: TuplaG
 // clase para tuplas de valores numéricos (genéricas)
 // 
 // parámetros: 
@@ -61,17 +61,17 @@ typedef unsigned int uint ;
 // *********************************************************************
 
 template< class T, unsigned n >
-class VecTmpl
+class TuplaG
 {
    private:
    T coo[n] ;  // vector de valores escalares
 
    public:
    // constructor por defecto: no hace nada
-   inline VecTmpl();
+   inline TuplaG();
 
    // constructor usando un array C++
-   inline VecTmpl( const T * org ) ;
+   inline TuplaG( const T * org ) ;
 
    // acceso de lectura/escritura a un elemento (v[i]=x, x=v[i])
    //T & operator [] (const unsigned i) ;
@@ -89,31 +89,31 @@ class VecTmpl
    operator  const T * ()  const ;
 
    // suma componente a componente ( v1=v2+v3 )
-   VecTmpl<T,n> operator + ( const VecTmpl & der ) const ;
+   TuplaG<T,n> operator + ( const TuplaG & der ) const ;
 
    // resta componente a componente ( v1=v2-v3 )
-   VecTmpl<T,n> operator - ( const VecTmpl & der ) const ;
+   TuplaG<T,n> operator - ( const TuplaG & der ) const ;
 
    // devuelve tupla negada ( v1 = -v2 )
-   VecTmpl<T,n> operator - (  ) const ;
+   TuplaG<T,n> operator - (  ) const ;
 
    // mult. por escalar por la derecha ( v1=v2*a )
-   VecTmpl<T,n> operator * ( const T & a ) const ;
+   TuplaG<T,n> operator * ( const T & a ) const ;
 
    // division por escalar ( v1=v2/a )
-   VecTmpl<T,n> operator / ( const T & a ) const ;
+   TuplaG<T,n> operator / ( const T & a ) const ;
 
    // producto escalar (dot)  a = v1.dot(v2)
-   T dot( const VecTmpl<T,n> & v2 ) const ;
+   T dot( const TuplaG<T,n> & v2 ) const ;
 
    // operador binario para producto escalar a = v1|v2 ;
-   T operator | ( const VecTmpl & der ) const ;
+   T operator | ( const TuplaG & der ) const ;
 
    // obtener longitud al cuadrado
    T lengthSq( ) const ;
 
    // obtener una copia normalizada
-   VecTmpl<T,n> normalized() const ;
+   TuplaG<T,n> normalized() const ;
 } ;
 
 //----------------------------------------------------------------------
@@ -121,93 +121,93 @@ class VecTmpl
 
 // mult. por escalar por la izquierda ( v1=a*v2 )
 template< class T, unsigned n >
-inline VecTmpl<T,n> operator *  ( const T & a, const  VecTmpl<T,n> & der ) ;
+inline TuplaG<T,n> operator *  ( const T & a, const  TuplaG<T,n> & der ) ;
 
 // escritura de un vector en un ostream
 template< class T, unsigned n >
-inline std::ostream & operator <<  ( std::ostream & os, const VecTmpl<T,n> & der ) ;
+inline std::ostream & operator <<  ( std::ostream & os, const TuplaG<T,n> & der ) ;
 
 // *********************************************************************
 //
-// Plantilla de clase: VecTmpl2
+// Plantilla de clase: TuplaG2
 // especialización parcial para tuplas de 2 elementos
 // (define constructores específicos)
 //
 // *********************************************************************
 
 template< class T >
-class VecTmpl2 : public VecTmpl<T,2>
+class TuplaG2 : public TuplaG<T,2>
 {
    public:
 
    // constructores: por defecto
-   VecTmpl2() ;
-   VecTmpl2( const T & c0, const T & c1 ) ;
-   VecTmpl2( const VecTmpl<T,2> & ini );
-   void operator = ( const VecTmpl<T,2> & der ) ;
+   TuplaG2() ;
+   TuplaG2( const T & c0, const T & c1 ) ;
+   TuplaG2( const TuplaG<T,2> & ini );
+   void operator = ( const TuplaG<T,2> & der ) ;
 } ;
 
 
 
 // *********************************************************************
 //
-// Plantilla de clase: VecTmpl3
+// Plantilla de clase: TuplaG3
 // especialización parcial para tuplas de 3 elementos
 // (define constructores específicos)
 //
 // *********************************************************************
 
 template< class T >
-class VecTmpl3 : public VecTmpl<T,3>
+class TuplaG3 : public TuplaG<T,3>
 {
    public:
 
    // constructores: por defecto
-   VecTmpl3() ;
-   VecTmpl3( const T & c0, const T & c1, const T & c2 ) ;
-   VecTmpl3( const VecTmpl<T,3> & ini );
-   void operator = ( const VecTmpl<T,3> & der ) ;
-   void operator = ( const VecTmpl<T,4> & der ) ; // asignar ignorando ultimo
+   TuplaG3() ;
+   TuplaG3( const T & c0, const T & c1, const T & c2 ) ;
+   TuplaG3( const TuplaG<T,3> & ini );
+   void operator = ( const TuplaG<T,3> & der ) ;
+   void operator = ( const TuplaG<T,4> & der ) ; // asignar ignorando ultimo
 
    // producto vectorial (cross)  a = v1.cross(v2)
-   VecTmpl3<T> cross( const VecTmpl3<T> & v2 ) const ;
+   TuplaG3<T> cross( const TuplaG3<T> & v2 ) const ;
 } ;
 
 
 // *********************************************************************
 //
-// Plantilla de clase: VecTmpl4
+// Plantilla de clase: TuplaG4
 // especialización parcial para tuplas de 4 elementos
 // (define constructores específicos)
 //
 // *********************************************************************
 
 template< class T >
-class VecTmpl4 : public VecTmpl<T,4>
+class TuplaG4 : public TuplaG<T,4>
 {
    public:
 
    // constructores: por defecto
-   VecTmpl4() ;
-   VecTmpl4( const T & c0, const T & c1, const T & c2, const T & c3 ) ;
-   VecTmpl4( const VecTmpl<T,4> & ini );
-   void operator = ( const VecTmpl<T,4> & der ) ;
+   TuplaG4() ;
+   TuplaG4( const T & c0, const T & c1, const T & c2, const T & c3 ) ;
+   TuplaG4( const TuplaG<T,4> & ini );
+   void operator = ( const TuplaG<T,4> & der ) ;
 } ;
 
 // *********************************************************************
 //
-// plantilla de clase: MatrixTemplate
+// plantilla de clase: MatrizCG
 // clase para matrices cuadradas genéricas
 //
 // *********************************************************************
 
 template< class T, unsigned n >
-class MatrixTemplate
+class MatrizCG
 {
    public:
-   VecTmpl< VecTmpl<T,n>, n > mat ;
+   TuplaG< TuplaG<T,n>, n > mat ;
 
-   MatrixTemplate<T,n> ()  {}  // constructor por defecto inline (no inicializa)
+   MatrizCG<T,n> ()  {}  // constructor por defecto inline (no inicializa)
 
    // conversion a un puntero de lectura/escritura de tipo: T*
    // ( T* p = matriz )
@@ -219,13 +219,13 @@ class MatrixTemplate
 
    // acceso de lectura a una fila
    // (devuelve puntero al primer elemento de una columna)
-   //inline const VecTmpl<T,n> & operator() ( const unsigned i ) const ;
+   //inline const TuplaG<T,n> & operator() ( const unsigned i ) const ;
 
    // acceso de lectura/escritura a una fila:
-   //inline VecTmpl<T,n> & operator[] ( int i )  ;
+   //inline TuplaG<T,n> & operator[] ( int i )  ;
 
    // componer esta matriz con otra por la derecha
-   inline MatrixTemplate<T,n> operator * ( const MatrixTemplate<T,n> & der ) const ;
+   inline MatrizCG<T,n> operator * ( const MatrizCG<T,n> & der ) const ;
 
    // acceso de solo lectura usando fila,columna: T x = m(fil,col)
    inline const T & operator()( const unsigned fil, const unsigned col ) const ;
@@ -234,38 +234,38 @@ class MatrixTemplate
    inline T & operator()( const unsigned fil, const unsigned col )  ;
 
    // multiplicar esta matriz por una tupla por la derecha
-   inline VecTmpl<T,n> operator * ( const VecTmpl<T,n>  & t ) const ;
+   inline TuplaG<T,n> operator * ( const TuplaG<T,n>  & t ) const ;
 
    // multiplicar esta matriz por una tupla por la derecha (con una dimesnión menos)
    // (se añade un 1, se multiplica, y luego se le quita la ultima componente)
-   inline VecTmpl<T,n-1> operator * ( const VecTmpl<T,n-1>  & t ) const ;
+   inline TuplaG<T,n-1> operator * ( const TuplaG<T,n-1>  & t ) const ;
 } ;
 
 // escritura de una matriz en un ostream
 template< class T, unsigned n > inline
-std::ostream & operator <<  ( std::ostream & os, const MatrixTemplate<T,n> & m ) ;
+std::ostream & operator <<  ( std::ostream & os, const MatrizCG<T,n> & m ) ;
 
 
 // *********************************************************************
 // tipos concretos:
 
-typedef VecTmpl2<float>  Vec2 ;
-typedef VecTmpl2<double> Vec2d ;
-typedef VecTmpl2<uint>   Vec2u ;
-typedef VecTmpl2<int>    Vec2i ;
+typedef TuplaG2<float>  Tupla2f ;
+typedef TuplaG2<double> Tupla2d ;
+typedef TuplaG2<uint>   Tupla2u ;
+typedef TuplaG2<int>    Tupla2i ;
 
-typedef VecTmpl3<float>  Vec3 ;
-typedef VecTmpl3<double> Vec3d ;
-typedef VecTmpl3<uint>   Vec3u ;
-typedef VecTmpl3<int>    Vec3i ;
+typedef TuplaG3<float>  Tupla3f ;
+typedef TuplaG3<double> Tupla3d ;
+typedef TuplaG3<uint>   Tupla3u ;
+typedef TuplaG3<int>    Tupla3i ;
 
-typedef VecTmpl4<float>  Vec4 ;
-typedef VecTmpl4<double> Vec4d ;
-typedef VecTmpl4<int>    Vec4i ;
-typedef VecTmpl4<uint>   Vec4u ;
+typedef TuplaG4<float>  Tupla4f ;
+typedef TuplaG4<double> Tupla4d ;
+typedef TuplaG4<int>    Tupla4i ;
+typedef TuplaG4<uint>   Tupla4u ;
 
-typedef MatrixTemplate<float,4>  Mat4 ;
-typedef MatrixTemplate<double,4> Mat4d ;
+typedef MatrizCG<float,4>  Matriz4f ;
+typedef MatrizCG<double,4> Matriz4d ;
 
 // *********************************************************************
 // MAT_ functions for various types of matrices typically used in 
@@ -280,64 +280,64 @@ void MAT_Tests() ;
 // ---------------------------------------------------------------------
 // creación y operadores de matrices: transformaciones de modelado
 
-Mat4 MAT_Ident( ) ;
-Mat4 Mat4_Translation( const float d[3] ) ;
-Mat4 Mat4_Translation( const float dx, const float dy , const float dz ) ;
+Matriz4f MAT_Ident( ) ;
+Matriz4f MAT_Traslacion( const float d[3] ) ;
+Matriz4f MAT_Traslacion( const float dx, const float dy , const float dz ) ;
 
-Mat4 Mat4_Scale( const float sx, const float sy, const float sz ) ;
-Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey, const float ez ) ;
-Mat4 Mat4_Rotation( const float ang_gra, const Vec3 & eje ) ;
-Mat4 Mat4_Rows( const Vec3 & fila0, const Vec3 & fila1, const Vec3 & fila2 );
+Matriz4f MAT_Escalado( const float sx, const float sy, const float sz ) ;
+Matriz4f MAT_Rotacion( const float ang_gra, const float ex, const float ey, const float ez ) ;
+Matriz4f MAT_Rotacion( const float ang_gra, const Tupla3f & eje ) ;
+Matriz4f MAT_Filas( const Tupla3f & fila0, const Tupla3f & fila1, const Tupla3f & fila2 );
 
 // ---------------------------------------------------------------------
 // matrices auxiliares para la transformación de vista
 
-Mat4 MAT_Transpuesta3x3( const Mat4 & org ) ;
-Mat4 Mat4_Rows         ( const Vec3 fila[3] );
-Mat4 Mat4_Columns      ( const Vec3 colum[3] );
+Matriz4f MAT_Transpuesta3x3( const Matriz4f & org ) ;
+Matriz4f MAT_Filas         ( const Tupla3f fila[3] );
+Matriz4f MAT_Columnas      ( const Tupla3f colum[3] );
 
 // ---------------------------------------------------------------------
 // matrices para la transformacion de vista:
 
-Mat4 Mat4_LookAt( const float origen[3], const float centro[3], const float vup[3] );
-Mat4 Mat4_View         ( const Vec3 eje[3], const Vec3& org );
-Mat4 Mat4_View_inv     ( const Vec3 eje[3], const Vec3& org );
+Matriz4f MAT_LookAt( const float origen[3], const float centro[3], const float vup[3] );
+Matriz4f MAT_Vista         ( const Tupla3f eje[3], const Tupla3f& org );
+Matriz4f MAT_Vista_inv     ( const Tupla3f eje[3], const Tupla3f& org );
 
 
 // ---------------------------------------------------------------------
 // matrices de transformación del viewport
 
-Mat4 Mat4_Viewport      ( int org_x, int org_y, int ancho, int alto );
-Mat4 Mat4_Viewport_inv  ( int org_x, int org_y, int ancho, int alto );
+Matriz4f MAT_Viewport      ( int org_x, int org_y, int ancho, int alto );
+Matriz4f MAT_Viewport_inv  ( int org_x, int org_y, int ancho, int alto );
 
 // ---------------------------------------------------------------------  
 // matrices para la transf. de proyección
 
-Mat4 Mat4_Frustum    ( const float l, const float r, const float b, const float t, const float n, const float f );
-Mat4 Mat4_Ortho( const float l, const float r, const float b, const float t, const float n, const float f );
-Mat4 Mat4_Perspective( const float fovy_grad, const float raz_asp, const float n, const float f );
+Matriz4f MAT_Frustum    ( const float l, const float r, const float b, const float t, const float n, const float f );
+Matriz4f MAT_Ortografica( const float l, const float r, const float b, const float t, const float n, const float f );
+Matriz4f MAT_Perspectiva( const float fovy_grad, const float raz_asp, const float n, const float f );
 
 // --------------------------------------------------------------------
 // calcula la inversa (la última fila debe ser 0, 0, 0, 1 - es decir,
 // no debe haber proyeccion)
-Mat4 Mat4_Inverse( const Mat4 & m );
+Matriz4f MAT_Inversa( const Matriz4f & m );
 
 // -------------------------------------------------------------------
 // una clase para una pila de matrices
 
-class Mat4Stack
+class PilaMatriz4f
 {
    private:
-      std::vector<Mat4> anteriores ;
+      std::vector<Matriz4f> anteriores ;
 
    public:
-      Mat4 actual  ;
+      Matriz4f actual  ;
       // crea una pila, donde la matriz actual es la identidad
-      inline Mat4Stack()
+      inline PilaMatriz4f()
       {  actual = MAT_Ident() ;
       }
       // crear una pila, dándole un valor a la matriz actual
-      inline Mat4Stack( const Mat4 & actual_ini )
+      inline PilaMatriz4f( const Matriz4f & actual_ini )
       {  actual = actual_ini ;
       }
       // hacer push de la pila (guarda la actual)
@@ -345,7 +345,7 @@ class Mat4Stack
       {  anteriores.push_back( actual );
       }
       // componer una matriz
-      inline void comp( const Mat4 & mat )
+      inline void comp( const Matriz4f & mat )
       {  actual = actual*mat ;
       }
       // hacer pop de la pila (recupera la última guardada con push)
@@ -367,18 +367,18 @@ class Mat4Stack
 
 // *********************************************************************
 // plantilla de clase:
-// VecTmpl<T,n>
+// TuplaG<T,n>
 // *********************************************************************
 
 template< class T, unsigned n> inline
-VecTmpl<T,n>::VecTmpl()
+TuplaG<T,n>::TuplaG()
 {
    
 } 
 
 // constructor usando un array C++
 template< class T, unsigned n> inline 
-VecTmpl<T,n>::VecTmpl( const T * org ) 
+TuplaG<T,n>::TuplaG( const T * org ) 
 {
    for( unsigned i = 0 ; i < n ; i++ )
       (*this)[i] = org[i] ;
@@ -387,7 +387,7 @@ VecTmpl<T,n>::VecTmpl( const T * org )
 //----------------------------------------------------------------------
 
 //template< class T, unsigned n >
-//T & VecTmpl<T,n>::operator [] (const unsigned i)
+//T & TuplaG<T,n>::operator [] (const unsigned i)
 //{
    //assert( i < n ) ;
    //return coo[i] ;
@@ -396,7 +396,7 @@ VecTmpl<T,n>::VecTmpl( const T * org )
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-const T & VecTmpl<T,n>::operator () (const unsigned i) const
+const T & TuplaG<T,n>::operator () (const unsigned i) const
 {
    assert( i < n ) ;
    return coo[i] ;
@@ -405,7 +405,7 @@ const T & VecTmpl<T,n>::operator () (const unsigned i) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-T & VecTmpl<T,n>::operator () (const unsigned i) 
+T & TuplaG<T,n>::operator () (const unsigned i) 
 {
    assert( i < n ) ;
    return coo[i] ;
@@ -415,7 +415,7 @@ T & VecTmpl<T,n>::operator () (const unsigned i)
 // conversion a un puntero de lectura/escritura de tipo: T* ( T* p = tupla )
 
 template< class T, unsigned n > inline 
-VecTmpl<T,n>::operator  T * () 
+TuplaG<T,n>::operator  T * () 
 {
    return coo ;
 }
@@ -424,7 +424,7 @@ VecTmpl<T,n>::operator  T * ()
 // conversion a un puntero de solo lectura de tipo T* ( const T* p = tupla )
 
 template< class T, unsigned n > inline 
-VecTmpl<T,n>::operator  const T * () const 
+TuplaG<T,n>::operator  const T * () const 
 {
    return coo ;
 }
@@ -432,9 +432,9 @@ VecTmpl<T,n>::operator  const T * () const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline 
-VecTmpl<T,n> VecTmpl<T,n>::operator + ( const VecTmpl<T,n> & der ) const
+TuplaG<T,n> TuplaG<T,n>::operator + ( const TuplaG<T,n> & der ) const
 {
-   VecTmpl<T,n> res ;
+   TuplaG<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = (*this)(i)+der(i) ;
    return res ;
@@ -443,9 +443,9 @@ VecTmpl<T,n> VecTmpl<T,n>::operator + ( const VecTmpl<T,n> & der ) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline 
-VecTmpl<T,n> VecTmpl<T,n>::operator - ( const VecTmpl<T,n> & der ) const
+TuplaG<T,n> TuplaG<T,n>::operator - ( const TuplaG<T,n> & der ) const
 {
-   VecTmpl<T,n> res ;
+   TuplaG<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = (*this)(i)-der(i) ;
    return res ;
@@ -455,9 +455,9 @@ VecTmpl<T,n> VecTmpl<T,n>::operator - ( const VecTmpl<T,n> & der ) const
 
 // devuelve tupla negada ( v1 = -v2 )
 template< class T, unsigned n > inline
-VecTmpl<T,n> VecTmpl<T,n>::operator - (  ) const 
+TuplaG<T,n> TuplaG<T,n>::operator - (  ) const 
 {
-   VecTmpl<T,n> res ;
+   TuplaG<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = -(*this)(i) ;
    return res ;
@@ -467,9 +467,9 @@ VecTmpl<T,n> VecTmpl<T,n>::operator - (  ) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-VecTmpl<T,n> VecTmpl<T,n>::operator * ( const T & a ) const 
+TuplaG<T,n> TuplaG<T,n>::operator * ( const T & a ) const 
 {
-   VecTmpl<T,n> res ;
+   TuplaG<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = (*this)(i)*a ;
    return res ;
@@ -478,9 +478,9 @@ VecTmpl<T,n> VecTmpl<T,n>::operator * ( const T & a ) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n >  inline
-VecTmpl<T,n> VecTmpl<T,n>::operator / ( const T & a ) const 
+TuplaG<T,n> TuplaG<T,n>::operator / ( const T & a ) const 
 {
-   VecTmpl<T,n> res ;
+   TuplaG<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = (*this)(i)/a ;
    return res ;
@@ -489,9 +489,9 @@ VecTmpl<T,n> VecTmpl<T,n>::operator / ( const T & a ) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-VecTmpl<T,n> operator * ( const T & a, const VecTmpl<T,n> & der )  
+TuplaG<T,n> operator * ( const T & a, const TuplaG<T,n> & der )  
 {
-   VecTmpl<T,n> res ;
+   TuplaG<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = a*der(i) ;
    return res ;
@@ -500,7 +500,7 @@ VecTmpl<T,n> operator * ( const T & a, const VecTmpl<T,n> & der )
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-std::ostream & operator <<  ( std::ostream & os, const VecTmpl<T,n> & der ) 
+std::ostream & operator <<  ( std::ostream & os, const TuplaG<T,n> & der ) 
 {
    os << "(" ;
    for( unsigned i = 0 ; i < n ; i++ )
@@ -516,7 +516,7 @@ std::ostream & operator <<  ( std::ostream & os, const VecTmpl<T,n> & der )
 
 // producto escalar (dot)  a = v1.dot(v2)
 template< class T, unsigned n > inline
-T VecTmpl<T,n>::dot( const VecTmpl<T,n> & v2 ) const 
+T TuplaG<T,n>::dot( const TuplaG<T,n> & v2 ) const 
 {
    double res = 0.0 ;
    for( unsigned int i = 0 ; i < n ; i++ )
@@ -528,7 +528,7 @@ T VecTmpl<T,n>::dot( const VecTmpl<T,n> & v2 ) const
 
 // obtener longitud al cuadrado
 template< class T, unsigned n > inline
-T VecTmpl<T,n>::lengthSq( ) const 
+T TuplaG<T,n>::lengthSq( ) const 
 {
    return T( this->dot( *this ) ) ;
 }
@@ -537,7 +537,7 @@ T VecTmpl<T,n>::lengthSq( ) const
 // operador binario para producto escalar
 
 template< class T, unsigned n > inline
-T VecTmpl<T,n>::operator | ( const VecTmpl & der ) const 
+T TuplaG<T,n>::operator | ( const TuplaG & der ) const 
 {
    return this->dot( der ) ;
 }
@@ -545,7 +545,7 @@ T VecTmpl<T,n>::operator | ( const VecTmpl & der ) const
 // ---------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-VecTmpl<T,n> VecTmpl<T,n>::normalized() const 
+TuplaG<T,n> TuplaG<T,n>::normalized() const 
 {
    T lenSq = T(0.0) ;
    for( unsigned i = 0 ; i < n ; i++ )
@@ -565,11 +565,11 @@ VecTmpl<T,n> VecTmpl<T,n>::normalized() const
 // *********************************************************************
 // plantilla de clase:
 //
-//   VecTmpl2<T>
+//   TuplaG2<T>
 // *********************************************************************
 
 template< class T > inline
-VecTmpl2<T>::VecTmpl2(  ) 
+TuplaG2<T>::TuplaG2(  ) 
 {
 
 }
@@ -577,7 +577,7 @@ VecTmpl2<T>::VecTmpl2(  )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl2<T>::VecTmpl2( const VecTmpl<T,2> & ini )
+TuplaG2<T>::TuplaG2( const TuplaG<T,2> & ini )
 {
    (*this)[0] = ini(0) ;
    (*this)[1] = ini(1) ;
@@ -586,7 +586,7 @@ VecTmpl2<T>::VecTmpl2( const VecTmpl<T,2> & ini )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl2<T>::operator = ( const VecTmpl<T,2> & der ) 
+void TuplaG2<T>::operator = ( const TuplaG<T,2> & der ) 
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -595,7 +595,7 @@ void VecTmpl2<T>::operator = ( const VecTmpl<T,2> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl2<T>::VecTmpl2( const T & c0, const T & c1 ) 
+TuplaG2<T>::TuplaG2( const T & c0, const T & c1 ) 
 {
    (*this)[0] = c0 ;
    (*this)[1] = c1 ;
@@ -604,12 +604,12 @@ VecTmpl2<T>::VecTmpl2( const T & c0, const T & c1 )
 // *********************************************************************
 //
 // plantilla de clase:
-// VecTmpl3<T>
+// TuplaG3<T>
 //
 // *********************************************************************
 
 template< class T > inline
-VecTmpl3<T>::VecTmpl3(  ) 
+TuplaG3<T>::TuplaG3(  ) 
 {
 
 }
@@ -617,7 +617,7 @@ VecTmpl3<T>::VecTmpl3(  )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl3<T>::VecTmpl3( const VecTmpl<T,3> & ini )
+TuplaG3<T>::TuplaG3( const TuplaG<T,3> & ini )
 {
    (*this)[0] = ini(0) ;
    (*this)[1] = ini(1) ;
@@ -627,7 +627,7 @@ VecTmpl3<T>::VecTmpl3( const VecTmpl<T,3> & ini )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl3<T>::operator = ( const VecTmpl<T,3> & der ) 
+void TuplaG3<T>::operator = ( const TuplaG<T,3> & der ) 
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -637,7 +637,7 @@ void VecTmpl3<T>::operator = ( const VecTmpl<T,3> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl3<T>::operator = ( const VecTmpl<T,4> & der ) 
+void TuplaG3<T>::operator = ( const TuplaG<T,4> & der ) 
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -647,7 +647,7 @@ void VecTmpl3<T>::operator = ( const VecTmpl<T,4> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl3<T>::VecTmpl3( const T & c0, const T & c1, const T & c2 ) 
+TuplaG3<T>::TuplaG3( const T & c0, const T & c1, const T & c2 ) 
 {
    (*this)[0] = c0 ;
    (*this)[1] = c1 ;
@@ -658,12 +658,12 @@ VecTmpl3<T>::VecTmpl3( const T & c0, const T & c1, const T & c2 )
 
 
 template< class T > inline
-VecTmpl3<T> VecTmpl3<T>::cross( const VecTmpl3<T> & v2 ) const 
+TuplaG3<T> TuplaG3<T>::cross( const TuplaG3<T> & v2 ) const 
 {
    // cuidado: no hay acceso a 'coo' tal cual, mirar:
    // http://stackoverflow.com/questions/7281072/accessing-public-members-of-base-class-fails
    
-   return VecTmpl3<T>(  (*this)(1)*v2(2) -  (*this)(2)*v2(1),
+   return TuplaG3<T>(  (*this)(1)*v2(2) -  (*this)(2)*v2(1),
                        (*this)(2)*v2(0) -  (*this)(0)*v2(2), 
                        (*this)(0)*v2(1) -  (*this)(1)*v2(0)
                      );
@@ -672,12 +672,12 @@ VecTmpl3<T> VecTmpl3<T>::cross( const VecTmpl3<T> & v2 ) const
 // *********************************************************************
 // plantilla de clase:
 //
-//   VecTmpl4<T>
+//   TuplaG4<T>
 //
 // *********************************************************************
 
 template< class T > inline
-VecTmpl4<T>::VecTmpl4(  ) 
+TuplaG4<T>::TuplaG4(  ) 
 {
 
 }
@@ -685,7 +685,7 @@ VecTmpl4<T>::VecTmpl4(  )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl4<T>::VecTmpl4( const VecTmpl<T,4> & ini )
+TuplaG4<T>::TuplaG4( const TuplaG<T,4> & ini )
 {
    (*this)[0] = ini(0) ;
    (*this)[1] = ini(1) ;
@@ -696,7 +696,7 @@ VecTmpl4<T>::VecTmpl4( const VecTmpl<T,4> & ini )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl4<T>::operator = ( const VecTmpl<T,4> & der ) 
+void TuplaG4<T>::operator = ( const TuplaG<T,4> & der ) 
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -707,7 +707,7 @@ void VecTmpl4<T>::operator = ( const VecTmpl<T,4> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl4<T>::VecTmpl4( const T& c0, const T& c1, const T& c2, const T& c3 ) 
+TuplaG4<T>::TuplaG4( const T& c0, const T& c1, const T& c2, const T& c3 ) 
 {
    (*this)[0] = c0 ;
    (*this)[1] = c1 ;
@@ -724,7 +724,7 @@ VecTmpl4<T>::VecTmpl4( const T& c0, const T& c1, const T& c2, const T& c3 )
 // conversion a un puntero de lectura/escritura de tipo T* ( T* p = m )
 // (devuelve puntero al primer elemento de la primera columna)
 template< class T, unsigned n > inline
-MatrixTemplate<T,n>::operator  T * ()
+MatrizCG<T,n>::operator  T * ()
 {
    return mat[0] ;
 }
@@ -733,7 +733,7 @@ MatrixTemplate<T,n>::operator  T * ()
 // conversion a un puntero de solo lectura de tipo: const T* ( T* p = m )
 // (devuelve puntero al primer elemento de la primera columna)
 template< class T, unsigned n > inline
-MatrixTemplate<T,n>::operator  const T * ()  const
+MatrizCG<T,n>::operator  const T * ()  const
 {
    return & (mat(0)(0)) ;
 }
@@ -741,7 +741,7 @@ MatrixTemplate<T,n>::operator  const T * ()  const
 //// ---------------------------------------------------------------------
 //// acceso de lectura a una fila:
 //template< class T, unsigned n > inline
-//const VecTmpl<T,n> & MatrixTemplate<T,n>::operator() ( const unsigned i ) const
+//const TuplaG<T,n> & MatrizCG<T,n>::operator() ( const unsigned i ) const
 //{
    //return mat(i) ;
 //}
@@ -749,7 +749,7 @@ MatrixTemplate<T,n>::operator  const T * ()  const
 ////----------------------------------------------------------------------
 
 //template< class T, unsigned n > inline
-//VecTmpl<T,n> & MatrixTemplate<T,n>::operator[] ( int i )
+//TuplaG<T,n> & MatrizCG<T,n>::operator[] ( int i )
 //{
    //return mat[i] ;
 //}
@@ -757,7 +757,7 @@ MatrixTemplate<T,n>::operator  const T * ()  const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-std::ostream & operator <<  ( std::ostream & os, const MatrixTemplate<T,n> & m )
+std::ostream & operator <<  ( std::ostream & os, const MatrizCG<T,n> & m )
 {
    using namespace std ;
 
@@ -784,9 +784,9 @@ std::ostream & operator <<  ( std::ostream & os, const MatrixTemplate<T,n> & m )
 // componer una matriz con otra por la derecha
 
 template< class T, unsigned n > inline
-MatrixTemplate<T,n> MatrixTemplate<T,n>::operator * ( const MatrixTemplate<T,n> & der ) const
+MatrizCG<T,n> MatrizCG<T,n>::operator * ( const MatrizCG<T,n> & der ) const
 {
-   MatrixTemplate<T,n> res ;
+   MatrizCG<T,n> res ;
 
    for( unsigned fil = 0 ; fil < n ; fil++ )
    for( unsigned col = 0 ; col < n ; col++ )
@@ -801,7 +801,7 @@ MatrixTemplate<T,n> MatrixTemplate<T,n>::operator * ( const MatrixTemplate<T,n> 
 // acceso de solo lectura usando fila,columna: T x = m(fil,col)
 
 template< class T, unsigned n > inline
-const T & MatrixTemplate<T,n>::operator()( const unsigned fil, const unsigned col ) const
+const T & MatrizCG<T,n>::operator()( const unsigned fil, const unsigned col ) const
 {
    assert( fil < n );
    assert( col < n ) ;
@@ -813,7 +813,7 @@ const T & MatrixTemplate<T,n>::operator()( const unsigned fil, const unsigned co
 // acceso de lectura/escritura usando fila,columna: m(fil,col) = v
 
 template< class T, unsigned n > inline
-T & MatrixTemplate<T,n>::operator()( const unsigned fil, const unsigned col )
+T & MatrizCG<T,n>::operator()( const unsigned fil, const unsigned col )
 {
    assert( fil < n );
    assert( col < n ) ;
@@ -823,9 +823,9 @@ T & MatrixTemplate<T,n>::operator()( const unsigned fil, const unsigned col )
 // ---------------------------------------------------------------------
 // multiplicar esta matriz por una tupla por la derecha
 template< class T, unsigned n > inline
-VecTmpl<T,n> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n>  & t ) const
+TuplaG<T,n> MatrizCG<T,n>::operator * ( const TuplaG<T,n>  & t ) const
 {
-   VecTmpl<T,n>  res ;
+   TuplaG<T,n>  res ;
    for( unsigned fil = 0 ; fil < n ; fil++ )
    {  res[fil] = 0.0 ;
       for( unsigned col = 0 ; col < n ; col++ )
@@ -839,9 +839,9 @@ VecTmpl<T,n> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n>  & t ) const
 // (se añade un 1, se multiplica, y luego se le quita la ultima componente)
 
 template< class T, unsigned n > inline
-VecTmpl<T,n-1> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n-1>  & t ) const
+TuplaG<T,n-1> MatrizCG<T,n>::operator * ( const TuplaG<T,n-1>  & t ) const
 {
-   VecTmpl<T,n> t1 ;
+   TuplaG<T,n> t1 ;
 
    // añadir un 1 a t, crear 't1'
    for( unsigned i = 0 ; i < n-1 ; i++ )
@@ -855,10 +855,10 @@ VecTmpl<T,n-1> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n-1>  & t ) con
          //resn(fil) += (*this)(fil,col) * t1(col) ;
    //}
 
-   VecTmpl<T,n> res1 = (*this)*t1 ;
+   TuplaG<T,n> res1 = (*this)*t1 ;
 
    // copiar 'resn' en 'res'
-   VecTmpl<T,n-1>  res ;
+   TuplaG<T,n-1>  res ;
    for( unsigned i = 0 ; i < n-1 ; i++ )
       res(i) = res1(i) ;
 
@@ -872,9 +872,9 @@ VecTmpl<T,n-1> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n-1>  & t ) con
 // --------------------------------------------------------------------
 
 
-inline Mat4 MAT_Ident(  )
+inline Matriz4f MAT_Ident(  )
 {
-   Mat4 res ;
+   Matriz4f res ;
    for( unsigned fil = 0 ; fil < 4 ; fil++ )
    for( unsigned col = 0 ; col < 4 ; col++ )
       res(fil,col) = (col == fil) ? 1.0f : 0.0f ;
@@ -884,9 +884,9 @@ inline Mat4 MAT_Ident(  )
 
 //----------------------------------------------------------------------
 
-inline Mat4 Mat4_Rows( const Vec3 & fila0, const Vec3 & fila1, const Vec3 & fila2 )
+inline Matriz4f MAT_Filas( const Tupla3f & fila0, const Tupla3f & fila1, const Tupla3f & fila2 )
 {
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    for( unsigned col = 0 ; col < 3 ; col++ )
    {  res(0,col) = fila0(col) ;
@@ -897,9 +897,9 @@ inline Mat4 Mat4_Rows( const Vec3 & fila0, const Vec3 & fila1, const Vec3 & fila
 }
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Translation( const float vec[3] )
+inline Matriz4f MAT_Traslacion( const float vec[3] )
 {
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    for( unsigned fil = 0 ; fil < 3 ; fil++ )
       res(fil,3) = vec[fil] ;
@@ -909,9 +909,9 @@ inline Mat4 Mat4_Translation( const float vec[3] )
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Translation( const float dx, const float dy , const float dz )
+inline Matriz4f MAT_Traslacion( const float dx, const float dy , const float dz )
 {
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    res(0,3) = dx ;
    res(1,3) = dy ;
@@ -921,9 +921,9 @@ inline Mat4 Mat4_Translation( const float dx, const float dy , const float dz )
 }
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Scale( const float sx, const float sy, const float sz )
+inline Matriz4f MAT_Escalado( const float sx, const float sy, const float sz )
 {
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    res(0,0) = sx ;
    res(1,1) = sy ;
@@ -934,9 +934,9 @@ inline Mat4 Mat4_Scale( const float sx, const float sy, const float sz )
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey , const float ez )
+inline Matriz4f MAT_Rotacion( const float ang_gra, const float ex, const float ey , const float ez )
 {
-   const Vec3 ejen = Vec3(ex,ey,ez).normalized() ;
+   const Tupla3f ejen = Tupla3f(ex,ey,ez).normalized() ;
 
    const double
       ang_rad = double(ang_gra)*double(2.0)*double(M_PI)/double(360.0) ,
@@ -951,7 +951,7 @@ inline Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey ,
       hy      = (1.0-c)*eyn ,
       hz      = (1.0-c)*ezn ;
 
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    res(0,0) = hx*exn+c     ; res(0,1) = hx*eyn-s*ezn ; res(0,2) = hx*ezn+s*eyn ;
    res(1,0) = hy*exn+s*ezn ; res(1,1) = hy*eyn+c     ; res(1,2) = hy*ezn-s*exn ;
@@ -962,24 +962,24 @@ inline Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey ,
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Rotation( const float ang_gra, const Vec3 & eje )
+inline Matriz4f MAT_Rotacion( const float ang_gra, const Tupla3f & eje )
 {
-   return Mat4_Rotation( ang_gra, eje(0), eje(1), eje(2) );
+   return MAT_Rotacion( ang_gra, eje(0), eje(1), eje(2) );
 }
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_LookAt( const float origen[3], const float centro[3], const float vup[3] )
+inline Matriz4f MAT_LookAt( const float origen[3], const float centro[3], const float vup[3] )
 {
-   Vec3
+   Tupla3f
       eje[3] ; // array con los tres vectores de los ejes del S.R. de la cámara
 
-   eje[Z] = ( Vec3(origen) - Vec3(centro) ).normalized() ; // eje Z desde el p.a. hacia el obs., normalizado
-   eje[X] = ( Vec3(vup).cross( eje[Z] )).normalized(),  // eje Z apunta en la dir. contraria a la camara
+   eje[Z] = ( Tupla3f(origen) - Tupla3f(centro) ).normalized() ; // eje Z desde el p.a. hacia el obs., normalizado
+   eje[X] = ( Tupla3f(vup).cross( eje[Z] )).normalized(),  // eje Z apunta en la dir. contraria a la camara
    eje[Y] = eje[Z].cross( eje[X] );                     // eje Y perpendicular a los otros dos.
 
-   Mat4
-      trasl = Mat4_Translation( -origen[X], -origen[Y], -origen[Z] ),
+   Matriz4f
+      trasl = MAT_Traslacion( -origen[X], -origen[Y], -origen[Z] ),
       rot   = MAT_Ident() ; // matriz de cambio de base mundo --> camara
 
    for( unsigned col = X ; col <= Z ; col++ )
@@ -990,7 +990,7 @@ inline Mat4 Mat4_LookAt( const float origen[3], const float centro[3], const flo
 }
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Frustum( const float l, const float r, const float b, const float t, const float n, const float f )
+inline Matriz4f MAT_Frustum( const float l, const float r, const float b, const float t, const float n, const float f )
 {
    const float eps = 1e-6 ;
    assert( fabs(r-l) > eps && fabs(t-b) > eps  && fabs(n-f) > eps );
@@ -1007,7 +1007,7 @@ inline Mat4 Mat4_Frustum( const float l, const float r, const float b, const flo
       c2 = (n+f)*inf ,
       c3 = 2.0f*f*n*inf ;
 
-   Mat4
+   Matriz4f
       res ;
 
    res(0,0) = a0  ; res(0,1) = 0.0; res(0,2) = a2  ; res(0,3) = 0.0 ;
@@ -1020,7 +1020,7 @@ inline Mat4 Mat4_Frustum( const float l, const float r, const float b, const flo
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Ortho( const float l, const float r, const float b, const float t, const float n, const float f )
+inline Matriz4f MAT_Ortografica( const float l, const float r, const float b, const float t, const float n, const float f )
 {
    const float eps = 1e-6 ;
    assert( fabs(r-l) > eps && fabs(t-b) > eps  && fabs(n-f) > eps );
@@ -1037,7 +1037,7 @@ inline Mat4 Mat4_Ortho( const float l, const float r, const float b, const float
       c2 = 2.0f*inf ,
       c3 = (f+n)*inf ;
 
-   Mat4
+   Matriz4f
       res ;
 
    res(0,0) = a0  ; res(0,1) = 0.0 ; res(0,2) = 0.0 ; res(0,3) = a3  ;
@@ -1050,7 +1050,7 @@ inline Mat4 Mat4_Ortho( const float l, const float r, const float b, const float
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Perspective( const float fovy_grad, const float raz_asp, const float n, const float f )
+inline Matriz4f MAT_Perspectiva( const float fovy_grad, const float raz_asp, const float n, const float f )
 {
    const float eps = 1e-6 ;
    assert( raz_asp > eps && fovy_grad > eps  && fabs(n-f) > eps );
@@ -1062,16 +1062,16 @@ inline Mat4 Mat4_Perspective( const float fovy_grad, const float raz_asp, const 
       b = -t ,
       l = -r ;
 
-   return Mat4_Frustum( l,r,b,t,n,f );
+   return MAT_Frustum( l,r,b,t,n,f );
 }
 
 
 // ---------------------------------------------------------------------
 // traspuesta (IGNORA LAS TRASLACIONES)
 
-inline Mat4 MAT_Transpuesta3x3( const Mat4 & org )
+inline Matriz4f MAT_Transpuesta3x3( const Matriz4f & org )
 {
-   Mat4 res = MAT_Ident() ;
+   Matriz4f res = MAT_Ident() ;
 
    for( unsigned i = 0 ; i < 3 ; i++ )
    for( unsigned j = 0 ; j < 3 ; j++ )
@@ -1082,9 +1082,9 @@ inline Mat4 MAT_Transpuesta3x3( const Mat4 & org )
 //----------------------------------------------------------------------
 // construir la sub-matriz 3x3 dando sus tres filas
 
-inline Mat4 Mat4_Rows( const Vec3 fila[3] )
+inline Matriz4f MAT_Filas( const Tupla3f fila[3] )
 {
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    for( unsigned col = 0 ; col < 3 ; col++ )
    {
@@ -1097,9 +1097,9 @@ inline Mat4 Mat4_Rows( const Vec3 fila[3] )
 //----------------------------------------------------------------------
 // construir la sub-matriz 3x3 dando sus tres columnas
 
-inline Mat4 Mat4_Columns( const Vec3 colum[3] )
+inline Matriz4f MAT_Columnas( const Tupla3f colum[3] )
 {
-   Mat4 res = MAT_Ident();
+   Matriz4f res = MAT_Ident();
 
    for( unsigned fil = 0 ; fil < 3 ; fil++ )
    {
@@ -1112,37 +1112,37 @@ inline Mat4 Mat4_Columns( const Vec3 colum[3] )
 // ---------------------------------------------------------------------
 // matriz del viewport  (deja las Z igual: entre -1 y 1)
 
-inline Mat4 Mat4_Viewport( int org_x, int org_y, int ancho, int alto )
+inline Matriz4f MAT_Viewport( int org_x, int org_y, int ancho, int alto )
 {
-   return Mat4_Translation( float(org_x), float(org_y), 0.0 )*
-          Mat4_Scale( float(ancho), float(alto), 1.0 )*
-          Mat4_Scale( 0.5, 0.5, 1.0 )*
-          Mat4_Translation( 1.0, 1.0, 1.0 ) ;
+   return MAT_Traslacion( float(org_x), float(org_y), 0.0 )*
+          MAT_Escalado( float(ancho), float(alto), 1.0 )*
+          MAT_Escalado( 0.5, 0.5, 1.0 )*
+          MAT_Traslacion( 1.0, 1.0, 1.0 ) ;
 }
 // ---------------------------------------------------------------------
 // matriz inversa de la matriz del viewport
 
-inline Mat4 Mat4_Viewport_inv( int org_x, int org_y, int ancho, int alto )
+inline Matriz4f MAT_Viewport_inv( int org_x, int org_y, int ancho, int alto )
 {
-   return Mat4_Translation( -1.0, -1.0, -1.0 ) *
-          Mat4_Scale( 2.0, 2.0, 1.0 )*
-          Mat4_Scale( 1.0/float(ancho), 1.0/float(alto), 1.0 )*
-          Mat4_Translation( -float(org_x), -float(org_y), 0.0 ) ;
+   return MAT_Traslacion( -1.0, -1.0, -1.0 ) *
+          MAT_Escalado( 2.0, 2.0, 1.0 )*
+          MAT_Escalado( 1.0/float(ancho), 1.0/float(alto), 1.0 )*
+          MAT_Traslacion( -float(org_x), -float(org_y), 0.0 ) ;
 }
 
 // ---------------------------------------------------------------------
 // matriz de vista, a partir del marco de coordenadas de la camara:
-inline Mat4 Mat4_View( const Vec3 eje[3], const Vec3& org )
+inline Matriz4f MAT_Vista( const Tupla3f eje[3], const Tupla3f& org )
 {
    // traslación por -origen, seguida de productos escalares
-   return Mat4_Rows( eje )*Mat4_Translation( -org ) ;
+   return MAT_Filas( eje )*MAT_Traslacion( -org ) ;
 }
 // ---------------------------------------------------------------------
 // matriz inversa de la vista, a partir del marco de coordenadas de la camara:
-inline Mat4 Mat4_View_inv( const Vec3 eje[3], const Vec3& org )
+inline Matriz4f MAT_Vista_inv( const Tupla3f eje[3], const Tupla3f& org )
 {
    // rotaciones seguidas de traslación por origen
-   return  Mat4_Translation( org )*Mat4_Columns( eje );
+   return  MAT_Traslacion( org )*MAT_Columnas( eje );
 }
 
 // --------------------------------------------------
@@ -1150,7 +1150,7 @@ inline Mat4 Mat4_View_inv( const Vec3 eje[3], const Vec3& org )
 
 // -----------------------------------------------------------------------
 // calculo del determinante de la submatriz 3x3
-inline float Mat4_Determinant3x3( const Mat4 & m )
+inline float MAT_Determinante3x3( const Matriz4f & m )
 {
    return + m(0,0)*m(1,1)*m(2,2)
           + m(0,1)*m(1,2)*m(2,0)
@@ -1165,7 +1165,7 @@ inline float Mat4_Determinant3x3( const Mat4 & m )
 // calcula la inversa de una matriz 4x4 (sin términos de proyección)
 // (la última fila debe ser 0, 0, 0, 1)
 
-inline Mat4 Mat4_Inverse( const Mat4 & m )
+inline Matriz4f MAT_Inversa( const Matriz4f & m )
 {
    assert( m(3,0) == 0.0 );
    assert( m(3,1) == 0.0 );
@@ -1173,7 +1173,7 @@ inline Mat4 Mat4_Inverse( const Mat4 & m )
    assert( m(3,3) == 1.0 );
 
    // 1. calcular matriz de cofactores ('cofac')
-   Mat4 cofac = MAT_Ident();
+   Matriz4f cofac = MAT_Ident();
 
    for( int i = 0 ; i < 3 ; i++ )
    for( int j = 0 ; j < 3 ; j++ )
@@ -1190,13 +1190,13 @@ inline Mat4 Mat4_Inverse( const Mat4 & m )
 
    // 3. calcular la matriz inversa de la sub-matrix 3x3 (inv3x3) como la
    // adjunta (transpuesta de los cofactores), dividida por el determinante:
-   Mat4 inv3x3 = MAT_Ident();
+   Matriz4f inv3x3 = MAT_Ident();
    for( int i = 0 ; i < 3 ; i++ )
    for( int j = 0 ; j < 3 ; j++ )
       inv3x3(i,j) = inv_det * cofac(j,i) ;
 
    // 4. calcular la matriz de traslación inversa
-   Mat4 trasl_inv = MAT_Ident() ;
+   Matriz4f trasl_inv = MAT_Ident() ;
    for( int i = 0 ; i < 3 ; i++ )
       trasl_inv(i,3) = -m(i,3) ;
 
@@ -1209,32 +1209,19 @@ inline Mat4 Mat4_Inverse( const Mat4 & m )
 // ---------------------------------------------------------------------
 // juego de tests de la matrices
 
-
-
-inline void matrix_tests()
+inline void MAT_TestInv( const Matriz4f & mat )
 {
    using namespace std ;
 
-   // test de la matriz inversa:
-   const Mat4 
-      mat1 = Mat4_Scale( 0.5, 0.9, -1.1 )*
-             Mat4_Rotation( 34.0, 1.0, 2.0, 3.0 )*Mat4_Translation( 1.5, -2.2, -1.1 )*Mat4_Scale( -1.5, -2.7, 5.0 )*
-             Mat4_Rotation( -130.0, -3.2, 2.0, -1.0 )*Mat4_Translation( -0.8, 1.0, -1.7 )*Mat4_Scale( 0.5, 2.0, -1.5 ),
-      mt   = Mat4_Translation( 1.0, 2.0, 3.0 ),
-      mr   = Mat4_Rotation( -130.0, -3.2, 2.0, -1.0 ),
-      me   = Mat4_Scale( 2.0, -1.0, 0.7 ) ;
+   // print determinante, solo para test
+   const float det = MAT_Determinante3x3( mat );
+   cout << "det (1) == " << det << endl ;
 
-   // test for the inverse matrix
-   const Mat4 mat2 = me*mat1*mt*mr*me ;
+   const Matriz4f inv = MAT_Inversa( mat );
+   const Matriz4f ide = inv*mat ;
 
-   const float det = Mat4_Determinant3x3( mat2 );
-   cout << "det de mat2 == " << det << endl ;
-
-   const Mat4 inv = Mat4_Inverse( mat2 );
-   const Mat4 ide = inv*mat2 ;
-
-   cout << "mat2 == " << endl
-        << mat2 << endl
+   cout << "mat == " << endl
+        << mat << endl
         << "inv == " << endl
         << inv << endl
         << "ide == " << endl
@@ -1242,19 +1229,35 @@ inline void matrix_tests()
 
 }
 
+inline void MAT_Tests()
+{
+
+   // test de la matriz inversa:
+   const Matriz4f mat1 = MAT_Escalado( 0.5, 0.9, -1.1 )*
+                        MAT_Rotacion( 34.0, 1.0, 2.0, 3.0 )*MAT_Traslacion( 1.5, -2.2, -1.1 )*MAT_Escalado( -1.5, -2.7, 5.0 )*
+                        MAT_Rotacion( -130.0, -3.2, 2.0, -1.0 )*MAT_Traslacion( -0.8, 1.0, -1.7 )*MAT_Escalado( 0.5, 2.0, -1.5 );
+
+   const Matriz4f mt = MAT_Traslacion( 1.0, 2.0, 3.0 ),
+                  mr = MAT_Rotacion( -130.0, -3.2, 2.0, -1.0 ),
+                  me = MAT_Escalado( 2.0, -1.0, 0.7 ) ;
+
+   MAT_TestInv( me*mat1*mt*mr*me );
+
+}
+
 
 // *********************************************************************
 // test function
 
-inline void tests()
+inline void test_vec_mat()
 {
    using namespace std ;
-   cout << "vec_mat::Tests()" << endl ;
-   matrix_tests();
+   cout << "test_vec_mat" << endl ;
+   MAT_Tests();
 }
 
 // *********************************************************************
 
-} // end namespace vec_mat
+} // end namespace figs_gen 
 
-#endif // end of  VECMAT_H
+#endif // end of FIGS_GEN_VEC_MAT_H
