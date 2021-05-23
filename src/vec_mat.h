@@ -1,7 +1,7 @@
 // *********************************************************************
 // **
 // ** Template classes for small vectors and matrices
-// ** Copyright (C) 2014 Carlos Ureña
+// ** Copyright (C) 2014-2021 Carlos Ureña
 // **
 // ** This program is free software: you can redistribute it and/or modify
 // ** it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 namespace vec_mat
 {
     
-// constantes para acceder a las componentes de las tuplas
+// constants used to access vectors' components
 const unsigned
    X = 0,
    Y = 1,
@@ -45,59 +45,54 @@ const unsigned
    G = 1,
    B = 2 ;
 
-// definir alias de 'unsigned int' cuyo descriptor tiene un solo token
+// an alias for 'unsigned int' but with a single token
 typedef unsigned int uint ;
 
 
 // *********************************************************************
-//
-// plantilla de clase: VecTmpl
-// clase para tuplas de valores numéricos (genéricas)
+// class template: VecTmpl
+// a template for classes for small fixed-length vectors with numeric values
 // 
-// parámetros: 
-//    T - tipo de los valores numéricos (float, double, int, unsigned, etc...)
-//    n - número de valores
-//
-// *********************************************************************
+// parameters: 
+//    T - values type (float, double, int, unsigned, etc...)
+//    n - number of values in the vector
+// --------------------------------------------------------------------
 
 template< class T, unsigned n >
 class VecTmpl
 {
    private:
-   T coo[n] ;  // vector de valores escalares
+   T coo[n] ;  // values
 
    public:
-   // constructor por defecto: no hace nada
+   // does nothing
    inline VecTmpl();
 
-   // constructor usando un array C++
+   // build from an array
    inline VecTmpl( const T * org ) ;
 
-   // acceso de lectura/escritura a un elemento (v[i]=x, x=v[i])
-   //T & operator [] (const unsigned i) ;
-
-   // acceso de solo lectura a un elemento ( x=v(i) )
+   // read-only access (usage: x=v(i) )
    const T & operator () (const unsigned i) const ;
 
-   // acceso de lectura-escritura a un elemento ( v(i)=x )
+   // arbitrary read/write access (usage: v(i)=x )
    T & operator () (const unsigned i) ;
 
-   // conversion a un puntero de lectura/escritura de tipo T* ( T* p = tupla )
+   // conversion to a read-write pointer (whose type is T*) (usage: T* p = v)
    operator  T * ()  ;
 
-   // conversion a un puntero de solo lectura de tipo: const  T* ( const T* p = tupla )
+   // conversion to a read-only pointer (whose type is T*) (usage: const T* p = v )
    operator  const T * ()  const ;
 
-   // suma componente a componente ( v1=v2+v3 )
+   // componentwise addition (usage: v1=v2+v3 )
    VecTmpl<T,n> operator + ( const VecTmpl & der ) const ;
 
-   // resta componente a componente ( v1=v2-v3 )
+   // componentwise substraction (usage: v1=v2-v3 )
    VecTmpl<T,n> operator - ( const VecTmpl & der ) const ;
 
-   // devuelve tupla negada ( v1 = -v2 )
+   // componentwise negation (usage: v1 = -v2 )
    VecTmpl<T,n> operator - (  ) const ;
 
-   // mult. por escalar por la derecha ( v1=v2*a )
+   // multiplication by a scalar (usage: v1=v2*a )
    VecTmpl<T,n> operator * ( const T & a ) const ;
 
    // division por escalar ( v1=v2/a )
@@ -127,13 +122,11 @@ inline VecTmpl<T,n> operator *  ( const T & a, const  VecTmpl<T,n> & der ) ;
 template< class T, unsigned n >
 inline std::ostream & operator <<  ( std::ostream & os, const VecTmpl<T,n> & der ) ;
 
-// *********************************************************************
-//
+// ********************************************************************
 // Plantilla de clase: VecTmpl2
 // especialización parcial para tuplas de 2 elementos
 // (define constructores específicos)
-//
-// *********************************************************************
+// --------------------------------------------------------------------
 
 template< class T >
 class VecTmpl2 : public VecTmpl<T,2>
@@ -148,14 +141,11 @@ class VecTmpl2 : public VecTmpl<T,2>
 } ;
 
 
-
 // *********************************************************************
-//
 // Plantilla de clase: VecTmpl3
 // especialización parcial para tuplas de 3 elementos
 // (define constructores específicos)
-//
-// *********************************************************************
+// --------------------------------------------------------------------
 
 template< class T >
 class VecTmpl3 : public VecTmpl<T,3>
@@ -175,12 +165,10 @@ class VecTmpl3 : public VecTmpl<T,3>
 
 
 // *********************************************************************
-//
 // Plantilla de clase: VecTmpl4
 // especialización parcial para tuplas de 4 elementos
 // (define constructores específicos)
-//
-// *********************************************************************
+// --------------------------------------------------------------------
 
 template< class T >
 class VecTmpl4 : public VecTmpl<T,4>
@@ -195,11 +183,9 @@ class VecTmpl4 : public VecTmpl<T,4>
 } ;
 
 // *********************************************************************
-//
 // plantilla de clase: MatrixTemplate
 // clase para matrices cuadradas genéricas
-//
-// *********************************************************************
+// --------------------------------------------------------------------
 
 template< class T, unsigned n >
 class MatrixTemplate
@@ -285,9 +271,10 @@ Mat4 Mat4_Translation( const float d[3] ) ;
 Mat4 Mat4_Translation( const float dx, const float dy , const float dz ) ;
 
 Mat4 Mat4_Scale( const float sx, const float sy, const float sz ) ;
-Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey, const float ez ) ;
-Mat4 Mat4_Rotation( const float ang_gra, const Vec3 & eje ) ;
-Mat4 Mat4_Rows( const Vec3 & fila0, const Vec3 & fila1, const Vec3 & fila2 );
+Mat4 Mat4_Scale( const float s[3] ) ;
+Mat4 Mat4_Rotation( const float ang_deg, const float ax, const float ay, const float az ) ;
+Mat4 Mat4_Rotation( const float ang_deg, const float a[3] ) ;
+Mat4 Mat4_Rows( const Vec3 & row0, const Vec3 & row1, const Vec3 & row2 );
 
 // ---------------------------------------------------------------------
 // matrices auxiliares para la transformación de vista
@@ -356,9 +343,6 @@ class Mat4Stack
          anteriores.pop_back() ;
       }
 } ;
-
-
-
 
 
 
@@ -867,8 +851,8 @@ VecTmpl<T,n-1> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n-1>  & t ) con
 
 
 // *********************************************************************
-// MAT_ functions for various types of matrices typically used in 
-// computer graphics (implementations)
+// MAT_ functions for generating various types of matrices typically 
+// used in computer graphics (implementations)
 // --------------------------------------------------------------------
 
 
@@ -884,7 +868,7 @@ inline Mat4 MAT_Ident(  )
 
 //----------------------------------------------------------------------
 
-inline Mat4 Mat4_Rows( const Vec3 & fila0, const Vec3 & fila1, const Vec3 & fila2 )
+inline Mat4 Mat4_Rows( const Vec3 & row0, const Vec3 & row1, const Vec3 & row2 )
 {
    Mat4 res = MAT_Ident();
 
@@ -906,7 +890,6 @@ inline Mat4 Mat4_Translation( const float vec[3] )
 
    return res ;
 }
-
 // ---------------------------------------------------------------------
 
 inline Mat4 Mat4_Translation( const float dx, const float dy , const float dz )
@@ -931,15 +914,27 @@ inline Mat4 Mat4_Scale( const float sx, const float sy, const float sz )
 
    return res ;
 }
+// ---------------------------------------------------------------------
+
+inline Mat4 Mat4_Scale( const float s[3] )
+{
+   Mat4 res = MAT_Ident();
+
+   res(0,0) = s[0] ;
+   res(1,1) = s[1] ;
+   res(2,2) = s[2] ;
+
+   return res ;
+}
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey , const float ez )
+inline Mat4 Mat4_Rotation( const float ang_deg, const float a[3] )
 {
-   const Vec3 ejen = Vec3(ex,ey,ez).normalized() ;
+   const Vec3 ejen = Vec3(a).normalized() ;
 
    const double
-      ang_rad = double(ang_gra)*double(2.0)*double(M_PI)/double(360.0) ,
+      ang_rad = double(ang_deg)*double(2.0)*double(M_PI)/double(360.0) ,
       c       = cos(ang_rad),
       s       = sin(ang_rad);
 
@@ -959,14 +954,12 @@ inline Mat4 Mat4_Rotation( const float ang_gra, const float ex, const float ey ,
 
    return res ;
 }
-
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Rotation( const float ang_gra, const Vec3 & eje )
+inline Mat4 Mat4_Rotation( const float ang_deg, const float ax, const float ay , const float az )
 {
-   return Mat4_Rotation( ang_gra, eje(0), eje(1), eje(2) );
+   return Mat4_Rotation( ang_deg, { ax, ay, az } );
 }
-
 // ---------------------------------------------------------------------
 
 inline Mat4 Mat4_LookAt( const float origen[3], const float centro[3], const float vup[3] )
