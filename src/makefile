@@ -1,11 +1,27 @@
 .SUFFIXES:
-.PHONY: test
+.SECONDARY:
+.PHONY: x0, test
 
-test: main_exe
-	./$<
+cc_opts=-std=c++11 -Wfatal-errors -I.
+latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-error  --jobname borrar
 
-main_exe : main_test.cpp vec_mat.h makefile
-	g++ -std=c++11 -Wfatal-errors -I. -o main_exe main_test.cpp
+v0: fig00-test.pdf
+	open $<
+
+fig%.pdf: fig%.tex
+	rm -rf borrar.*
+	pdflatex $(latex_opts) $<
+	mv borrar.pdf $@
+	rm -rf borrar.*
+
+fig%.tex : fig%_exe makefile
+	cat header.tex >$@
+	./$< >> $@
+	cat footer.tex >>$@
+
+fig%_exe : fig%.cpp vec_mat.h makefile
+	g++ $(cc_opts) -o $@  $<
+
 
 clean:
-	rm *_exe
+	rm -rf *_exe fig*.tex fig*.pdf borrar.*
