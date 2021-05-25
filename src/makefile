@@ -8,6 +8,9 @@ latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-err
 v0: fig00-test.pdf
 	open $<
 
+v01: fig01-rot2d.pdf
+	open $<
+	
 fig%.pdf: fig%.tex
 	rm -rf borrar.*
 	pdflatex $(latex_opts) $<
