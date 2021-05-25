@@ -1,14 +1,14 @@
-#include <stdio.h>
+
 #include <vec_mat.h>
 
-namespace ttt 
+namespace ttt
 {
    // tests for: https://clang.llvm.org/docs/LanguageExtensions.html#vectors-and-extended-vectors
-   
+
    typedef float float4 __attribute__((ext_vector_type(4)));
    typedef float float2 __attribute__((ext_vector_type(2)));
 
-   float4 foo(float2 a, float2 b) 
+   float4 foo(float2 a, float2 b)
    {
       float4 c;
       c.xz = a;
@@ -33,7 +33,7 @@ namespace ttt
 
 int main( int argc, char * argv[] )
 {
-   using namespace vec_mat ; 
+   using namespace vec_mat ;
    tests() ;
 
    ttt::test();

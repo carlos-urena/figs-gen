@@ -34,7 +34,7 @@
 
 namespace vec_mat
 {
-    
+
 // constants used to access vectors' components
 const unsigned
    X = 0,
@@ -52,8 +52,8 @@ typedef unsigned int uint ;
 // *********************************************************************
 // class template: VecTmpl
 // a template for classes for small fixed-length vectors with numeric values
-// 
-// parameters: 
+//
+// parameters:
 //    T - values type (float, double, int, unsigned, etc...)
 //    n - number of values in the vector
 // --------------------------------------------------------------------
@@ -254,7 +254,7 @@ typedef MatrixTemplate<float,4>  Mat4 ;
 typedef MatrixTemplate<double,4> Mat4d ;
 
 // *********************************************************************
-// MAT_ functions for various types of matrices typically used in 
+// MAT_ functions for various types of matrices typically used in
 // computer graphics (declarations)
 // --------------------------------------------------------------------
 
@@ -266,15 +266,11 @@ void MAT_Tests() ;
 // ---------------------------------------------------------------------
 // creación y operadores de matrices: transformaciones de modelado
 
-Mat4 MAT_Ident( ) ;
-Mat4 Mat4_Translation( const float d[3] ) ;
-Mat4 Mat4_Translation( const float dx, const float dy , const float dz ) ;
-
-Mat4 Mat4_Scale( const float sx, const float sy, const float sz ) ;
-Mat4 Mat4_Scale( const float s[3] ) ;
-Mat4 Mat4_Rotation( const float ang_deg, const float ax, const float ay, const float az ) ;
-Mat4 Mat4_Rotation( const float ang_deg, const float a[3] ) ;
-Mat4 Mat4_Rows( const Vec3 & row0, const Vec3 & row1, const Vec3 & row2 );
+Mat4 MAT_Ident       ( ) ;
+Mat4 Mat4_Translation( const Vec3& d ) ;
+Mat4 Mat4_Scale      ( const Vec3& s ) ;
+Mat4 Mat4_Rotation   ( const float ang_deg, const Vec3& a ) ;
+Mat4 Mat4_Rows       ( const Vec3 & row0, const Vec3 & row1, const Vec3 & row2 );
 
 // ---------------------------------------------------------------------
 // matrices auxiliares para la transformación de vista
@@ -297,7 +293,7 @@ Mat4 Mat4_View_inv     ( const Vec3 eje[3], const Vec3& org );
 Mat4 Mat4_Viewport      ( int org_x, int org_y, int ancho, int alto );
 Mat4 Mat4_Viewport_inv  ( int org_x, int org_y, int ancho, int alto );
 
-// ---------------------------------------------------------------------  
+// ---------------------------------------------------------------------
 // matrices para la transf. de proyección
 
 Mat4 Mat4_Frustum    ( const float l, const float r, const float b, const float t, const float n, const float f );
@@ -357,12 +353,12 @@ class Mat4Stack
 template< class T, unsigned n> inline
 VecTmpl<T,n>::VecTmpl()
 {
-   
-} 
+
+}
 
 // constructor usando un array C++
-template< class T, unsigned n> inline 
-VecTmpl<T,n>::VecTmpl( const T * org ) 
+template< class T, unsigned n> inline
+VecTmpl<T,n>::VecTmpl( const T * org )
 {
    for( unsigned i = 0 ; i < n ; i++ )
       (*this)[i] = org[i] ;
@@ -389,7 +385,7 @@ const T & VecTmpl<T,n>::operator () (const unsigned i) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-T & VecTmpl<T,n>::operator () (const unsigned i) 
+T & VecTmpl<T,n>::operator () (const unsigned i)
 {
    assert( i < n ) ;
    return coo[i] ;
@@ -398,8 +394,8 @@ T & VecTmpl<T,n>::operator () (const unsigned i)
 //----------------------------------------------------------------------
 // conversion a un puntero de lectura/escritura de tipo: T* ( T* p = tupla )
 
-template< class T, unsigned n > inline 
-VecTmpl<T,n>::operator  T * () 
+template< class T, unsigned n > inline
+VecTmpl<T,n>::operator  T * ()
 {
    return coo ;
 }
@@ -407,15 +403,15 @@ VecTmpl<T,n>::operator  T * ()
 //----------------------------------------------------------------------
 // conversion a un puntero de solo lectura de tipo T* ( const T* p = tupla )
 
-template< class T, unsigned n > inline 
-VecTmpl<T,n>::operator  const T * () const 
+template< class T, unsigned n > inline
+VecTmpl<T,n>::operator  const T * () const
 {
    return coo ;
 }
 
 //----------------------------------------------------------------------
 
-template< class T, unsigned n > inline 
+template< class T, unsigned n > inline
 VecTmpl<T,n> VecTmpl<T,n>::operator + ( const VecTmpl<T,n> & der ) const
 {
    VecTmpl<T,n> res ;
@@ -426,7 +422,7 @@ VecTmpl<T,n> VecTmpl<T,n>::operator + ( const VecTmpl<T,n> & der ) const
 
 //----------------------------------------------------------------------
 
-template< class T, unsigned n > inline 
+template< class T, unsigned n > inline
 VecTmpl<T,n> VecTmpl<T,n>::operator - ( const VecTmpl<T,n> & der ) const
 {
    VecTmpl<T,n> res ;
@@ -439,19 +435,19 @@ VecTmpl<T,n> VecTmpl<T,n>::operator - ( const VecTmpl<T,n> & der ) const
 
 // devuelve tupla negada ( v1 = -v2 )
 template< class T, unsigned n > inline
-VecTmpl<T,n> VecTmpl<T,n>::operator - (  ) const 
+VecTmpl<T,n> VecTmpl<T,n>::operator - (  ) const
 {
    VecTmpl<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
       res[i] = -(*this)(i) ;
    return res ;
-   
+
 }
 
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-VecTmpl<T,n> VecTmpl<T,n>::operator * ( const T & a ) const 
+VecTmpl<T,n> VecTmpl<T,n>::operator * ( const T & a ) const
 {
    VecTmpl<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
@@ -462,7 +458,7 @@ VecTmpl<T,n> VecTmpl<T,n>::operator * ( const T & a ) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n >  inline
-VecTmpl<T,n> VecTmpl<T,n>::operator / ( const T & a ) const 
+VecTmpl<T,n> VecTmpl<T,n>::operator / ( const T & a ) const
 {
    VecTmpl<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
@@ -473,7 +469,7 @@ VecTmpl<T,n> VecTmpl<T,n>::operator / ( const T & a ) const
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-VecTmpl<T,n> operator * ( const T & a, const VecTmpl<T,n> & der )  
+VecTmpl<T,n> operator * ( const T & a, const VecTmpl<T,n> & der )
 {
    VecTmpl<T,n> res ;
    for( unsigned i = 0 ; i < n ; i++ )
@@ -484,23 +480,23 @@ VecTmpl<T,n> operator * ( const T & a, const VecTmpl<T,n> & der )
 //----------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-std::ostream & operator <<  ( std::ostream & os, const VecTmpl<T,n> & der ) 
+std::ostream & operator <<  ( std::ostream & os, const VecTmpl<T,n> & der )
 {
    os << "(" ;
    for( unsigned i = 0 ; i < n ; i++ )
    {  os << der(i) ;
-      if ( i+1 < n ) 
+      if ( i+1 < n )
          os << "," ;
    }
    os << ")" ;
-   return os ;   
+   return os ;
 }
 
 //----------------------------------------------------------------------
 
 // producto escalar (dot)  a = v1.dot(v2)
 template< class T, unsigned n > inline
-T VecTmpl<T,n>::dot( const VecTmpl<T,n> & v2 ) const 
+T VecTmpl<T,n>::dot( const VecTmpl<T,n> & v2 ) const
 {
    double res = 0.0 ;
    for( unsigned int i = 0 ; i < n ; i++ )
@@ -512,7 +508,7 @@ T VecTmpl<T,n>::dot( const VecTmpl<T,n> & v2 ) const
 
 // obtener longitud al cuadrado
 template< class T, unsigned n > inline
-T VecTmpl<T,n>::lengthSq( ) const 
+T VecTmpl<T,n>::lengthSq( ) const
 {
    return T( this->dot( *this ) ) ;
 }
@@ -521,7 +517,7 @@ T VecTmpl<T,n>::lengthSq( ) const
 // operador binario para producto escalar
 
 template< class T, unsigned n > inline
-T VecTmpl<T,n>::operator | ( const VecTmpl & der ) const 
+T VecTmpl<T,n>::operator | ( const VecTmpl & der ) const
 {
    return this->dot( der ) ;
 }
@@ -529,21 +525,21 @@ T VecTmpl<T,n>::operator | ( const VecTmpl & der ) const
 // ---------------------------------------------------------------------
 
 template< class T, unsigned n > inline
-VecTmpl<T,n> VecTmpl<T,n>::normalized() const 
+VecTmpl<T,n> VecTmpl<T,n>::normalized() const
 {
    T lenSq = T(0.0) ;
    for( unsigned i = 0 ; i < n ; i++ )
       lenSq += (*this)(i) * (*this)(i) ;
-   
+
    if ( ! ( lenSq > 0.0 ) )
    {  using namespace std ;
       cout << "lenSq == " << lenSq << endl << flush ;
    }
-   
+
    assert( lenSq > 0.0 ) ;
-   
+
    return (*this)*(T(1.0/sqrt(double(lenSq)))) ;
-   
+
 }
 
 // *********************************************************************
@@ -553,7 +549,7 @@ VecTmpl<T,n> VecTmpl<T,n>::normalized() const
 // *********************************************************************
 
 template< class T > inline
-VecTmpl2<T>::VecTmpl2(  ) 
+VecTmpl2<T>::VecTmpl2(  )
 {
 
 }
@@ -570,7 +566,7 @@ VecTmpl2<T>::VecTmpl2( const VecTmpl<T,2> & ini )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl2<T>::operator = ( const VecTmpl<T,2> & der ) 
+void VecTmpl2<T>::operator = ( const VecTmpl<T,2> & der )
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -579,7 +575,7 @@ void VecTmpl2<T>::operator = ( const VecTmpl<T,2> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl2<T>::VecTmpl2( const T & c0, const T & c1 ) 
+VecTmpl2<T>::VecTmpl2( const T & c0, const T & c1 )
 {
    (*this)[0] = c0 ;
    (*this)[1] = c1 ;
@@ -593,7 +589,7 @@ VecTmpl2<T>::VecTmpl2( const T & c0, const T & c1 )
 // *********************************************************************
 
 template< class T > inline
-VecTmpl3<T>::VecTmpl3(  ) 
+VecTmpl3<T>::VecTmpl3(  )
 {
 
 }
@@ -611,7 +607,7 @@ VecTmpl3<T>::VecTmpl3( const VecTmpl<T,3> & ini )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl3<T>::operator = ( const VecTmpl<T,3> & der ) 
+void VecTmpl3<T>::operator = ( const VecTmpl<T,3> & der )
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -621,7 +617,7 @@ void VecTmpl3<T>::operator = ( const VecTmpl<T,3> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl3<T>::operator = ( const VecTmpl<T,4> & der ) 
+void VecTmpl3<T>::operator = ( const VecTmpl<T,4> & der )
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -631,7 +627,7 @@ void VecTmpl3<T>::operator = ( const VecTmpl<T,4> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl3<T>::VecTmpl3( const T & c0, const T & c1, const T & c2 ) 
+VecTmpl3<T>::VecTmpl3( const T & c0, const T & c1, const T & c2 )
 {
    (*this)[0] = c0 ;
    (*this)[1] = c1 ;
@@ -642,13 +638,13 @@ VecTmpl3<T>::VecTmpl3( const T & c0, const T & c1, const T & c2 )
 
 
 template< class T > inline
-VecTmpl3<T> VecTmpl3<T>::cross( const VecTmpl3<T> & v2 ) const 
+VecTmpl3<T> VecTmpl3<T>::cross( const VecTmpl3<T> & v2 ) const
 {
    // cuidado: no hay acceso a 'coo' tal cual, mirar:
    // http://stackoverflow.com/questions/7281072/accessing-public-members-of-base-class-fails
-   
+
    return VecTmpl3<T>(  (*this)(1)*v2(2) -  (*this)(2)*v2(1),
-                       (*this)(2)*v2(0) -  (*this)(0)*v2(2), 
+                       (*this)(2)*v2(0) -  (*this)(0)*v2(2),
                        (*this)(0)*v2(1) -  (*this)(1)*v2(0)
                      );
 }
@@ -661,7 +657,7 @@ VecTmpl3<T> VecTmpl3<T>::cross( const VecTmpl3<T> & v2 ) const
 // *********************************************************************
 
 template< class T > inline
-VecTmpl4<T>::VecTmpl4(  ) 
+VecTmpl4<T>::VecTmpl4(  )
 {
 
 }
@@ -680,7 +676,7 @@ VecTmpl4<T>::VecTmpl4( const VecTmpl<T,4> & ini )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-void VecTmpl4<T>::operator = ( const VecTmpl<T,4> & der ) 
+void VecTmpl4<T>::operator = ( const VecTmpl<T,4> & der )
 {
    (*this)[0] = der(0) ;
    (*this)[1] = der(1) ;
@@ -691,7 +687,7 @@ void VecTmpl4<T>::operator = ( const VecTmpl<T,4> & der )
 // ---------------------------------------------------------------------
 
 template< class T > inline
-VecTmpl4<T>::VecTmpl4( const T& c0, const T& c1, const T& c2, const T& c3 ) 
+VecTmpl4<T>::VecTmpl4( const T& c0, const T& c1, const T& c2, const T& c3 )
 {
    (*this)[0] = c0 ;
    (*this)[1] = c1 ;
@@ -851,7 +847,7 @@ VecTmpl<T,n-1> MatrixTemplate<T,n>::operator * ( const VecTmpl<T,n-1>  & t ) con
 
 
 // *********************************************************************
-// MAT_ functions for generating various types of matrices typically 
+// MAT_ functions for generating various types of matrices typically
 // used in computer graphics (implementations)
 // --------------------------------------------------------------------
 
@@ -873,65 +869,42 @@ inline Mat4 Mat4_Rows( const Vec3 & row0, const Vec3 & row1, const Vec3 & row2 )
    Mat4 res = MAT_Ident();
 
    for( unsigned col = 0 ; col < 3 ; col++ )
-   {  res(0,col) = fila0(col) ;
-      res(1,col) = fila1(col) ;
-      res(2,col) = fila2(col) ;
+   {  res(0,col) = row0(col) ;
+      res(1,col) = row1(col) ;
+      res(2,col) = row2(col) ;
    }
    return res ;
 }
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Translation( const float vec[3] )
+inline Mat4 Mat4_Translation( const Vec3& d )
 {
    Mat4 res = MAT_Ident();
 
-   for( unsigned fil = 0 ; fil < 3 ; fil++ )
-      res(fil,3) = vec[fil] ;
+   res(0,3) = d(0) ;
+   res(1,3) = d(1) ;
+   res(2,3) = d(2) ;
 
    return res ;
 }
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Translation( const float dx, const float dy , const float dz )
+inline Mat4 Mat4_Scale( const Vec3& s )
 {
    Mat4 res = MAT_Ident();
 
-   res(0,3) = dx ;
-   res(1,3) = dy ;
-   res(2,3) = dz ;
-
-   return res ;
-}
-// ---------------------------------------------------------------------
-
-inline Mat4 Mat4_Scale( const float sx, const float sy, const float sz )
-{
-   Mat4 res = MAT_Ident();
-
-   res(0,0) = sx ;
-   res(1,1) = sy ;
-   res(2,2) = sz ;
-
-   return res ;
-}
-// ---------------------------------------------------------------------
-
-inline Mat4 Mat4_Scale( const float s[3] )
-{
-   Mat4 res = MAT_Ident();
-
-   res(0,0) = s[0] ;
-   res(1,1) = s[1] ;
-   res(2,2) = s[2] ;
+   res(0,0) = s(0) ;
+   res(1,1) = s(1) ;
+   res(2,2) = s(2) ;
 
    return res ;
 }
 
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Rotation( const float ang_deg, const float a[3] )
+inline Mat4 Mat4_Rotation( const float ang_deg, const Vec3 &a )
 {
-   const Vec3 ejen = Vec3(a).normalized() ;
+   const Vec3 ejen = a.normalized() ;
 
    const double
       ang_rad = double(ang_deg)*double(2.0)*double(M_PI)/double(360.0) ,
@@ -956,28 +929,23 @@ inline Mat4 Mat4_Rotation( const float ang_deg, const float a[3] )
 }
 // ---------------------------------------------------------------------
 
-inline Mat4 Mat4_Rotation( const float ang_deg, const float ax, const float ay , const float az )
-{
-   return Mat4_Rotation( ang_deg, { ax, ay, az } );
-}
-// ---------------------------------------------------------------------
-
-inline Mat4 Mat4_LookAt( const float origen[3], const float centro[3], const float vup[3] )
+inline Mat4 Mat4_LookAt( const Vec3& origin, const Vec3& center, const Vec3& vup )
 {
    Vec3
-      eje[3] ; // array con los tres vectores de los ejes del S.R. de la cámara
+      axis[3] ; // array con los tres vectores de los ejes del S.R. de la cámara
 
-   eje[Z] = ( Vec3(origen) - Vec3(centro) ).normalized() ; // eje Z desde el p.a. hacia el obs., normalizado
-   eje[X] = ( Vec3(vup).cross( eje[Z] )).normalized(),  // eje Z apunta en la dir. contraria a la camara
-   eje[Y] = eje[Z].cross( eje[X] );                     // eje Y perpendicular a los otros dos.
+   axis[Z] = ( origin - center ).normalized() ; // eje Z desde el p.a. hacia el obs., normalizado
+   axis[X] = vup.cross( axis[Z] ).normalized(),  // eje Z apunta en la dir. contraria a la camara
+   axis[Y] = axis[Z].cross( axis[X] );                     // eje Y perpendicular a los otros dos.
 
    Mat4
-      trasl = Mat4_Translation( -origen[X], -origen[Y], -origen[Z] ),
+      trasl = Mat4_Translation( -origin ),
       rot   = MAT_Ident() ; // matriz de cambio de base mundo --> camara
 
+   // use Mat4_Rows or Mat4_Columns instead ??
    for( unsigned col = X ; col <= Z ; col++ )
    for( unsigned fil = X ; fil <= Z ; fil++ )
-      rot(fil,col) = eje[fil](col) ;
+      rot(fil,col) = axis[fil](col) ;
 
    return rot * trasl ;
 }
@@ -1107,20 +1075,20 @@ inline Mat4 Mat4_Columns( const Vec3 colum[3] )
 
 inline Mat4 Mat4_Viewport( int org_x, int org_y, int ancho, int alto )
 {
-   return Mat4_Translation( float(org_x), float(org_y), 0.0 )*
-          Mat4_Scale( float(ancho), float(alto), 1.0 )*
-          Mat4_Scale( 0.5, 0.5, 1.0 )*
-          Mat4_Translation( 1.0, 1.0, 1.0 ) ;
+   return Mat4_Translation( { float(org_x), float(org_y), 0.0 } )*
+          Mat4_Scale( { float(ancho), float(alto), 1.0 } )*
+          Mat4_Scale( { 0.5, 0.5, 1.0 })*
+          Mat4_Translation( {1.0, 1.0, 1.0 } ) ;
 }
 // ---------------------------------------------------------------------
 // matriz inversa de la matriz del viewport
 
 inline Mat4 Mat4_Viewport_inv( int org_x, int org_y, int ancho, int alto )
 {
-   return Mat4_Translation( -1.0, -1.0, -1.0 ) *
-          Mat4_Scale( 2.0, 2.0, 1.0 )*
-          Mat4_Scale( 1.0/float(ancho), 1.0/float(alto), 1.0 )*
-          Mat4_Translation( -float(org_x), -float(org_y), 0.0 ) ;
+   return Mat4_Translation( { -1.0, -1.0, -1.0 } ) *
+          Mat4_Scale( { 2.0, 2.0, 1.0 } )*
+          Mat4_Scale( { 1.0/float(ancho), 1.0/float(alto), 1.0 } )*
+          Mat4_Translation( {-float(org_x), -float(org_y), 0.0 } ) ;
 }
 
 // ---------------------------------------------------------------------
@@ -1209,13 +1177,13 @@ inline void matrix_tests()
    using namespace std ;
 
    // test de la matriz inversa:
-   const Mat4 
-      mat1 = Mat4_Scale( 0.5, 0.9, -1.1 )*
-             Mat4_Rotation( 34.0, 1.0, 2.0, 3.0 )*Mat4_Translation( 1.5, -2.2, -1.1 )*Mat4_Scale( -1.5, -2.7, 5.0 )*
-             Mat4_Rotation( -130.0, -3.2, 2.0, -1.0 )*Mat4_Translation( -0.8, 1.0, -1.7 )*Mat4_Scale( 0.5, 2.0, -1.5 ),
-      mt   = Mat4_Translation( 1.0, 2.0, 3.0 ),
-      mr   = Mat4_Rotation( -130.0, -3.2, 2.0, -1.0 ),
-      me   = Mat4_Scale( 2.0, -1.0, 0.7 ) ;
+   const Mat4
+      mat1 = Mat4_Scale( {0.5, 0.9, -1.1} )*
+             Mat4_Rotation( 34.0, {1.0, 2.0, 3.0} )*Mat4_Translation( {1.5, -2.2, -1.1} )*Mat4_Scale( {-1.5, -2.7, 5.0} )*
+             Mat4_Rotation( -130.0, {-3.2, 2.0, -1.0} )*Mat4_Translation( {-0.8, 1.0, -1.7} )*Mat4_Scale( {0.5, 2.0, -1.5} ),
+      mt   = Mat4_Translation( {1.0, 2.0, 3.0} ),
+      mr   = Mat4_Rotation( -130.0, {-3.2, 2.0, -1.0} ),
+      me   = Mat4_Scale( {2.0, -1.0, 0.7}  ) ;
 
    // test for the inverse matrix
    const Mat4 mat2 = me*mat1*mt*mr*me ;
