@@ -5,6 +5,8 @@
 cc_opts=-std=c++11 -Wfatal-errors -I.
 latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-error  --jobname borrar
 
+v2: fig02-perp2d.pdf
+	open -a skim $<
 
 v1: fig01-rot2d.pdf
 	open -a skim $<
@@ -12,7 +14,7 @@ v1: fig01-rot2d.pdf
 v0: fig00-test.pdf
 	open -a skim $<
 
-fig%.pdf: fig%.tex
+fig%.pdf: fig%.tex header.tex footer.tex
 	rm -rf borrar.*
 	pdflatex $(latex_opts) $<
 	mv borrar.pdf $@

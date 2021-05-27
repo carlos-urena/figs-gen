@@ -9,66 +9,45 @@ using namespace vec_mat ;
 int main( int argc, char *argv[] )
 {
    
+   const Vec2 
+      u           = { 3.2, 1.4 } ,
+      v           = { -u(Y), u(X) } ;
    const float 
-      radius      = 3.0 ,
-      arc_radius  = 1.2 ,
-      theta_deg   = 40 ,
-      u_angle_deg = 15.0 ,
-      theta_rad   = theta_deg*M_PI/180.0,
-      radius_u    = radius*std::cos( theta_rad ),
-      radius_v    = radius*std::sin( theta_rad ) ;
-   
-               
+      u_radius     = sqrt(u.lengthSq()) ,
+      u_angle_deg  = atan2( u(Y), u(X) )*180.0/M_PI ;
+
    const Vec2  
-      pmin    = { -radius/3.0, -radius/3.0 },
-      pmax    = {  radius+1.0,  radius+1.0 } ;
+      grid_pmin    = { -u(Y), 0.0 },
+      grid_pmax    = { u(X), u(X) } ;
    
-
-
    cout
       << "\\begin{tikzpicture}" << endl
-      << "%%\\draw[very thin,color=gray!20,step=0.25]"  << endl
-      << "%%     " << pmin << " grid " << pmax << " ;" << endl
-      << "\\draw[color=gray,line width=0.2mm] " << endl 
-      << "       +(" << u_angle_deg << ":"<< radius << ") " << endl 
-      << "       arc[start angle=" << u_angle_deg << ", end angle=" << u_angle_deg+90.0 << ", radius=" << radius << "] ;" << endl 
-      << "\\draw[color=gray,dotted,line width=0.2mm] " << endl 
-      << "       ("<< u_angle_deg << ":" << radius_u << ") " << endl 
-      << "       -- (" << u_angle_deg+theta_deg << ":" << radius << ") ;" << endl 
-      << "\\draw[color=gray,dotted,line width=0.2mm] " << endl 
-      << "       ("<< (u_angle_deg+90.0) << ":" << radius_v << ") " << endl 
-      << "       -- (" << u_angle_deg+theta_deg << ":" << radius << ") ;" << endl 
-      << "\\fill[fill opacity=0.2,fill=blue] " << endl 
-      << "       (0,0) " << endl 
-      << "       -- +(" << u_angle_deg << ":" << arc_radius << ") arc[start angle=" << u_angle_deg << ", end angle=" << u_angle_deg+theta_deg << ", radius=" << arc_radius <<"]" << endl 
-      << "       -- cycle ; " << endl 
-      << "\\draw[color=blue,line width=0.1mm] " << endl 
-      << "       +(" << u_angle_deg << ":"<< arc_radius << ") " << endl 
-      << "       arc[start angle=" << u_angle_deg << ", end angle=" << u_angle_deg+theta_deg << ", radius=" << arc_radius << "] ;" << endl 
-      << "\\path " << endl 
-      << "       +("<< u_angle_deg + theta_deg/2.0 << ":" << arc_radius*0.7 << ") " << endl 
-      << "       node[anchor=center] {$\\theta$} ;" << endl
+      << "\\draw[very thin,color=gray!30,step=0.2]"  << endl
+      << "     " << grid_pmin << " grid " << grid_pmax << " ;" << endl
+      << "\\draw[->,>=latex,color=red,line width=0.2mm] " << endl 
+      << "      (0,0) -- (2,0)" << endl 
+      << "      node[below,anchor=north] {$\\vux$} ;" << endl
+      << "\\draw[->,>=latex,color=red,line width=0.2mm] " << endl 
+      << "      (0,0) -- (0,2) " << endl
+      << "      node[right, anchor=west] {$\\vuy$} ;" << endl
+      << "\\draw[line width=0.2mm,color=blue]" << endl 
+      << "      " << 0.2f*u << " -- " << 0.2f*(u+v) << " -- " << 0.2f*v << " ;" << endl 
+      << "\\fill[fill=blue,opacity=0.1] " << endl 
+      << "      (0,0) -- ("<< u(X) << ",0) -- " << u << " -- cycle ;" << endl 
+      << "\\fill[fill=blue,opacity=0.1] " << endl 
+      << "      (0,0) -- ( 0, "<< u(X) << ") -- " << v << " -- cycle ;" << endl 
+      << "\\draw[color=gray!20,line width=0.2mm] " << endl 
+      << "       +(" << u_angle_deg << ":"<< u_radius << ") " << endl 
+      << "       arc[start angle=" << u_angle_deg << ", end angle=" << u_angle_deg+90.0 << ", radius=" << u_radius << "] ;" << endl 
       << "\\draw[->,>=latex,color=blue,line width=0.4mm] " << endl 
       << "      (0,0) " << endl 
-      << "      -- +("<< u_angle_deg << ":" << radius << ") " << endl 
-      << "      node[right] {$\\flu$} ;" << endl
+      << "      -- ("<< u(X) << "," << u(Y) << ") " << endl 
+      << "      node[right] {$\\flu\\,=\\,a\\vux\\,+\\,b\\vuy$} ;" << endl
       << "\\draw[->,>=latex,color=blue,line width=0.4mm] " << endl 
       << "      (0,0) " << endl 
-      << "      --  +("<< (u_angle_deg+90.0) << ":" << radius << ")" << endl 
-      << "      node[right, anchor=east] {$\\flv\\,=\\,P(\\flu)$} ;" << endl
-      << "\\draw[->,>=latex,color=black,line width=0.4mm] " << endl 
-      << "      (0,0) " << endl 
-      << "      --  +("<< (u_angle_deg+theta_deg) << ":" << radius << ")" << endl 
-      << "      node[anchor=south west] {$\\flw\\,=\\,(\\cos\\theta)\\flu\\,+\\,(\\sin\\theta)\\flv$} ;" << endl
-      << "\\draw[->,>=latex,color=red,line width=0.2mm] " << endl 
-      << "      (0,0) " << endl 
-      << "       --  +("<< u_angle_deg << ":" << radius_u << ") " << endl 
-      << "      node[midway, anchor=north] {$(\\cos\\theta)\\flu$} ;" << endl
-      << "\\draw[->,>=latex,color=red,line width=0.2mm] " << endl 
-      << "      (0,0) " << endl 
-      << "       --  +("<< (u_angle_deg+90.0) << ":" << radius_v << ") " << endl 
-      << "      node[midway, anchor=east] {$(\\sin\\theta)\\flv$} ;" << endl
-     
+      << "      -- ("<< -u(Y) << "," << u(X) << ") " << endl 
+      << "      node[above, anchor=south west] {$\\,P(\\flu)\\,=\\,-b\\vux\\,+\\,a\\vuy$} ;" << endl
+      
       << "\\end{tikzpicture}" << endl
       << endl ;
 }
