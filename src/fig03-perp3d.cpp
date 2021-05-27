@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vec_mat.h>
 
+using namespace std ;
+using namespace vec_mat ;
+
 
 int main( int argc, char *argv[] )
 {
@@ -11,7 +14,7 @@ int main( int argc, char *argv[] )
    cout 
       << "\\documentclass[border=1mm]{standalone}" << endl 
       << "\\input{header.tex}" << endl ;
-   
+
    const Vec2 
       u           = { 3.2, 1.4 } ,
       v           = { -u(Y), u(X) } ;

@@ -2,13 +2,17 @@
 #include <iostream>
 #include <vec_mat.h>
 
-using namespace std ;
-using namespace vec_mat ;
 
 
 int main( int argc, char *argv[] )
 {
-   
+   using namespace std ;
+   using namespace vec_mat ;
+
+   cout 
+      << "\\documentclass[border=1mm]{standalone}" << endl 
+      << "\\input{header.tex}" << endl ;
+
    const float 
       radius      = 3.0 ,
       arc_radius  = 1.2 ,

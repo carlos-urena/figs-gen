@@ -1,4 +1,4 @@
-\documentclass[border=1mm]{standalone}
+
 
 
 \usepackage[utf8]{inputenc}
@@ -178,7 +178,904 @@
 \newcommand{\trotay}[1]{\trgen{\optrotaeje_{\mbox{$y$}}}{#1}}
 \newcommand{\trotaz}[1]{\trgen{\optrotaeje_{\mbox{$z$}}}{#1}}
 
-\input{include-tikz.tex}
+%% ---- include-tikz begin 
+%%----------------------------------------------------------------------
+
+
+\newcommand{\tikzisometrico}{%
+  \tikzset{isometricXYZ/.style={x={(0.7cm,-0.45cm)},%
+                                y={(0.0cm,0.8cm)},%
+                                z={(-0.7cm,-0.45cm)}}}
+}
+
+%%----------------------------------------------------------------------
+
+
+\newcommand{\ejes}[2]{%
+   %% #1 == longitud de los versores
+   %% #2 == longitud de las líneas que prolongan los versores
+   \begin{scope}[->, >=latex, color=black, line width=0.4mm]
+      \draw (0,0,0) -- ({#1},0,0) ;
+      \draw (0,0,0) -- (0,{#1},0) ;
+      \draw (0,0,0) -- (0,0,{#1}) ;
+   \end{scope}
+   \begin{scope}[color=black, line width=0.1mm]
+      \draw (0,0,0) -- ({#2},0,0)  ;
+      \draw (0,0,0) -- (0,{#2},0)  ;
+      \draw (0,0,0) -- (0,0,{#2})  ;
+   \end{scope}
+}
+
+
+
+%%----------------------------------------------------------------------
+
+\newcommand{\ejesvi}[2]{%
+   %% #1 == longitud de los versores
+   %% #2 == longitud de las líneas que prolongan los versores
+
+   \begin{scope}[color=black, line width=0.1mm]
+      \draw (0,0,0) -- ({#2},0,0) node[right=1mm] {$X+$} ;
+      \draw (0,0,0) -- (0,{#2},0) node[above=1mm] {$Y+$} ;
+      \draw (0,0,0) -- (0,0,{#2}) node[left=1mm]  {$Z+$} ;
+   \end{scope}
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\ejesvii}[2]{%
+   %% #1 == longitud de los versores
+   %% #2 == longitud de las líneas que prolongan los versores
+   \begin{scope}[->, >=latex, color=black, line width=0.4mm]
+      \draw (0,0,0) -- ({#1},0,0) ;
+      \draw (0,0,0) -- (0,{#1},0) ;
+      \draw (0,0,0) -- (0,0,{#1}) ;
+   \end{scope}
+   \begin{scope}[color=black, line width=0.1mm]
+      \draw (0,0,0) -- ({#2},0,0)  ;
+      \draw (0,0,0) -- (0,{#2},0)  ;
+      \draw (0,0,0) -- (0,0,{#2})  ;
+   \end{scope}
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\ejesviii}[2]{%
+   %% #1 == longitud de los versores
+   %% #2 == longitud de las líneas que prolongan los versores
+   \begin{scope}[->, >=latex, color=black!50, line width=0.3mm]
+      \draw (0,0,0) -- ({#1},0,0) ;
+      \draw (0,0,0) -- (0,{#1},0) ;
+      \draw (0,0,0) -- (0,0,{#1}) ;
+   \end{scope}
+   \begin{scope}[color=black, line width=0.1mm]
+      \draw (0,0,0) -- ({#2},0,0)  ;
+      \draw (0,0,0) -- (0,{#2},0)  ;
+      \draw (0,0,0) -- (0,0,{#2})  ;
+   \end{scope}
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\gridtresdxy}[1]{%
+   \foreach \cx in {0.0,0.2,0.4,...,#1}
+         \draw (\cx,0,0) -- (\cx,#1,0) ;
+   \foreach \cy in {0.0,0.2,0.4,...,#1}
+         \draw (0,\cy,0) -- (#1,\cy,0) ;
+}
+
+\newcommand{\gridtresdxz}[1]{%
+   %% xz
+   \foreach \cx in {0.0,0.2,0.4,...,#1}
+         \draw (\cx,0,0) -- (\cx,0,#1) ;
+   \foreach \cz in {0.0,0.2,0.4,...,#1}
+         \draw (0,0,\cz) -- (#1,0,\cz) ;
+}
+
+\newcommand{\gridtresdyz}[1]{%
+   %% zy
+   \foreach \cz in {0.0,0.2,0.4,...,#1}
+         \draw (0,0,\cz) -- (0,#1,\cz) ;
+   \foreach \cy in {0.0,0.2,0.4,...,#1}
+         \draw (0,\cy,0) -- (0,\cy,#1) ;
+}
+
+\newcommand{\gridtresd}[1]{%
+  \begin{scope}[color=black!10, line width=0.06mm]
+     \gridtresdxy{#1}
+     \gridtresdxz{#1}
+	 \gridtresdyz{#1}
+   \end{scope}%
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\ejesviv}[1]{%
+   %% #1 == longitud de las líneas que prolongan los versores
+   %% grid xy
+   \gridtresd{#1}
+   \begin{scope}[color=black, line width=0.1mm]
+      \draw (0,0,0) -- ({#1},0,0)  ;
+      \draw (0,0,0) -- (0,{#1},0)  ;
+      \draw (0,0,0) -- (0,0,{#1})  ;
+   \end{scope}
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\circuloz}[2]{%
+  %% #1 == radio del circulo
+  %% #2 == z del circulo
+  %%
+
+  %% circulo (ver pág 390 del manual)
+  \draw [line width=0.1mm,color=red] ({#1},0,{#2})
+  \foreach \ang in {2,4,...,358}
+  {
+     -- ({#1 * cos(\ang )},{#1 * sin(\ang)},{#2})
+  }
+   -- cycle ;
+   %% arco
+  \draw [->,>=latex, line width=0.5mm,color=red] ({#1*cos(26)},{#1*sin(26)},{#2})
+  \foreach \ang in {28,30,...,120}
+  {
+     -- ({#1 * cos(\ang )},{#1 * sin(\ang)},{#2})
+  }
+    ;
+}
+
+
+%%----------------------------------------------------------------------
+
+\newcommand{\circulox}[2]{%
+  %% #1 == radio del circulo
+  %% #2 == x del circulo
+
+  %% circulo (ver pág 390 del manual)
+  \draw [line width=0.1mm,color=red] ({#2},{#1},0)
+  \foreach \ang in {2,4,...,358}
+  {
+     -- ({#2},{#1 * cos(\ang )},{#1 * sin(\ang)})
+  }
+   -- cycle ;
+
+   %% arco
+  \draw [->,>=latex,line width=0.5mm,color=red] ({#2},{#1*cos(26)},{#1*sin(26)})
+  \foreach \ang in {28,30,...,120}
+  {
+     -- ({#2},{#1 * cos(\ang )},{#1 * sin(\ang)})
+  }
+    ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\arcopz}[2]{%
+  %% #1 == radio
+  %% #2 == angulo final (inicial =0)
+
+  %% relleno(ver pág 390 del manual)
+  \fill [color=red,opacity=.2]
+     (0,0,0)
+     \foreach \ang in {0,2,4,...,#2}
+     { -- ({#1 * cos(\ang)},{#1 * sin(\ang )},0)
+     }
+     -- cycle ;
+  %% flecha
+  \draw [->,>=latex,line width=0.5mm,color=red]
+     (#1,0,0)
+     \foreach \ang in {2,4,6,...,#2}
+     { -- ({#1 * cos(\ang)},{#1 * sin(\ang )},0)
+     }
+     ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\arcopx}[2]{%
+  %% #1 == radio
+  %% #2 == angulo final (inicial =0)
+
+  %% relleno(ver pág 390 del manual)
+  \fill [color=red,opacity=.2]
+     (0,0,0)
+     \foreach \ang in {0,2,4,...,#2}
+     { -- (0,{#1 * cos(\ang)},{#1 * sin(\ang )})
+     }
+     -- cycle ;
+  %% flecha
+  \draw [->,>=latex,line width=0.5mm,color=red]
+     (0,#1,0)
+     \foreach \ang in {2,4,6,...,#2}
+     { -- (0,{#1 * cos(\ang)},{#1 * sin(\ang )})
+     }
+     ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\circuloy}[2]{%
+  %% #1 == radio del circulo
+  %% #2 == y del circulo
+
+  %% circulo (ver pág 390 del manual)
+  \draw [line width=0.1mm,color=red] (0,{#2},{#1})
+  \foreach \ang in {2,4,...,358}
+  {
+     -- ({#1 * sin(\ang)},{#2},{#1 * cos(\ang )})
+  }
+   -- cycle ;
+
+   %% arco
+  \draw [->,>=latex,line width=0.5mm,color=red] ({#1*sin(26)},{#2},{#1*cos(26)})
+  \foreach \ang in {28,30,...,120}
+  {
+     -- ({#1 * sin(\ang)},{#2},{#1 * cos(\ang )})
+  }
+    ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\arcopy}[2]{%
+  %% #1 == radio
+  %% #2 == angulo final (inicial =0)
+
+  %% relleno(ver pág 390 del manual)
+  \fill [color=red,opacity=.2]
+     (0,0,0)
+     \foreach \ang in {0,2,4,...,#2}
+     { -- ({#1 * sin(\ang)},0,{#1 * cos(\ang )})
+     }
+     -- cycle ;
+  %% flecha
+  \draw [->,>=latex,line width=0.5mm,color=red]
+     (0,0,#1)
+     \foreach \ang in {2,4,6,...,#2}
+     { -- ({#1 * sin(\ang)},0,{#1 * cos(\ang )})
+     }
+     ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\arcopyif}[3]{%
+  %% #1 == radio
+  %% #2 == ángulo inicial
+  %% #3 == ángulo final
+
+  %% relleno(ver pág 390 del manual)
+  \pgfmathparse{(#2)+2} \edef\segang{\pgfmathresult}
+  \fill [color=red,opacity=.2]
+     (0,0,0)
+     \foreach \ang in {#2,\segang,...,#3}
+     { -- ({#1 * sin(\ang)},0,{#1 * cos(\ang )})
+     }
+     -- cycle ;
+
+  %% flecha
+  \draw [->,>=latex,line width=0.5mm,color=red]
+     ({#1 * sin(#2)},0,{#1 * cos(#2)})
+     \foreach \ang in {#2,\segang,...,#3}
+     { -- ({#1 * sin(\ang)},0,{#1 * cos(\ang )})
+     }
+     ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\arcopzifrev}[3]{%
+  %% #1 == radio
+  %% #2 == ángulo inicial
+  %% #3 == ángulo final
+
+  %% relleno(ver pág 390 del manual)
+  \pgfmathparse{(#2)-2} \edef\segang{\pgfmathresult}
+  \pgfmathparse{\segang-2} \edef\terang{\pgfmathresult}
+  \fill [color=red,opacity=.2]
+     (0,0,0)
+     \foreach \ang in {#2,...,#3}
+     { -- ({#1 * cos(\ang )},{#1 * sin(\ang)},0)
+     }
+     -- cycle ;
+
+  %% flecha
+  \draw [->,>=latex,line width=0.5mm,color=red]
+     ({#1 * cos(#2)},{#1 * sin(#2)},0)
+     \foreach \ang in {#2,...,#3}
+     { -- ({#1 * cos(\ang )},{#1 * sin(\ang)},0)
+     }
+     ;
+}
+
+%%----------------------------------------------------------------------
+
+%\begin{frame}{Ejemplo  de uso de pgf/tikz para 3D}
+%\tikzisometrico
+%\begin{center}
+%\begin{tikzpicture}[scale=2,isometricXYZ]
+   %\ejes{1.0}{2.5}
+   %\circuloz{0.5}{1.0}
+   %\circulox{0.5}{1.0}
+   %%%\circuloxy{1.2}{1.5}
+%\end{tikzpicture}
+%\end{center}
+%\end{frame}
+
+%%----------------------------------------------------------------------
+
+%% http://tex.stackexchange.com/questions/35218/passing-arguments-to-def-inside-newcommand-tikz-pgf
+
+\newcommand{\trcident}[4]{%
+  \pgfmathparse{#2} \edef\cx{\pgfmathresult}
+  \pgfmathparse{#3} \edef\cy{\pgfmathresult}
+  \pgfmathparse{#4} \edef\cz{\pgfmathresult}
+  \coordinate (#1) at ({\cx},{\cy},{\cz})%
+}
+
+%%\newcommand{\trc}[4]{\trcident{#1}{#2}{#3}{#4}}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\desplx}{0.0}
+\newcommand{\desply}{0.0}
+\newcommand{\desplz}{0.0}
+
+\newcommand{\mxx}{1.0} \newcommand{\mxy}{0.0} \newcommand{\mxz}{0.0}
+\newcommand{\myx}{0.0} \newcommand{\myy}{1.0} \newcommand{\myz}{0.0}
+\newcommand{\mzx}{0.0} \newcommand{\mzy}{0.0} \newcommand{\mzz}{1.0}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\trc}[4]{%
+  \pgfmathparse{#2} \edef\cx{\pgfmathresult}
+  \pgfmathparse{#3} \edef\cy{\pgfmathresult}
+  \pgfmathparse{#4} \edef\cz{\pgfmathresult}
+  \coordinate (#1) at (%
+           {\mxx*\cx+\mxy*\cy+\mxz*\cz+\desplx},%
+           {\myx*\cx+\myy*\cy+\myz*\cz+\desply},%
+           {\mzx*\cx+\mzy*\cy+\mzz*\cz+\desplz})%
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\casita}{%
+
+  \def\vminx{0.0}
+  \def\vmaxx{0.5}
+  \def\vmedx{{(0.5*(\vminx+\vmaxx))}}
+  \def\vminz{{\vminx*1.4}}
+  \def\vmaxz{{\vmaxx*1.4}}
+  \def\hhy{0.5}
+  \def\hhymax{0.7}
+
+  \trc{AAA}{\vminx}{0}{\vminz} ;
+  \trc{AAB}{\vminx}{0}{\vmaxz} ;
+  \trc{ABA}{\vminx}{\hhy}{\vminz} ;
+  \trc{ABB}{\vminx}{\hhy}{\vmaxz} ;
+  \trc{BAA}{\vmaxx}{0}{\vminz} ;
+  \trc{BAB}{\vmaxx}{0}{\vmaxz} ;
+  \trc{BBA}{\vmaxx}{\hhy}{\vminz} ;
+  \trc{BBB}{\vmaxx}{\hhy}{\vmaxz} ;
+  \trc{MCA}{\vmedx}{\hhymax}{\vminz} ;
+  \trc{MCB}{\vmedx}{\hhymax}{\vmaxz} ;
+
+  \begin{scope}[color=blue,line width =0.2mm, fill=blue!20,fill opacity=.30]
+    \fill (AAA) -- (AAB) -- (BAB) -- (BAA) -- cycle ; %% suelo
+    \fill (AAA) -- (AAB) -- (ABB) -- (ABA) -- cycle ;  %% pared X-
+    \fill (BAA) -- (BAB) -- (BBB) -- (BBA) -- cycle ;%% pared X+
+    \fill (AAA) -- (BAA) -- (BBA) -- (MCA) -- (ABA) -- cycle ; %% pared Z-
+    \fill (AAB) -- (BAB) -- (BBB) -- (MCB) -- (ABB) -- cycle ; %% pared Z+
+    \fill (ABA) -- (ABB) -- (MCB) -- (MCA) -- cycle ; %% tejado, flanco X-
+    \fill (BBA) -- (BBB) -- (MCB) -- (MCA) -- cycle ; %% tejado, flanco X+
+  \end{scope}
+
+  \begin{scope}[color=blue, line width =0.2mm] %%, dashed]
+     \draw (AAA) -- (BAA) ;
+     \draw (AAA) -- (ABA) ;
+     \draw (AAA) -- (AAB) ;
+  \end{scope}
+
+  \begin{scope}[color=blue,line width =0.2mm]
+    \draw (BAA) -- (BAB) ;
+    \draw (BBA) -- (BBB) ;
+    \draw (ABA) -- (ABB) ;
+    \draw (MCA) -- (MCB) ;
+
+    \draw (BAA) -- (BBA) ;
+    \draw (AAB) -- (ABB) ;
+    \draw (BAB) -- (BBB) ;
+
+    \draw (AAB) -- (BAB) ;
+
+    \draw (MCA) -- (BBA) ;
+    \draw (MCA) -- (ABA) ;
+    \draw (MCB) -- (ABB) ;
+    \draw (MCB) -- (BBB) ;
+  \end{scope}
+}
+
+
+%%----------------------------------------------------------------------
+
+\newcommand{\casitadxu}{%
+
+  \def\vminx{1.0}  %% 0.0 + desplazamiento en X
+  \def\vmaxx{1.5}  %% 0.5 + desplazamiento en X
+  \def\vmedx{{(0.5*(\vminx+\vmaxx))}}
+  \def\vminz{{0.0*1.4}}
+  \def\vmaxz{{0.5*1.4}}
+  \def\hhy{0.5}
+  \def\hhymax{0.7}
+
+  \trc{AAA}{\vminx}{0}{\vminz} ;
+  \trc{AAB}{\vminx}{0}{\vmaxz} ;
+  \trc{ABA}{\vminx}{\hhy}{\vminz} ;
+  \trc{ABB}{\vminx}{\hhy}{\vmaxz} ;
+  \trc{BAA}{\vmaxx}{0}{\vminz} ;
+  \trc{BAB}{\vmaxx}{0}{\vmaxz} ;
+  \trc{BBA}{\vmaxx}{\hhy}{\vminz} ;
+  \trc{BBB}{\vmaxx}{\hhy}{\vmaxz} ;
+  \trc{MCA}{\vmedx}{\hhymax}{\vminz} ;
+  \trc{MCB}{\vmedx}{\hhymax}{\vmaxz} ;
+
+  \begin{scope}[color=blue,line width =0.2mm, fill=blue!20,fill opacity=.30]
+    \fill (AAA) -- (AAB) -- (BAB) -- (BAA) -- cycle ; %% suelo
+    \fill (AAA) -- (AAB) -- (ABB) -- (ABA) -- cycle ;  %% pared X-
+    \fill (BAA) -- (BAB) -- (BBB) -- (BBA) -- cycle ;%% pared X+
+    \fill (AAA) -- (BAA) -- (BBA) -- (MCA) -- (ABA) -- cycle ; %% pared Z-
+    \fill (AAB) -- (BAB) -- (BBB) -- (MCB) -- (ABB) -- cycle ; %% pared Z+
+    \fill (ABA) -- (ABB) -- (MCB) -- (MCA) -- cycle ; %% tejado, flanco X-
+    \fill (BBA) -- (BBB) -- (MCB) -- (MCA) -- cycle ; %% tejado, flanco X+
+  \end{scope}
+
+  \begin{scope}[color=blue, line width =0.2mm] %%, dashed]
+     \draw (AAA) -- (BAA) ;
+     \draw (AAA) -- (ABA) ;
+     \draw (AAA) -- (AAB) ;
+  \end{scope}
+
+  \begin{scope}[color=blue,line width =0.2mm]
+    \draw (BAA) -- (BAB) ;
+    \draw (BBA) -- (BBB) ;
+    \draw (ABA) -- (ABB) ;
+    \draw (MCA) -- (MCB) ;
+
+    \draw (BAA) -- (BBA) ;
+    \draw (AAB) -- (ABB) ;
+    \draw (BAB) -- (BBB) ;
+
+    \draw (AAB) -- (BAB) ;
+
+    \draw (MCA) -- (BBA) ;
+    \draw (MCA) -- (ABA) ;
+    \draw (MCB) -- (ABB) ;
+    \draw (MCB) -- (BBB) ;
+  \end{scope}
+}
+
+
+%\begin{frame}{La Casita.}
+%\tikzisometrico
+%\begin{center}
+%\begin{tikzpicture}[scale=2,isometricXYZ]
+   %\ejesvi{0.8}{1.5}
+   %\casita
+   %\circulox{0.4}{1.2}
+   %\circuloy{0.4}{1.2}
+   %\circuloz{0.4}{1.2}
+%\end{tikzpicture}
+%\end{center}
+%\end{frame}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\casitad}{%
+    \filldraw[color=blue, line width=0.3mm, fill=blue!20, fill opacity=.50]
+        (1.5,0) -- (2.5,0) -- (2.5,0.5) -- (2,1.0) -- (1.5,0.5) -- cycle ;
+    \draw[ color=blue, line width=0.3mm ] (-0.2,0.0) -- (2.8,0.0) ;%
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\casitadvi}{%
+       \filldraw[color=blue, line width=0.3mm, fill=blue!20, fill opacity=.50]
+        (0,0) -- ++(2,0) -- ++(0.0,1) -- ++(-1,1) -- ++(-1,-1) -- cycle ;
+
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\casitadn}{%
+    \filldraw[color=blue, line width=0.3mm, fill=blue!20, fill opacity=.50]
+        (-0.3,-0.25) -- ++(1,0) -- ++(0.0,0.5) -- ++(-0.5,0.5) -- ++(-0.5,-0.5) -- cycle ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\versoresdosd}{%
+    \draw[->, >=latex, color=black,line width=0.4mm] (0,0) -- (1,0)
+         node [below=1mm] {$\flx$} ;
+    \draw[->, >=latex, color=black, line width=0.4mm] (0,0) -- (0,1)
+         node [left=1mm] {$\fly$} ;
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\ejesgridrot}{%
+    \edef\xmin{-0.37}
+    \edef\xmax{2.67}
+    \edef\ymin{-0.37}
+    \edef\ymax{2.67}
+    \draw[very thin,color=gray!20,step=0.25]
+              (\xmin,\ymin) grid (\xmax,\ymax);
+    \begin{scope}[color=black,  line width=0.2mm]
+       \draw (\xmin,0) -- (\xmax,0) ;
+       \draw (0,\ymin) -- (0,\ymax) ;
+    \end{scope}
+    \versoresdosd
+}
+
+%%----------------------------------------------------------------------
+
+\newcommand{\ejesgridrotnv}{%
+    \edef\xmin{-0.37}
+    \edef\xmax{1.8} %%%% cua
+    \edef\ymin{-0.37}
+    \edef\ymax{2.57}
+    \draw[very thin,color=gray!20,step=0.25]
+              (\xmin,\ymin) grid (\xmax,\ymax);
+    \begin{scope}[color=black,  line width=0.2mm]
+       \draw (\xmin,0) -- (\xmax,0) ;
+       \draw (0,\ymin) -- (0,\ymax)  ;
+    \end{scope}
+}
+
+%%----------------------------------------------------------------------
+
+\tikzset{rectangulo/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm,
+     text badly centered,
+     anchor=center,
+     text width=1.6cm,
+     font=\bfseries\footnotesize
+  }
+}
+
+\tikzset{recfix/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=black,
+     fill=black!40!white!60,
+     rounded corners=1mm,
+     text badly centered,
+     anchor=center,
+     text width=1.3cm,
+     font=\bfseries\footnotesize
+  }
+}
+
+\tikzset{recvs/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue,
+     fill=blue!20!white!80,
+     %%top color=white, bottom color=blue!4!black!6,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=1mm,
+     text badly centered,
+     anchor=center,
+     text width=0.8cm,
+     font=\bfseries\tiny
+  }
+}
+
+\tikzset{recfs/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=red,
+     fill=red!40!white!60,
+     %%top color=white, bottom color=blue!4!black!6,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=1mm,
+     text badly centered,
+     anchor=center,
+     text width=0.8cm,
+     font=\bfseries\tiny
+  }
+}
+
+
+
+\tikzset{recuadro/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm, %%
+     %%text badly centered,
+     %%anchor=left,
+     text width=0.9\textwidth %%, %%,
+     %%font=\itshape
+  }
+}
+
+
+\tikzset{circulo/.style={ circle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm, %%
+     text badly centered,
+     %%anchor=left,
+     text width=1.5cm, %%,
+     font=\bfseries\footnotesize
+  }
+}
+
+%\ifestiloarticulo
+\tikzset{rectangulolp/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm,
+     text badly centered,
+     anchor=center,
+     text width=2.5cm,
+     %%font=\bfseries\footnotesize
+     font=\bfseries\small
+  }
+}
+\newcommand{\escalaff}{1.5}
+% \else
+% \tikzset{rectangulolp/.style={ rectangle,
+%      drop shadow={opacity=0.7},  %% (ver pg. 307)
+%      draw=blue!30!black!70,
+%      top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+%      rounded corners=2mm,
+%      text badly centered,
+%      anchor=center,
+%      text width=1.6cm,
+%      %%font=\bfseries\footnotesize
+%      font=\bfseries\scriptsize
+%   }
+% }
+% \newcommand{\escalaff}{1}
+% \fi
+
+
+
+%%----------------------------------------------------------------------
+
+
+
+%%%%%%%%%%%
+
+%% algunas definiciones que habrá que quitar de aquí:
+
+
+
+
+
+
+
+
+%%----------------------------------------------------------------------
+
+\newenvironment{doscolizq}{%
+\begin{minipage}[c]{0.52\textwidth}
+\begin{center}
+}{
+\end{center}
+\end{minipage}
+}
+
+\newenvironment{doscolder}{%
+\begin{minipage}[c]{0.43\textwidth}
+\begin{center}
+}{
+\end{center}
+\end{minipage}
+}
+
+\definecolor{colPol}{rgb}{0.7,0.2,0.4}
+\definecolor{colVer}{rgb}{0.2,0.0,0.4}
+
+\newcommand{\vertice}[2]{%
+   %%\fill[color=colVer] (v#1) circle (.5mm) node[#2] {\$#1$} ;
+   \fill[color=colVer] (v#1) circle (.5mm) node[#2] {\scriptsize #1} ;
+}
+
+\newcommand{\circuloi}[1]{%
+   \fill[color=colVer] (#1) circle (.5mm) ;
+}
+
+\newcommand{\verticero}[2]{%
+   \fill[color=colPol] (v#1) circle (.5mm)  ;
+   \path (v#1) node[#2,color=colVer] {\scriptsize #1} ;
+}
+
+%%------------------------------------------------------------------
+
+
+% Manual de pgf/tikz en:
+% http://www.iro.umontreal.ca/~simardr/pgfmanual.pdf
+
+%%\tikzstyle{every node}+=[font=\bfseries\footnotesize]
+\tikzstyle{every edge}+=[-latex,very thick,font=\bfseries\footnotesize]
+
+\tikzset{rectangulo/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm,
+     text badly centered,
+     anchor=center,
+     text width=1.5cm,
+     font=\bfseries\footnotesize
+  }
+}
+
+\tikzset{recuadro/.style={ rectangle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm, %%
+     %%text badly centered,
+     %%anchor=left,
+     text width=2cm %%, %%,
+     %%font=\itshape
+  }
+}
+
+\tikzset{circulo/.style={ circle,
+     drop shadow={opacity=0.7},  %% (ver pg. 307)
+     draw=blue!30!black!70,
+     top color=white, bottom color=black!10,   %% gradación de relleno (ver pp.56 y 57)
+     rounded corners=2mm, %%
+     text badly centered,
+     %%anchor=left,
+     text width=0.4cm, %%,
+     font=\bfseries\footnotesize
+  }
+}
+
+%%----------------------------------------------------------------------
+
+\definecolor{rellenoEx}{rgb}{0.85,0.85,0.86}
+\definecolor{rellenoInN}{rgb}{0.30,0.30,0.35}
+\definecolor{rellenoInM}{rgb}{0.30,0.35,0.30}
+\definecolor{rellenoIn}{rgb}{0.30,0.15,0.15}
+\definecolor{cletras}{rgb}{1.0,1.0,1.0}
+
+\tikzset{cajar/.style={rounded corners,fill=rellenoIn,drop shadow}}
+\tikzset{cajac/.style={fill=rellenoIn,drop shadow}}
+\tikzset{cajaex/.style={rounded corners,fill=rellenoEx}}
+\newcommand{\tl}{\footnotesize} %% tipo de letra en cajas
+\newcommand{\tlf}{\tiny} %% tipo de letra en las flechas
+\tikzset{eflecha/.style={single arrow,draw=black,fill=white,single arrow head extend=1ex}}
+\tikzset{eflechaa/.style={single arrow,draw=black,fill=lightgray}}
+
+
+%% -----------------------------------------------------------------------------
+%% Ordenes para "flechas gordas" (flechas con relleno, texto, bordes...)
+%% Obtenido de aquí:
+%% https://tex.stackexchange.com/questions/432138/automatically-positioning-node-shape-on-to-path-in-tikz-for-outlined-transpa
+%% (con algunos ajustes que se ven en los comentatios.)
+
+\tikzset%
+{%
+   fat arrow/.style=
+   {  every to/.style=
+      {  to path=
+         {
+            let
+               \p1 = ($(\tikztotarget)-(\tikztostart)$),
+               \n1 = {int(mod(scalar(atan2(\y1,\x1))+360, 360))}, % calculate angle in range [0,360)
+               \p2 = ($(\tikztotarget.\n1+180)-(\tikztostart.\n1)$),
+               \n2 = {veclen(\x1,\y1)}
+            in
+               -- (\tikztotarget)
+            node
+            [
+               single arrow,
+               single arrow head extend=3.5pt,
+               draw=black,
+               fill=white,
+               inner xsep=0pt,
+               inner ysep=4pt, % use inner ysep to set width -- orig 5pt
+               minimum height=\n2-0.5pt, %%-\pgflinewidth,
+               rotate=\n1, % not shape border rotate, because that for some reason didn't work
+               anchor=tip, %%, % anchor=tip added, pos=0.5 removed
+               #1          % arguments passed to fat arrow added here
+            ]
+            at (\tikztotarget) %%.\n1+180)
+            {} \tikztonodes
+         }
+      }
+   },
+   fat arrow/.default= % empty default for argument of fat arrow
+}
+%% -----------------------------------------------------------------------------
+
+\newcommand{\flechatexto}[3]{%  args: #1=initial anchor, #2=end anchor, #3=text
+   \node[minimum width=0,minimum height=0] (ini) at (#1) {};
+   \node[minimum width=0,minimum height=0] (fin) at (#2) {};
+   \path[fat arrow] (ini) to (fin);
+   \path (ini.center) -- node[sloped,anchor=west,pos=-0.06] {\tiny\textbf{#3}} (fin.center);
+}
+%% -----------------------------------------------------------------------------
+
+\newcommand{\micajaex}[5]%    nombre, texto, ancho, alto, otros...
+{
+   \node[rectangle,
+         rounded corners,fill=rellenoEx,
+         minimum width=#3, minimum height=#4
+         #5]
+      (#1)
+      {};
+   \node
+      [below=.5mm of #1.north,
+         anchor=north]
+      {\Large\textbf{#2}};
+}
+
+%% igual pero con título no tan grande
+\newcommand{\micajaexN}[5]%    nombre, texto, ancho, alto, otros...
+{
+   \node[rectangle,
+         rounded corners,fill=rellenoEx,
+         minimum width=#3, minimum height=#4
+         #5]
+      (#1)
+      {};
+   \node
+      [below=.5mm of #1.north,
+         anchor=north]
+      {\textbf{#2}};
+}
+%% -----------------------------------------------------------------------------
+%% tres variantes de caja interna (cambian los colores y el redondeo de bordes)
+
+\newcommand{\micajain}[5]%   nombre, ancho, alto, otros, texto
+{
+   \node[rectangle,
+         rounded corners=3mm,
+         fill=rellenoIn,drop shadow,
+         minimum width=#2, minimum height=#3
+         #4]
+      (#1) {};
+   \node[cletras] at (#1.center) {\tl #5};
+}
+
+\newcommand{\micajainN}[5]%   nombre, ancho, alto, otros, texto
+{
+   \node[rectangle,
+         cletras,fill=rellenoInN,drop shadow,
+         minimum width=#2, minimum height=#3
+         #4]
+      (#1) {};
+      \node[cletras] at (#1.center) {\tl #5};
+}
+
+\newcommand{\micajainM}[5]%   nombre, ancho, alto, otros, texto
+{
+   \node[rectangle,
+         rounded corners=3mm,
+         fill=rellenoInM,drop shadow,
+         minimum width=#2, minimum height=#3
+         #4]
+      (#1) {};
+      \node[cletras] at (#1.center) {\tl #5};
+}
+%% -----------------------------------------------------------------------------
+
+%% nodo puesto en una determinada posición relativa:
+%%    #1 = identificador del nodo
+%%    #2 = posicion relativa, p.ej: right=8mm of X.east, para un nodo 'X' cualquiera
+\newcommand{\nodocoord}[2]{%
+   \node[minimum width=0, minimum height=0,#2,anchor=center] (#1) {};
+}
+
+
+%% ---- include-tikz end
 
 \begin{document}
 %% CUA: para evitar un problema que aparece con el 'spanish babel' y los símbolos > y <

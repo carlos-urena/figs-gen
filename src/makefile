@@ -5,6 +5,9 @@
 cc_opts=-std=c++11 -Wfatal-errors -I.
 latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-error  --jobname borrar
 
+v3: fig03-perp3d.pdf
+	open -a skim $<
+
 v2: fig02-perp2d.pdf
 	open -a skim $<
 
@@ -21,10 +24,8 @@ fig%.pdf: fig%.tex header.tex footer.tex
 	rm -rf borrar.*
 
 fig%.tex : fig%_exe makefile
-	cat header.tex >$@
-	./$< >> $@
-	cat footer.tex >>$@
-
+	./$< > $@
+	
 fig%_exe : fig%.cpp vec_mat.h makefile
 	g++ $(cc_opts) -o $@  $<
 

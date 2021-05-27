@@ -5,6 +5,11 @@
 
 int main( int argc, char *argv[] )
 {
+   using namespace std ;
+
+   cout 
+      << "\\documentclass[border=1mm]{standalone}" << endl 
+      << "\\input{header.tex}" << endl ;
 
    const char * tex = R"tex(
    \tikzisometrico
@@ -18,6 +23,9 @@ int main( int argc, char *argv[] )
    \end{tikzpicture}
    )tex";
 
-   using namespace std ;
-   cout << tex ;
+   
+   cout 
+      << tex << endl 
+      << "\\end{document}" << endl ;
+
 }
