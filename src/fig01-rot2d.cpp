@@ -75,4 +75,7 @@ int main( int argc, char *argv[] )
      
       << "\\end{tikzpicture}" << endl
       << endl ;
+
+   cout 
+      << "\\end{document}" << endl ;
 }
