@@ -5,17 +5,23 @@
 cc_opts=-std=c++11 -Wfatal-errors -I.
 latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-error  --jobname borrar
 
+v4: fig04-rot3d.pdf
+	open -a skim $<
+
 v3: fig03-perp3d.pdf
 	open -a skim $<
 
-v2: fig02-perp2d.pdf
+v2: fig02-rot2d.pdf
 	open -a skim $<
 
-v1: fig01-rot2d.pdf
+v1: fig01-perp2d.pdf
 	open -a skim $<
 
 v0: fig00-test.pdf
 	open -a skim $<
+
+all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf
+	open -a skim *.pdf
 
 fig%.pdf: fig%.tex header.tex footer.tex
 	rm -rf borrar.*
