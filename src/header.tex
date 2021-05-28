@@ -267,6 +267,13 @@
          \draw (0,\cy,0) -- (#1,\cy,0) ;
 }
 
+\newcommand{\gridtresdxyii}[1]{%
+   \foreach \cx in {0.0,0.1,0.2,...,#1}
+         \draw (\cx,0,0) -- (\cx,#1,0) ;
+   \foreach \cy in {0.0,0.1,0.2,...,#1}
+         \draw (0,\cy,0) -- (#1,\cy,0) ;
+}
+
 \newcommand{\gridtresdxz}[1]{%
    %% xz
    \foreach \cx in {0.0,0.2,0.4,...,#1}
