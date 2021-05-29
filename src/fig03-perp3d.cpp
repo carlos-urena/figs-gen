@@ -24,6 +24,7 @@ int main( int argc, char *argv[] )
       t = s-u ;
 
    cout
+      << "\\definecolor{verde}{rgb}{0,0.3,0}" << endl 
       << "\\tikzset{isometrico/.style={x={(0.7cm,-0.45cm)},   " << endl
       << "                             y={(0.0cm,0.95cm)},     " << endl
       << "                             z={(-0.7cm,-0.45cm)}}} " << endl
@@ -33,7 +34,8 @@ int main( int argc, char *argv[] )
       << "   \\draw[color=gray,line width=0.1mm]" << endl 
       << "         " << -e << " -- " << 2.0f*e << "  ;"
       << "   \\draw[->,>=latex,color=blue,line width=0.2mm]" << endl 
-      << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\fls-\\flu\\,=\\,\\flt$} ;" << endl
+      // << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\fls-\\flu\\,=\\,\\flt$} ;" << endl
+      << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\flt$} ;" << endl
       << "   \\draw[->,>=latex,color=black,line width=0.2mm]" << endl 
       << "         (0,0,0) -- " << s << " node[near end,above,anchor=south east] {$\\fls$} ;" << endl
       << "   \\draw[->,>=latex,color=blue,line width=0.25mm]" << endl 
@@ -44,7 +46,8 @@ int main( int argc, char *argv[] )
       << "   \\path[color=blue] " << 0.95f*u << endl 
       << "         node[anchor=north west] {$\\begin{aligned} " << endl 
       << "               \\flu\\,&=\\,-\\vue\\times\\flv\\\\" << endl 
-      << "                       &=\\,-P_{\\vue}^2(\\fls)" << endl 
+      << "                       &=\\,-P_{\\vue}^2(\\fls)\\\\" << endl 
+      << "                       & \\color{verde}=\\,\\fls-(\\fls\\cdot\\vue)\\vue" << endl
       << "         \\end{aligned}$} ;" << endl 
       << "   \\draw[->,>=latex,color=black,line width=0.2mm]" << endl 
       << "         (0,0,0) -- " << e << " node[above,anchor=south] {$\\vue$} ;" << endl
@@ -55,7 +58,8 @@ int main( int argc, char *argv[] )
       << "   \\path ( 0," << 1.5*v(Y) << ","<< t(Z) << ") " << endl 
       << "         node[anchor=center,color=blue] {$\\begin{aligned} " << endl 
       << "             \\flt\\,&=\\,\\fls-\\flu\\\\" << endl
-      << "                     &=\\,\\fls+P_{\\vue}^2(\\fls)" << endl 
+      << "                     &=\\,\\fls+P_{\\vue}^2(\\fls)\\\\" << endl 
+      << "                    & \\color{verde}=\\,(\\fls\\cdot\\vue)\\vue" << endl
       << "         \\end{aligned}$};" << endl
       << "\\end{tikzpicture}" << endl
       << endl ;
