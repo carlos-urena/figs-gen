@@ -29,10 +29,10 @@ int main( int argc, char *argv[] )
    const float 
       l = -0.3,
       r = -l,
-      b = 0.7*l,
+      b =  0.7*l,
       t = -b ,
       n = 1.0,
-      f = 3.0;
+      f = 2.0;
    auto  
       fm = FrustumMesh { l, r, b, t, n, f };
    const Vec3 
@@ -46,13 +46,15 @@ int main( int argc, char *argv[] )
       // << "\\tikzset{isometrico/.style={x={(0.0cm,-0.0cm)},   " << endl
       // << "                             y={(0.0cm,0.95cm)},     " << endl
       // << "                             z={(-1.0cm,0.0cm)}}} " << endl
-      << "\\begin{tikzpicture}[scale=2.5,isometrico]" << endl ;
+      << "\\begin{tikzpicture}[scale=4,isometrico]" << endl ;
 
    // classify edges according to 'v'
    std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
    fm.compute_edges_types( view_vec, edges_types ) ;
 
    //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
+
+   
 
    // draw frustum back-facing edges (dashed)
    fm.draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
@@ -76,6 +78,30 @@ int main( int argc, char *argv[] )
    line( {0,0,0}, {r,t,-n}, st, "" );
    line( {0,0,0}, {l,b,-n}, st, "" );
    line( {0,0,0}, {r,b,-n}, st, "" );
+
+   
+   
+   for( auto &iv : {0,1,2,3} )
+      cout << "\\fill[fill=blue] " << fm.vertexes[iv] << " circle [radius=0.15mm];" << endl ;
+
+   for( auto &iv : {4,5,6,7} )
+      cout << "\\fill[fill=red] " << fm.vertexes[iv] << " circle [radius=0.15mm];" << endl ;
+  
+   cout << endl << "%% labels" << endl ;
+
+   cout << "\\path " << fm.vertexes[0] << " node[blue,anchor=east] {$(l,b,-n)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[1] << " node[blue,anchor=north west] {$(r,b,-n)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[2] << " node[blue,anchor=east] {$(l,t,-n)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[3] << " node[blue,anchor=north west] {$(r,t,-n)$} ;" << endl ;
+
+   cout << "\\path " << fm.vertexes[4] << " node[red,anchor=south west] {$(sl,sb,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[5] << " node[red,anchor=west] {$(sr,sb,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[6] << " node[red,anchor=west] {$(sl,st,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[7] << " node[red,anchor=west] {$(sr,st,-f)$} ;" << endl ;
+
+   cout << "\\path " << (fm.vertexes[5]+Vec3(0.0,-0.5,0.0)) << " node[anchor=east] {$s\\,=\\,f/n$} ;" << endl ;
+
+   
 
    
 

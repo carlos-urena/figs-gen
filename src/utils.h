@@ -28,23 +28,23 @@ struct VertexIdxsSeq
    public:
    vector<unsigned> idxs ;
 
-   inline VertexIdxsSeq( std::initializer_list<unsigned> p_idxs ) 
+    VertexIdxsSeq( std::initializer_list<unsigned> p_idxs ) 
    {
       for( auto it = p_idxs.begin(); it != p_idxs.end(); ++it ) 
          idxs.push_back( *it );
    } ;
    
-   inline unsigned operator[] ( const unsigned i ) const 
+    unsigned operator[] ( const unsigned i ) const 
    {
       assert( i < idxs.size() );
       return idxs[i] ;
    }
-   inline unsigned size () const 
+    unsigned size () const 
    {
       return idxs.size() ;
    }
 
-   inline void write_coords( const vector<Vec3> & vertexes ) const 
+    void write_coords( const vector<Vec3> & vertexes ) const 
    {
       for( unsigned iv= 0 ; iv < idxs.size() ; iv++ )
          cout << " " << vertexes[idxs[iv]]  << (iv < idxs.size()-1 ? " -- " : " ") ; 
@@ -71,7 +71,7 @@ class IndPolMesh
    // ------------------------------------------------------------
    // init tables from 'vertexes' and 'polygons'
 
-   inline void init_tables()
+    void init_tables()
    {
       // empty current tables, if not void
       pol_normals.clear();
@@ -171,7 +171,7 @@ class IndPolMesh
    // classify edges according to 'v' (view vector), using polygons normals
    // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
 
-   inline void compute_edges_types( const Vec3 & v, std::vector<unsigned> & edges_types  )
+    void compute_edges_types( const Vec3 & v, std::vector<unsigned> & edges_types  )
    {
       edges_types.clear();
 
@@ -205,7 +205,7 @@ class IndPolMesh
    // ------------------------------------------------------------
    // draw filled front facing polygons 
 
-   inline void draw_filled_ff_pols( const Vec3 & view_vec, const std::string &style  )
+    void draw_filled_ff_pols( const Vec3 & view_vec, const std::string &style  )
    {
       cout << endl << "%% front facing polygons" << endl ;
       for( unsigned ip = 0 ; ip < polygons.size() ; ip++ )
@@ -220,7 +220,7 @@ class IndPolMesh
    // ------------------------------------------------------------
    // draw edges, but only of a given type
 
-   inline void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   )
+    void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   )
    {
       assert( type < 4 );
 
@@ -236,7 +236,7 @@ class IndPolMesh
    }
    // ------------------------------------------------------------
    // draw normals, usually for debugging, uses 'pol_centers' and 'pol_normals' 
-   inline void draw_normals( const float len, const std::string & style  )
+    void draw_normals( const float len, const std::string & style  )
    {
       assert( pol_centers.size() == polygons.size() );
       assert( pol_normals.size() == polygons.size() );
@@ -257,7 +257,7 @@ class FrustumMesh : public IndPolMesh
 {
    public:
    FrustumMesh( const float l, const float r, 
-                const float t, const float b,
+                const float b, const float t,
                 const float n, const float f   )
    {
       assert( 0 < n );
@@ -269,6 +269,8 @@ class FrustumMesh : public IndPolMesh
          rf = r*s, 
          bf = b*s,
          tf = t*s ;
+
+      cout << "%%%%% frustum b = " << b << endl ;
 
       vertexes =
       {  
@@ -283,13 +285,13 @@ class FrustumMesh : public IndPolMesh
 
       polygons = 
       {  
-         {6,7,5,4}, // far (back) polygon 
-         {6,4,0,2}, // left side polygon 
-         {4,5,1,0},  // bottom polygon 
+         {4,5,7,6}, // far (back) polygon 
+         {0,4,6,2}, // left side polygon 
+         {0,1,5,4},  // bottom polygon 
 
-         {0,1,3,2}, // near (front) plane polygon 
-         {1,5,7,3}, // right side polygon 
-         {2,3,7,6}, // top polygon 
+         {0,2,3,1}, // near (front) plane polygon 
+         {1,3,7,5}, // right side polygon 
+         {2,6,7,3}, // top polygon 
       } ;
 
       // inits normals, edges, etc....
@@ -315,6 +317,7 @@ void line( const Vec3 & org, const Vec3 & dest, const std::string & style, const
 void axes()
 {
    const std::string lw = "line width=0.16mm" ;
+   cout << "\\fill (0,0) circle [radius=0.11mm];" << endl ;
    line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_c$}" );
    line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_c$}" );
    line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_c$}" );

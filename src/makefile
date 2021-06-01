@@ -35,7 +35,7 @@ fig%.pdf: fig%.tex header.tex footer.tex
 fig%.tex : fig%_exe makefile
 	./$< > $@
 	
-fig%_exe : fig%.cpp vec_mat.h makefile
+fig%_exe : fig%.cpp vec_mat.h utils.h makefile
 	g++ $(cc_opts) -o $@  $<
 
 
