@@ -227,6 +227,15 @@ void FrustumMesh::draw( const Vec3 & v )
    //    cout << " " << pol_centers[i] << " -- " << (pol_centers[i] + 0.5f*pol_normals[i]) << " ;" << endl ;
    // }
 
+   // classify edges according to 'v'
+
+   std::vector<bool> draw_edge ; // for each edge, true iif the edge is front-facing or contour according to 'v'
+
+   for( unsigned ie = 0 ; ie < edges_verts.size() ; ie++ )
+   {
+      
+   }
+
    // draw all edges (dashed)
    
    for( unsigned ie = 0 ; ie < edges_verts.size() ; ie++ )
@@ -237,15 +246,17 @@ void FrustumMesh::draw( const Vec3 & v )
       cout << "\\draw[line width=0.1mm,dashed] " << v1 << " -- " << v2 << " ; " << endl ;
    }
 
-   // draw filled polygons
-   for( unsigned i = 0 ; i < polygons.size() ; i++ )
-   {
-      cout << "\\fill[fill=gray,opacity=0.1] " << endl ;
-      polygons[i].write_coords( vertexes ); 
-      cout << " -- cycle ;" << endl << endl ;
-   }
+   // draw filled polygons (only front-facing polygons)
+   for( unsigned ip = 0 ; ip < polygons.size() ; ip++ )
+      if ( 0.0 < pol_normals[ip].dot( v ) )
+      {
+         cout << "\\fill[fill=gray,opacity=0.1] " << endl ;
+         polygons[ip].write_coords( vertexes ); 
+         cout << " -- cycle ;" << endl << endl ;
+      }
+   
 
-   // draw again, but only front facing edges or contour edges 
+   // draw again, but only front facing or contour edges 
 
    
 }
