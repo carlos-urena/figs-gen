@@ -10,8 +10,10 @@ using namespace vec_mat ;
 
 class IndPolMesh ;
 
+// **********************************************************************
+// Class VertexIdxSeq
+// a sequence of indexed vertices
 // ----------------------------------------------------------------------
-// a sequence of vertexes indexes
 
 struct VertexIdxsSeq
 {
@@ -43,8 +45,9 @@ struct VertexIdxsSeq
    
 } ;
 
-// ----------------------------------------------------------------------
-// indexed polygonal meshes 
+// **********************************************************************
+// Class InPolMesh
+// ---------------------------------------------------------------------- 
 
 class IndPolMesh
 {
@@ -57,7 +60,9 @@ class IndPolMesh
    vector<Vec2u>         edges_verts ;  // for each edge, adyacent vertxes indexes
    vector<Vec2u>         edges_pols  ;  // for each edge, adyacent polygons indexes, or -1
 
+   // ------------------------------------------------------------
    // init tables from 'vertexes' and 'polygons'
+
    inline void init_tables()
    {
       // empty current tables, if not void
@@ -94,10 +99,6 @@ class IndPolMesh
          else 
             pol_normals.push_back( Vec3 { 0.0,0.0,0.0} );
       }
-
-      
-     
-     
 
       // populate adj_vert and adj_edge
 
@@ -157,131 +158,182 @@ class IndPolMesh
       }
 
    }
+
+   // ------------------------------------------------------------
+   // classify edges according to 'v' (view vector), using polygons normals
+   // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
+
+   inline void compute_edges_types( const Vec3 & v, std::vector<unsigned> & edges_types  )
+   {
+      edges_types.clear();
+
+      const unsigned n_pols = polygons.size() ;
+      
+      for( unsigned ie = 0 ; ie < edges_verts.size() ; ie++ )
+      {
+
+         const Vec2u & ap = edges_pols[ie] ; // adjacent polygons 
+
+         unsigned type = 0 ; // --> back facing, by default
+         if ( ap(1) == n_pols )
+            type = 3 ;   // --> single adjacent polygon
+         else 
+         {
+            const float 
+               d0a = v.dot( pol_normals[ap(0)] ),
+               d1a = v.dot( pol_normals[ap(1)] ),
+               d0  = std::min( d0a, d1a ),
+               d1  = std::max( d0a, d1a );
+
+            if ( 0.0 < d0  )   // 0 < d0 <= d1 --> front facing  
+               type = 2 ;
+            else if ( 0.0 < d1 )  // d0 <= 0.0 < d1 --> contour
+               type = 1 ;
+         }
+         edges_types.push_back( type );
+      }
+   }
+
+   // ------------------------------------------------------------
+   // draw filled front facing polygons 
+
+   inline void draw_filled_ff_pols( const Vec3 & view_vec, const std::string &style  )
+   {
+      cout << endl << "%% front facing polygons" << endl ;
+      for( unsigned ip = 0 ; ip < polygons.size() ; ip++ )
+      if ( 0.0 < pol_normals[ip].dot( view_vec ) )
+      {
+         cout << "\\fill[" << style << "] " << endl ;
+         polygons[ip].write_coords( vertexes ); 
+         cout << " -- cycle ;" << endl << endl ;
+      }
+   }
+
+   // ------------------------------------------------------------
+   // draw edges, but only of a given type
+
+   inline void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   )
+   {
+      assert( type < 4 );
+
+      cout << endl << "%% edges with type == " << type << endl ;
+      for( unsigned ie = 0 ; ie < edges_verts.size() ; ie++ )
+         if ( edges_types[ie] == type )
+         {
+            const Vec2u & ep = edges_pols[ie] ; // get adjacent polygons 
+            const Vec3 &  v1 = vertexes[edges_verts[ie](0)],
+                          v2 = vertexes[edges_verts[ie](1)] ;
+            cout << "\\draw[" << style << "] " << v1 << " -- " << v2 << " ; " << endl ;
+         }
+   }
+   // ------------------------------------------------------------
+   // draw normals, usually for debugging, uses 'pol_centers' and 'pol_normals' 
+   inline void draw_normals( const float len, const std::string & style  )
+   {
+      assert( pol_centers.size() == polygons.size() );
+      assert( pol_normals.size() == polygons.size() );
+
+      cout << endl << "%% normals" << endl ;
+      for( unsigned i = 0 ; i < polygons.size() ; i++ )
+         cout << "\\draw[" << style << "] "  << " " << pol_centers[i] << " -- " << (pol_centers[i] + len*pol_normals[i]) << " ;" << endl ;
+      
+   }
+   
 } ;
 
+// **********************************************************************
+// Class frustum mesh
 // ----------------------------------------------------------------------
-// frustum mesh
 
 class FrustumMesh : public IndPolMesh 
 {
    public:
    FrustumMesh( const float l, const float r, 
                 const float t, const float b,
-                const float n, const float f   );  
-   void draw( const Vec3 & v );  
-} ;
+                const float n, const float f   )
+   {
+      assert( 0 < n );
+      assert( n < f );
 
+      const float
+         s = f/n,
+         lf = l*s, 
+         rf = r*s, 
+         bf = b*s,
+         tf = t*s ;
+
+      vertexes =
+      {  
+         // vertexes on the near plane
+         { l, b, -n }, { r, b, -n },
+         { l, t, -n }, { r, t, -n },
+
+         // vertexes on the far plane
+         { lf, bf, -f }, { rf, bf, -f },
+         { lf, tf, -f }, { rf, tf, -f },   
+      };
+
+      polygons = 
+      {  
+         {6,7,5,4}, // far (back) polygon 
+         {6,4,0,2}, // left side polygon 
+         {4,5,1,0},  // bottom polygon 
+
+         {0,1,3,2}, // near (front) plane polygon 
+         {1,5,7,3}, // right side polygon 
+         {2,3,7,6}, // top polygon 
+      } ;
+
+      // inits normals, edges, etc....
+      init_tables();
+
+   }
+
+   // draw using a view vector 'v'
+   inline void draw_v1( const Vec3 & view_vec )
+   {
+      // classify edges according to 'v'
+      std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
+      compute_edges_types( view_vec, edges_types ) ;
+
+      //draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
+
+      // draw back-facing edges (dashed)
+      draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
+
+      // draw filled front-facing polygons
+      draw_filled_ff_pols( view_vec, "fill=gray,opacity=0.2" );
+
+      // draw front facing and contour edges
+      draw_edges_type( 2, "line width=0.10mm,color=black", edges_types ); // front facing edges
+      draw_edges_type( 1, "line width=0.16mm,color=black", edges_types ); // contour edges (thicker)
+   
+   }
+} ; // class frustum mesh 
+
+// **********************************************************************
+// aux funcs
 // ----------------------------------------------------------------------
 
-FrustumMesh::FrustumMesh( const float l, const float r, 
-                          const float t, const float b,
-                          const float n, const float f   )
-
-{
-   assert( 0 < n );
-   assert( n < f );
-
-   const float
-      s = f/n,
-      lf = l*s, 
-      rf = r*s, 
-      bf = b*s,
-      tf = t*s ;
-
-   vertexes =
-   {  
-      // vertexes on the near plane
-      { l, b, -n }, { r, b, -n },
-      { l, t, -n }, { r, t, -n },
-
-      // vertexes on the far plane
-      { lf, bf, -f }, { rf, bf, -f },
-      { lf, tf, -f }, { rf, tf, -f },   
-   };
-
-   polygons = 
-   {  
-      {6,7,5,4}, // far (back) polygon 
-      {6,4,0,2}, // left side polygon 
-      {4,5,1,0},  // bottom polygon 
-
-      {0,1,3,2}, // near (front) plane polygon 
-      {1,5,7,3}, // right side polygon 
-      {2,3,7,6}, // top polygon 
-   } ;
-
-   // inits normals, edges, etc....
-   init_tables();
-
-}
-
-// draw using a view vector 'v'
-void FrustumMesh::draw( const Vec3 & v )
-{
-   const unsigned n_pols = polygons.size() ;
-
-   // draw normals, only for debugging 
-   // for( unsigned i = 0 ; i < polygons.n_pols ; i++ )
-   // {
-   //    cout << "\\draw[->,>=latex,line width=0.3mm,color=blue] " ;
-   //    cout << " " << pol_centers[i] << " -- " << (pol_centers[i] + 0.5f*pol_normals[i]) << " ;" << endl ;
-   // }
-
-   // classify edges according to 'v'
-
-   std::vector<bool> draw_edge ; // for each edge, true iif the edge is front-facing or contour according to 'v'
-
-   for( unsigned ie = 0 ; ie < edges_verts.size() ; ie++ )
-   {
-      
-   }
-
-   // draw all edges (dashed)
-   
-   for( unsigned ie = 0 ; ie < edges_verts.size() ; ie++ )
-   {
-      const Vec2u & ep = edges_pols[ie] ; // get adjacent polygons 
-      const Vec3 & v1 = vertexes[edges_verts[ie](0)],
-                   v2 = vertexes[edges_verts[ie](1)] ;
-      cout << "\\draw[line width=0.1mm,dashed] " << v1 << " -- " << v2 << " ; " << endl ;
-   }
-
-   // draw filled polygons (only front-facing polygons)
-   for( unsigned ip = 0 ; ip < polygons.size() ; ip++ )
-      if ( 0.0 < pol_normals[ip].dot( v ) )
-      {
-         cout << "\\fill[fill=gray,opacity=0.1] " << endl ;
-         polygons[ip].write_coords( vertexes ); 
-         cout << " -- cycle ;" << endl << endl ;
-      }
-   
-
-   // draw again, but only front facing or contour edges 
-
-   
-}
-
-void arrow3( const Vec3 & org, const Vec3 & dest, const std::string & style, const std::string & end_node  )
-{
-   using namespace std ;
-   cout << "\\draw[->,>=latex," << style << "]" << endl 
-      << "         "<< org << " -- " << dest << " " << end_node << " ;" << endl ;
-}
-void segment( const Vec3 & org, const Vec3 & dest, const std::string & style, const std::string & end_node  )
+void line( const Vec3 & org, const Vec3 & dest, const std::string & style, const std::string & end_node  )
 {
    using namespace std ;
    cout << "\\draw[" << style << "]" << endl 
       << "         "<< org << " -- " << dest << " " << end_node << " ;" << endl ;
 }
+// ----------------------------------------------------------------------
 
 void axes()
 {
-   
-   arrow3( {0,0,0}, {1,0,0}, "color=red,line width=0.1mm", "node[right] {$\\vux_c$}" );
-   arrow3( {0,0,0}, {0,1,0}, "color=green!50!black,line width=0.1mm", "node[above] {$\\vuy_c$}" );
-   arrow3( {0,0,0}, {0,0,1}, "color=blue,line width=0.1mm", "node[above] {$\\vuz_c$}" );
+   const std::string lw = "line width=0.16mm" ;
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_c$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_c$}" );
+   line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_c$}" );
 }
 
+// **********************************************************************
+// main
+// ----------------------------------------------------------------------
 
 int main( int argc, char *argv[] )
 {
@@ -297,12 +349,12 @@ int main( int argc, char *argv[] )
       r = -l,
       b = 0.7*l,
       t = -b ,
-      n = 1.5,
+      n = 1.0,
       f = 3.0;
-
-   auto fm = FrustumMesh { l, r, b, t, n, f };
-
-   //cout << "// " << fm.polygons[0][0] << " ?? " << endl ;
+   auto  
+      fm = FrustumMesh { l, r, b, t, n, f };
+   const Vec3 
+      view_vec = { 1, 1, 1 };
 
    cout
       << "\\definecolor{verde}{rgb}{0,0.3,0}" << endl 
@@ -314,15 +366,34 @@ int main( int argc, char *argv[] )
       // << "                             z={(-1.0cm,0.0cm)}}} " << endl
       << "\\begin{tikzpicture}[scale=2.5,isometrico]" << endl ;
 
+   // classify edges according to 'v'
+   std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
+   fm.compute_edges_types( view_vec, edges_types ) ;
+
+   //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
+
+   // draw frustum back-facing edges (dashed)
+   fm.draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
+
+   // draw frustum filled front-facing polygons
+   fm.draw_filled_ff_pols( view_vec, "fill=gray,opacity=0.2" );
+
+   // draw frustum front facing and contour edges
+   fm.draw_edges_type( 2, "line width=0.10mm,color=black", edges_types ); // front facing edges
+   fm.draw_edges_type( 1, "line width=0.16mm,color=black", edges_types ); // contour edges (thicker)
+
+   // draw line along Z- axis from origin to center of front face on the near plane
+   line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
+
+   // draw axes
    axes();
-   segment( {0,0,2}, {0,0,-n}, "line width=0.1mm,color=blue", "" );
-   //segment( {0,0,-n}, {0,0,-f}, "dashed,line width=0.07mm,color=blue", "" );
-   fm.draw( Vec3 {1.0,1.0,1.0} );
    
-   segment( {0,0,0}, {l,t,-n}, "line width=0.05mm,color=gray", "" );
-   segment( {0,0,0}, {r,t,-n}, "line width=0.05mm,color=gray", "" );
-   segment( {0,0,0}, {l,b,-n}, "line width=0.05mm,color=gray", "" );
-   segment( {0,0,0}, {r,b,-n}, "line width=0.05mm,color=gray", "" );
+   // draw projectors from origin towards frustum edges
+   const std::string & st = "line width=0.05mm,color=gray" ;
+   line( {0,0,0}, {l,t,-n}, st, "" );
+   line( {0,0,0}, {r,t,-n}, st, "" );
+   line( {0,0,0}, {l,b,-n}, st, "" );
+   line( {0,0,0}, {r,b,-n}, st, "" );
 
    
 
