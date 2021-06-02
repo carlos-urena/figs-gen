@@ -54,8 +54,6 @@ int main( int argc, char *argv[] )
 
    //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
 
-   
-
    // draw frustum back-facing edges (dashed)
    cm.draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
 
@@ -70,15 +68,9 @@ int main( int argc, char *argv[] )
    line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
 
    // draw axes
-   axes();
+   axes("{\\mbox{\\hspace*{-.22mm}\\small c}}");
    
-   // // draw projectors from origin towards frustum edges
-   // const std::string & st = "line width=0.07mm,color=gray,dashed" ;
-   // line( {0,0,0}, {l,t,-n}, st, "" );
-   // line( {0,0,0}, {r,t,-n}, st, "" );
-   // line( {0,0,0}, {l,b,-n}, st, "" );
-   // line( {0,0,0}, {r,b,-n}, st, "" );
-
+   
    for( auto &iv : {0,1,2,3} )
       cout << "\\fill[fill=blue] " << cm.vertexes[iv] << " circle [radius=0.15mm];" << endl ;
 

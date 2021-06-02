@@ -70,7 +70,7 @@ int main( int argc, char *argv[] )
    line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
 
    // draw axes
-   axes();
+   axes( "{\\mbox{c}}" );
    
    // draw projectors from origin towards frustum edges
    const std::string & st = "line width=0.07mm,dashed,color=gray" ;

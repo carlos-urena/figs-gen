@@ -362,13 +362,15 @@ void line( const Vec3 & org, const Vec3 & dest, const std::string & style, const
 }
 // ----------------------------------------------------------------------
 
-void axes()
+void axes( const std::string & subscript )
 {
    const std::string lw = "line width=0.16mm" ;
-   cout << "\\fill (0,0) circle [radius=0.11mm];" << endl ;
-   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_c$}" );
-   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_c$}" );
-   line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_c$}" );
+   
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
+   line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_" + subscript + "$}" );
+   cout << "\\fill (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
+   
 }
 
 
