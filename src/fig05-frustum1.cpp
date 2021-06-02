@@ -64,7 +64,7 @@ int main( int argc, char *argv[] )
 
    // draw frustum front facing and contour edges
    fm.draw_edges_type( 2, "line width=0.10mm,color=black", edges_types ); // front facing edges
-   fm.draw_edges_type( 1, "line width=0.16mm,color=black", edges_types ); // contour edges (thicker)
+   fm.draw_edges_type( 1, "line width=0.22mm,color=black", edges_types ); // contour edges (thicker)
 
    // draw line along Z- axis from origin to center of front face on the near plane
    line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
@@ -73,7 +73,7 @@ int main( int argc, char *argv[] )
    axes();
    
    // draw projectors from origin towards frustum edges
-   const std::string & st = "line width=0.05mm,color=gray" ;
+   const std::string & st = "line width=0.07mm,dashed,color=gray" ;
    line( {0,0,0}, {l,t,-n}, st, "" );
    line( {0,0,0}, {r,t,-n}, st, "" );
    line( {0,0,0}, {l,b,-n}, st, "" );
@@ -100,10 +100,6 @@ int main( int argc, char *argv[] )
    cout << "\\path " << fm.vertexes[7] << " node[red,anchor=west] {$(sr,st,-f)$} ;" << endl ;
 
    cout << "\\path " << (fm.vertexes[5]+Vec3(0.0,-0.5,0.0)) << " node[anchor=east] {$s\\,=\\,f/n$} ;" << endl ;
-
-   
-
-   
 
    cout 
       << "\\end{tikzpicture}"

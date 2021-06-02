@@ -5,6 +5,10 @@
 cc_opts=-std=c++11 -Wfatal-errors -I.
 latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-error  --jobname borrar
 
+
+v6: fig06-cuboid1.pdf	
+	open -a skim $<
+
 v5: fig05-frustum1.pdf	
 	open -a skim $<
 

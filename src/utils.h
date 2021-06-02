@@ -220,7 +220,7 @@ class IndPolMesh
    // ------------------------------------------------------------
    // draw edges, but only of a given type
 
-    void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   )
+   void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   )
    {
       assert( type < 4 );
 
@@ -236,7 +236,7 @@ class IndPolMesh
    }
    // ------------------------------------------------------------
    // draw normals, usually for debugging, uses 'pol_centers' and 'pol_normals' 
-    void draw_normals( const float len, const std::string & style  )
+   void draw_normals( const float len, const std::string & style  )
    {
       assert( pol_centers.size() == polygons.size() );
       assert( pol_normals.size() == polygons.size() );
@@ -281,6 +281,54 @@ class FrustumMesh : public IndPolMesh
          // vertexes on the far plane
          { lf, bf, -f }, { rf, bf, -f },
          { lf, tf, -f }, { rf, tf, -f },   
+      };
+
+      polygons = 
+      {  
+         {4,5,7,6}, // far (back) polygon 
+         {0,4,6,2}, // left side polygon 
+         {0,1,5,4},  // bottom polygon 
+
+         {0,2,3,1}, // near (front) plane polygon 
+         {1,3,7,5}, // right side polygon 
+         {2,6,7,3}, // top polygon 
+      } ;
+
+      // inits normals, edges, etc....
+      init_tables();
+
+   }
+
+   
+} ; // class frustum mesh 
+
+
+// **********************************************************************
+// Class cuboid mesh
+// ----------------------------------------------------------------------
+
+class CuboidMesh : public IndPolMesh 
+{
+   public:
+   CuboidMesh(  const float l, const float r, 
+                const float b, const float t,
+                const float n, const float f   )
+   {
+      assert( 0 < n );
+      assert( n < f );
+
+      
+      cout << "%%%%% cuboid b = " << b << endl ;
+
+      vertexes =
+      {  
+         // vertexes on the near plane
+         { l, b, -n }, { r, b, -n },
+         { l, t, -n }, { r, t, -n },
+
+         // vertexes on the far plane
+         { l, b, -f }, { r, b, -f },
+         { l, t, -f }, { r, t, -f },   
       };
 
       polygons = 
