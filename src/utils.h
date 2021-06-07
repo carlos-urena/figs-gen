@@ -171,7 +171,7 @@ class IndPolMesh
    // classify edges according to 'v' (view vector), using polygons normals
    // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
 
-    void compute_edges_types( const Vec3 & v, std::vector<unsigned> & edges_types  )
+   void compute_edges_types( const Vec3 & v, std::vector<unsigned> & edges_types  ) const 
    {
       edges_types.clear();
 
@@ -205,9 +205,9 @@ class IndPolMesh
    // ------------------------------------------------------------
    // draw filled front facing polygons 
 
-    void draw_filled_ff_pols( const Vec3 & view_vec, const std::string &style  )
+   void draw_filled_ff_pols( const Vec3 & view_vec, const std::string &style  ) const 
    {
-      cout << endl << "%% front facing polygons" << endl ;
+      cout << endl << "%% front facing polygons, filled" << endl ;
       for( unsigned ip = 0 ; ip < polygons.size() ; ip++ )
       if ( 0.0 < pol_normals[ip].dot( view_vec ) )
       {
@@ -218,9 +218,29 @@ class IndPolMesh
    }
 
    // ------------------------------------------------------------
+   // draw filled front facing polygons 
+
+   void draw_filled_shaded_ff_pols( const Vec3 & view_vec, const Vec3 & light_vec  ) const 
+   {
+      assert( pol_normals.size() == polygons.size() );
+      const Vec3 light_n = light_vec.normalized() ;
+
+      cout << endl << "%% front facing polygons, filled & shaded" << endl ;
+      for( unsigned ip = 0 ; ip < polygons.size() ; ip++ )
+      if ( 0.0 < pol_normals[ip].dot( view_vec ) )
+      {
+         const float d = std::max( 0.0f, light_n.dot( pol_normals[ip] ) ),
+                     perc_f = std::trunc(100.0*(0.4+0.6*d)) ;
+         cout << "\\fill[" << "white!" << unsigned(perc_f) << "!black,opacity=0.3" << "] " << endl ;
+         polygons[ip].write_coords( vertexes ); 
+         cout << " -- cycle ;" << endl << endl ;
+      }
+   }
+
+   // ------------------------------------------------------------
    // draw edges, but only of a given type
 
-   void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   )
+   void draw_edges_type( const unsigned type, const std::string & style, const std::vector<unsigned> edges_types   ) const 
    {
       assert( type < 4 );
 
@@ -236,7 +256,7 @@ class IndPolMesh
    }
    // ------------------------------------------------------------
    // draw normals, usually for debugging, uses 'pol_centers' and 'pol_normals' 
-   void draw_normals( const float len, const std::string & style  )
+   void draw_normals( const float len, const std::string & style  ) const 
    {
       assert( pol_centers.size() == polygons.size() );
       assert( pol_normals.size() == polygons.size() );
@@ -245,6 +265,28 @@ class IndPolMesh
       for( unsigned i = 0 ; i < polygons.size() ; i++ )
          cout << "\\draw[" << style << "] "  << " " << pol_centers[i] << " -- " << (pol_centers[i] + len*pol_normals[i]) << " ;" << endl ;
       
+   }
+   // ------------------------------------------------------------
+   // draw the mesh by using a particular style, named as 'style 1'
+
+   void draw_style_1( const Vec3 & view_vec ) const 
+   {
+      // classify edges according to 'v'
+      std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
+      compute_edges_types( view_vec, edges_types ) ;
+
+      //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
+
+      // draw frustum back-facing edges (dashed)
+      draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
+
+      // draw frustum filled front-facing polygons
+      //draw_filled_ff_pols( view_vec, "fill=gray,opacity=0.2" );
+      draw_filled_shaded_ff_pols( view_vec, { 1.0f, 3.0f, 2.0f} );
+
+      // draw frustum front facing and contour edges
+      draw_edges_type( 2, "line width=0.10mm,color=black", edges_types ); // front facing edges
+      draw_edges_type( 1, "line width=0.22mm,color=black", edges_types ); // contour edges (thicker)
    }
    
 } ;

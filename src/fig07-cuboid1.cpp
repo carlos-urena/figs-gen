@@ -48,21 +48,8 @@ int main( int argc, char *argv[] )
       // << "                             z={(-1.0cm,0.0cm)}}} " << endl
       << "\\begin{tikzpicture}[scale=4,isometrico]" << endl ;
 
-   // classify edges according to 'v'
-   std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
-   cm.compute_edges_types( view_vec, edges_types ) ;
-
-   //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
-
-   // draw frustum back-facing edges (dashed)
-   cm.draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
-
-   // draw frustum filled front-facing polygons
-   cm.draw_filled_ff_pols( view_vec, "fill=gray,opacity=0.2" );
-
-   // draw frustum front facing and contour edges
-   cm.draw_edges_type( 2, "line width=0.10mm,color=black", edges_types ); // front facing edges
-   cm.draw_edges_type( 1, "line width=0.25mm,color=black", edges_types ); // contour edges (thicker)
+   // draw the cuboid mesh
+   cm.draw_style_1( view_vec );
 
    // draw line along Z- axis from origin to center of front face on the near plane
    line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
