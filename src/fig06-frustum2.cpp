@@ -44,7 +44,7 @@ int main( int argc, char *argv[] )
       // << "                             z={(-1.0cm,0.0cm)}}} " << endl
       << "\\begin{tikzpicture}[scale=4,isometrico]" << endl ;
 
-   fm.draw_style_1( view_vec );
+   fm.draw_style_2( view_vec );
 
    // draw line along Z- axis from origin to center of front face on the near plane
    //line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
@@ -52,17 +52,16 @@ int main( int argc, char *argv[] )
    // lines marking the width and heigth of frustum front face
 
    // width:
-   line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.1mm,dashed,color=black!80!blue", "" );
-   line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.1mm,dashed,color=black!80!blue", "" );
-   line( {l,b-0.3,-n}, {r,b-0.3,-n}, "<->,>=latex,line width=0.15mm,color=white!40!blue", " node[pos=0.5,below] {$w$}" );
+   line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {l,b-0.3,-n}, {r,b-0.3,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2w$}" );
   
    // height
-   line( {l-0.4,b,-n}, {l,b,-n}, "line width=0.1mm,dashed,color=black!80!blue", "" );
-   line( {l-0.4,t,-n}, {l,t,-n}, "line width=0.1mm,dashed,color=black!80!blue", "" );
-   line( {l-0.25,b,-n},{l-0.25,t,-n}, "<->,>=latex,line width=0.15mm,color=white!40!blue", " node[pos=0.5,left] {$h$}" );
+   line( {l-0.4,b,-n}, {l,b,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {l-0.4,t,-n}, {l,t,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {l-0.25,b,-n},{l-0.25,t,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2h$}" );
 
-
-    // angulo relleno correspondiente a hfovy
+   // angulo relleno correspondiente a hfovy
    const unsigned ns = 16 ;
    const float    hfovy_ang_rad = 2.0*std::atan2(0.5*(t-b),n) , 
                   hfovy_radius  = 0.5 ;
@@ -76,13 +75,29 @@ int main( int argc, char *argv[] )
    }
    cout << "         cycle   ;" << endl;
 
-   //
+   //line( {0.0,0.0,0.0}, {0.0,0.0,-n}, "line width=0.15mm,color=red!50!blue", "" );
+
+   // 'beta' (hfovy) label
    cout << "    \\path " << Vec3{0.0,0.0,-hfovy_radius*1.15} << " node[anchor=center] {$\\beta$};" << endl ; 
 
    // lines on sides (and in front) of hfovy arc 
    line( {0.0,0.0,0.0}, {0.0,b,-n}, "line width=0.15mm,color=black", "" );
    line( {0.0,0.0,0.0}, {0.0,t,-n}, "line width=0.15mm,color=black", "" );
    line( {0.0,b,-n}, {0.0,t,-n}, "line width=0.15mm,color=black", "" );
+
+   // expresions for w,h,r,l,b,t .... ??
+
+   cout << "     \\path " << Vec3{0.0,1.0,1.0} << endl 
+        << "         node[anchor=center] {$\\begin{aligned}" << endl 
+        << "           h\\,&=\\,n\\tan(\\beta/2) \\\\" << endl 
+        << "           w\\,&=\\,hr \\\\" << endl 
+        << "           l\\,&=-w \\\\" << endl 
+        << "           r\\,&=+w \\\\" << endl
+        << "           b\\,&=-h \\\\" << endl
+        << "           t\\,&=+h " << endl
+        << "      \\end{aligned}$};" << endl ;
+
+
 
   
 
