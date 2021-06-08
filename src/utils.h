@@ -425,6 +425,13 @@ void line( const Vec3 & org, const Vec3 & dest, const std::string & style, const
    cout << "\\draw[" << style << "]" << endl 
       << "         "<< org << " -- " << dest << " " << end_node << " ;" << endl ;
 }
+
+void disk( const Vec3 & center, const std::string & color, const std::string & style, const std::string & node )
+{
+   using namespace std ;
+   cout << "\\fill[fill=" << color << "] " << center << " circle[" << style << "] "<< node << ";" << endl ;
+
+}
 // ----------------------------------------------------------------------
 
 void axes( const std::string & subscript )
@@ -434,7 +441,8 @@ void axes( const std::string & subscript )
    line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
    line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
    line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_" + subscript + "$}" );
-   cout << "\\fill (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto_" + subscript + "$}" );
+   //cout << "\\fill[fill=black] (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
    
 }
 

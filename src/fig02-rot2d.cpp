@@ -63,7 +63,7 @@ int main( int argc, char *argv[] )
       << "\\draw[->,>=latex,color=black,line width=0.4mm] " << endl 
       << "      (0,0) " << endl 
       << "      --  +("<< (u_angle_deg+theta_deg) << ":" << radius << ")" << endl 
-      << "      node[anchor=south west] {$\\flw\\,=\\,(\\cos\\theta)\\flu\\,+\\,(\\sin\\theta)\\flv$} ;" << endl
+      << "      node[anchor=south west] {$\\flt\\,=\\,(\\cos\\theta)\\flu\\,+\\,(\\sin\\theta)\\flv$} ;" << endl
       << "\\draw[->,>=latex,color=red,line width=0.2mm] " << endl 
       << "      (0,0) " << endl 
       << "       --  +("<< u_angle_deg << ":" << radius_u << ") " << endl 

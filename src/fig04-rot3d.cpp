@@ -1,9 +1,11 @@
 
 #include <iostream>
 #include <vec_mat.h>
+#include <utils.h>
 
 using namespace std ;
 using namespace vec_mat ;
+using namespace utils ;
 
 
 int main( int argc, char *argv[] )
@@ -90,7 +92,7 @@ int main( int argc, char *argv[] )
       
       // vector 't'
       << "   \\draw[->,>=latex,color=blue,line width=0.2mm]" << endl 
-      << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\flt$} ;" << endl
+      << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\flw$} ;" << endl
       
       // vector 's'
       << "   \\draw[->,>=latex,color=black,line width=0.2mm]" << endl 
@@ -116,7 +118,7 @@ int main( int argc, char *argv[] )
 
       // vector 'w'
       << "   \\draw[->,>=latex,color=blue,line width=0.25mm]" << endl 
-      << "         (0,0,0) -- " << w << " node[right,anchor=west] {$\\flw\\,=\\,(\\cos\\theta)\\flu+(\\sin\\theta)\\flv$} ;" << endl
+      << "         (0,0,0) -- " << w << " node[right,anchor=west] {$\\flt\\,=\\,(\\cos\\theta)\\flu+(\\sin\\theta)\\flv$} ;" << endl
       
       // vector 'e'
       << "   \\draw[->,>=latex,color=black,line width=0.2mm]" << endl 
@@ -131,16 +133,19 @@ int main( int argc, char *argv[] )
       // expresion for the rotated vector (upper left)
       << "   \\path ( 0," << 1.5*v(Y) << ","<< t(Z) << ") " << endl 
       << "         node[anchor=center] {$\\begin{aligned} " << endl 
-      << "             R_{\\theta}(\\fls)\\,&=\\,R_{\\theta}(\\flt+\\flu)\\\\" << endl
-      << "                                  &=\\,\\flt+R_{\\theta}(\\flu)\\\\" << endl 
+      << "             R_{\\theta}(\\fls)\\,&=\\,R_{\\theta}(\\flu+\\flw)\\\\" << endl
+      << "                                  &=\\,R_{\\theta}(\\flu)+\\flw\\\\" << endl 
       << "                                  &=\\,\\flt+\\flw " << endl 
-      << "         \\end{aligned}$};" << endl
-
+      << "         \\end{aligned}$};" << endl 
       // expresion for rotated vector (bottom right)
       << "   \\path "<< endl
       << "         (" << 1.3*s(X) << "," << s(Y) << "," << 0.8*s(Z) << ")" << endl 
       << "         node[right,anchor=west] " << endl
-      << "         {$R_{\\theta}(\\fls)\\,=\\,\\flt+(\\cos\\theta)\\flu+(\\sin\\theta)\\flv$} ;" << endl 
+      << "         {$R_{\\theta}(\\fls)\\,=\\,(\\cos\\theta)\\flu+(\\sin\\theta)\\flv+\\flw$} ;" << endl ;
+
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto$}" );
+
+   cout 
       << "\\end{tikzpicture}" << endl
       << endl ;
 

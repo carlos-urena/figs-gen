@@ -1,9 +1,11 @@
 
 #include <iostream>
 #include <vec_mat.h>
+#include <utils.h>
 
 using namespace std ;
 using namespace vec_mat ;
+using namespace utils ;
 
 
 int main( int argc, char *argv[] )
@@ -34,8 +36,7 @@ int main( int argc, char *argv[] )
       << "   \\draw[color=gray,line width=0.1mm]" << endl 
       << "         " << -e << " -- " << 2.0f*e << "  ;"
       << "   \\draw[->,>=latex,color=blue,line width=0.2mm]" << endl 
-      // << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\fls-\\flu\\,=\\,\\flt$} ;" << endl
-      << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\flt$} ;" << endl
+      << "         (0,0,0) -- " << t << " node[above,anchor=south east] {$\\flw$} ;" << endl
       << "   \\draw[->,>=latex,color=black,line width=0.2mm]" << endl 
       << "         (0,0,0) -- " << s << " node[near end,above,anchor=south east] {$\\fls$} ;" << endl
       << "   \\draw[->,>=latex,color=blue,line width=0.25mm]" << endl 
@@ -57,10 +58,13 @@ int main( int argc, char *argv[] )
       << "         " << u << " -- " << s << " ;" << endl
       << "   \\path ( 0," << 1.5*v(Y) << ","<< t(Z) << ") " << endl 
       << "         node[anchor=center,color=blue] {$\\begin{aligned} " << endl 
-      << "             \\flt\\,&=\\,\\fls-\\flu\\\\" << endl
+      << "             \\flw\\,&=\\,\\fls-\\flu\\\\" << endl
       << "                     &=\\,\\fls+P_{\\vue}^2(\\fls)\\\\" << endl 
       << "                    & \\color{verde}=\\,(\\fls\\cdot\\vue)\\vue" << endl
-      << "         \\end{aligned}$};" << endl
+      << "         \\end{aligned}$};" << endl ;
+      
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto$}" );
+   cout 
       << "\\end{tikzpicture}" << endl
       << endl ;
 
