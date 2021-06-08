@@ -29,7 +29,7 @@ v1: fig01-perp2d.pdf
 v0: fig00-test.pdf
 	open -a skim $<
 
-all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf
+all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf fig05-frustum1.pdf fig06-frustum2.pdf fig07-cuboid1.pdf
 	open -a skim *.pdf
 
 fig%.pdf: fig%.tex header.tex footer.tex

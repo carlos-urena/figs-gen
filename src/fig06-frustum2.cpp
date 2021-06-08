@@ -51,6 +51,19 @@ int main( int argc, char *argv[] )
 
    // lines marking the width and heigth of frustum front face
 
+   // filled triangle with 'beta' arc and bisectriz
+
+   cout << "\\draw[color=black!70!white,line width=0.1mm] (" << l << ",0," << -n << ") -- (" << r << ",0," << -n << ") ;" << endl ;
+
+   cout 
+      << "\\fill[fill=white,opacity=0.7] "<< endl 
+      << "       (0,0,0) " << endl 
+      << "      -- " << Vec3 {0.0,b,-n} << endl 
+      << "      -- " << Vec3 {0.0,t,-n} << endl 
+      << "      -- cycle ;" << endl 
+      << "\\draw[color=black!30!white,line width=0.1mm] (0,0,0) -- (0,0," << -n << ") -- (" << r << ",0," << -n << ") ;" << endl ;
+
+   
    // width:
    line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
    line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
