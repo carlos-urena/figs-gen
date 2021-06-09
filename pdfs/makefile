@@ -2,11 +2,12 @@
 ##.SECONDARY:
 .PHONY: x0, test
 
-cc_opts=-std=c++11 -Wfatal-errors -I.
-latex_opts=-shell-escape -interaction nonstopmode --halt-on-error -file-line-error  --jobname borrar
-pdfs:=../pdfs
+cc_opts=-std=c++11 -Wfatal-errors -I$(src)
+src=../src
+latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-error  --jobname borrar
 
-v8: fig01-persp1.pdf	
+
+v8: fig08-persp1.pdf	
 	open -a skim $<
 
 v7: fig07-cuboid1.pdf	
@@ -36,16 +37,16 @@ v0: fig00-test.pdf
 all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf fig05-frustum1.pdf fig06-frustum2.pdf fig07-cuboid1.pdf
 	open -a skim *.pdf
 
-fig%.pdf: fig%.tex header.tex footer.tex
+fig%.pdf: fig%.tex $(src)/header.tex $(src)/footer.tex
 	rm -rf borrar.*
-	pdflatex $(latex_opts) $<
+	TEXINPUTS=../src ; pdflatex $(latex_opts) $<
 	mv borrar.pdf $@
 	rm -rf borrar.*
 
 fig%.tex : fig%_exe makefile
 	./$< > $@
 	
-fig%_exe : fig%.cpp vec_mat.h utils.h makefile
+fig%_exe : $(src)/fig%.cpp $(src)/vec_mat.h $(src)/utils.h makefile
 	g++ $(cc_opts) -o $@  $<
 
 

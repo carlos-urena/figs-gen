@@ -10,7 +10,7 @@ int main( int argc, char *argv[] )
 
    cout 
       << "\\documentclass[border=1mm]{standalone}" << endl 
-      << "\\input{header.tex}" << endl ;
+      << "\\input{../src/header.tex}" << endl ;
    
    const Vec2 
       u           = { 3.2, 1.4 } ,

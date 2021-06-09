@@ -15,7 +15,7 @@ int main( int argc, char *argv[] )
 
    cout 
       << "\\documentclass[border=1mm]{standalone}" << endl 
-      << "\\input{header.tex}" << endl ;
+      << "\\input{../src/header.tex}" << endl ;
 
    const float 
       theta_deg = 35.0 ,
