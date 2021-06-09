@@ -315,6 +315,28 @@ class IndPolMesh
 } ;
 
 // **********************************************************************
+// Class InstancedMesh 
+// ----------------------------------------------------------------------
+
+class InstancedMesh : public IndPolMesh 
+{
+   public:
+   InstancedMesh( const IndPolMesh orig, const Mat4 & mat )
+   {
+
+      for( unsigned iv = 0 ; iv < orig.vertexes.size() ; iv++ )
+      {
+         Vec3 vtr = mat*(orig.vertexes[iv]);
+         vertexes.push_back( vtr ) ;
+      }
+      for( unsigned ip = 0 ; ip < orig.polygons.size() ; ip++ )
+         polygons.push_back( orig.polygons[ip] ) ;
+
+      init_tables();
+   }
+} ;
+
+// **********************************************************************
 // Class frustum mesh
 // ----------------------------------------------------------------------
 
@@ -414,6 +436,37 @@ class CuboidMesh : public IndPolMesh
 
    
 } ; // class frustum mesh 
+
+// **********************************************************************
+// Class MurosCasita
+// ----------------------------------------------------------------------
+
+class MurosCasita : public IndPolMesh
+{
+   public:
+   MurosCasita( const float f )
+   {
+      
+      const float sx = 1.0, sy = 1.0, sz = 1.0 ;
+
+      vertexes = 
+      {
+         { 0.0, 0.0, 0.0 }, { sx, 0.0, 0.0 }, { sx, sy, 0.0 }, { sx/2.0, sy*f, 0.0 }, { 0.0, sy, 0.0 },
+         { 0.0, 0.0, sz  }, { sx, 0.0, sz  }, { sx, sy, sz  }, { sx/2.0, sy*f, sz  }, { 0.0, sy, sz  },
+      } ;
+
+      polygons = 
+      {
+         {0,1,2,3,4}, { 9,8,7,6,5},  // delantero, trasero
+         {1,6,7,2},  {4,9,5,0},      // derecho, izquierdo
+         {2,7,8,3},  {4,3,8,9},       // tejado derecho, tejado izquierdo
+         {5,6,1,0} // suelo
+      } ;
+
+      init_tables();
+   }
+
+} ;
 
 // **********************************************************************
 // aux funcs
