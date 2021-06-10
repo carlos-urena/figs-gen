@@ -520,24 +520,31 @@ void isometric_proj( const Vec3 & view_vec_nn )
 {
    const float lsq = view_vec_nn.lengthSq()  ;
    assert( lsq >  1e-2 );
-   const Vec3 view_vec = view_vec_nn/ std::sqrtf( lsq ) ;
+   const Vec3 view_vec   = view_vec_nn/ std::sqrtf( lsq ) ;
    const Vec3 cam_z_axis = view_vec ;
    const Vec3 cam_x_axis = (Vec3(0.0,1.0,0.0).cross( view_vec )).normalized() ;
    const Vec3 cam_y_axis = (cam_z_axis.cross( cam_x_axis )).normalized();
 
    cerr << " z axis == " << cam_z_axis << endl ;
-   cerr << "x·y == " << cam_x_axis.dot( cam_y_axis ) << endl ;
+   
    cerr << "x·x == " << cam_x_axis.dot( cam_x_axis ) << endl ;
-
-   cerr << "y·z == " << cam_y_axis.dot( cam_z_axis ) << endl ;
    cerr << "y·y == " << cam_y_axis.dot( cam_y_axis ) << endl ;
-
-   cerr << "z·x == " << cam_z_axis.dot( cam_x_axis ) << endl ;
    cerr << "z·z == " << cam_z_axis.dot( cam_z_axis ) << endl ;
 
-   const auto xa = Vec2 { cam_x_axis(0), cam_x_axis(1) } ;
-   const auto ya = Vec2 { cam_y_axis(0), cam_y_axis(1) } ;
-   const auto za = Vec2 { cam_z_axis(0), cam_z_axis(1) } ;
+   cerr << "x·y == " << cam_x_axis.dot( cam_y_axis ) << endl ;
+   cerr << "y·z == " << cam_y_axis.dot( cam_z_axis ) << endl ;
+   cerr << "z·x == " << cam_z_axis.dot( cam_x_axis ) << endl ;
+
+   const auto xa = Vec2 { cam_x_axis(0), cam_y_axis(0) } ;
+   const auto ya = Vec2 { cam_x_axis(1), cam_y_axis(1) } ;
+   const auto za = Vec2 { cam_x_axis(2), cam_y_axis(2) } ;
+
+
+   cerr 
+      << "xa == " << xa << endl 
+      << "ya == " << ya << endl 
+      << "za == " << za << endl ;
+        
 
    cout << "\\tikzset{isometric_proj/.style={x={" << xa << "}, y={" << ya << "}, z={" << za << "}}} " << endl ;
 }
