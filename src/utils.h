@@ -326,8 +326,11 @@ class InstancedMesh : public IndPolMesh
 
       for( unsigned iv = 0 ; iv < orig.vertexes.size() ; iv++ )
       {
-         Vec3 vtr = mat*(orig.vertexes[iv]);
-         vertexes.push_back( vtr ) ;
+         Vec3 vo   = orig.vertexes[iv] ;
+         Vec4 vt   = mat * Vec4{ vo(X), vo(Y), vo(Z), 1.0 };
+         const float w = vt(3) ;
+
+         vertexes.push_back( (1.0f/w)*Vec3{ vt(X), vt(Y), vt(Z)} ) ;
       }
       for( unsigned ip = 0 ; ip < orig.polygons.size() ; ip++ )
          polygons.push_back( orig.polygons[ip] ) ;
@@ -397,25 +400,23 @@ class FrustumMesh : public IndPolMesh
 class CuboidMesh : public IndPolMesh 
 {
    public:
-   CuboidMesh(  const float l, const float r, 
-                const float b, const float t,
-                const float n, const float f   )
+   CuboidMesh(  const float x0, const float x1, 
+                const float y0, const float y1,
+                const float z0, const float z1   )
    {
-      assert( 0 < n );
-      assert( n < f );
-
-      
-      cout << "%%%%% cuboid b = " << b << endl ;
+      assert( x0 < x1 );
+      assert( y0 < y1 );
+      assert( z0 < z1 );
 
       vertexes =
       {  
-         // vertexes on the near plane
-         { l, b, -n }, { r, b, -n },
-         { l, t, -n }, { r, t, -n },
+         // vertexes on the near plane (on z==z1, the max value in Z)
+         { x0, y0, z1 }, { x1, y0, z1 },
+         { x0, y1, z1 }, { x1, y1, z1 },
 
-         // vertexes on the far plane
-         { l, b, -f }, { r, b, -f },
-         { l, t, -f }, { r, t, -f },   
+         // vertexes on the far plane (on z==z0, the min value in Z)
+         { x0, y0, z0 }, { x1, y0, z0 },
+         { x0, y1, z0 }, { x1, y1, z0 },   
       };
 
       polygons = 
@@ -431,7 +432,6 @@ class CuboidMesh : public IndPolMesh
 
       // inits normals, edges, etc....
       init_tables();
-
    }
 
    
@@ -497,6 +497,49 @@ void axes( const std::string & subscript )
    disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto_" + subscript + "$}" );
    //cout << "\\fill[fill=black] (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
    
+}
+
+// ----------------------------------------------------------------------
+
+void axes_z_neg( const std::string & subscript )
+{
+   const std::string lw = "line width=0.16mm" ;
+   
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
+   line( {0,0,0}, {0,0,-1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_" + subscript + "$}" );
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto_" + subscript + "$}" );
+   //cout << "\\fill[fill=black] (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
+   
+}
+
+// ----------------------------------------------------------------------
+
+
+void isometric_proj( const Vec3 & view_vec_nn )
+{
+   const float lsq = view_vec_nn.lengthSq()  ;
+   assert( lsq >  1e-2 );
+   const Vec3 view_vec = view_vec_nn/ std::sqrtf( lsq ) ;
+   const Vec3 cam_z_axis = view_vec ;
+   const Vec3 cam_x_axis = (Vec3(0.0,1.0,0.0).cross( view_vec )).normalized() ;
+   const Vec3 cam_y_axis = (cam_z_axis.cross( cam_x_axis )).normalized();
+
+   cerr << " z axis == " << cam_z_axis << endl ;
+   cerr << "x·y == " << cam_x_axis.dot( cam_y_axis ) << endl ;
+   cerr << "x·x == " << cam_x_axis.dot( cam_x_axis ) << endl ;
+
+   cerr << "y·z == " << cam_y_axis.dot( cam_z_axis ) << endl ;
+   cerr << "y·y == " << cam_y_axis.dot( cam_y_axis ) << endl ;
+
+   cerr << "z·x == " << cam_z_axis.dot( cam_x_axis ) << endl ;
+   cerr << "z·z == " << cam_z_axis.dot( cam_z_axis ) << endl ;
+
+   const auto xa = Vec2 { cam_x_axis(0), cam_x_axis(1) } ;
+   const auto ya = Vec2 { cam_y_axis(0), cam_y_axis(1) } ;
+   const auto za = Vec2 { cam_z_axis(0), cam_z_axis(1) } ;
+
+   cout << "\\tikzset{isometric_proj/.style={x={" << xa << "}, y={" << ya << "}, z={" << za << "}}} " << endl ;
 }
 
 

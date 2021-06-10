@@ -34,7 +34,7 @@ int main( int argc, char *argv[] )
       n = 1.0,
       f = 2.0;
    auto  
-      cm = CuboidMesh { l, r, b, t, n, f };
+      cm = CuboidMesh { l, r, b, t, -f, -n };
    const Vec3 
       view_vec = { 1, 1, 1 };
 

@@ -7,6 +7,9 @@ src=../src
 latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-error  --jobname borrar
 
 
+v9: fig09-persp2.pdf	
+	open -a skim $<
+
 v8: fig08-persp1.pdf	
 	open -a skim $<
 
@@ -39,7 +42,7 @@ all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf fig05-fru
 
 fig%.pdf: fig%.tex $(src)/header.tex $(src)/footer.tex
 	rm -rf borrar.*
-	TEXINPUTS=../src ; pdflatex $(latex_opts) $<
+	pdflatex $(latex_opts) $<
 	mv borrar.pdf $@
 	rm -rf borrar.*
 
