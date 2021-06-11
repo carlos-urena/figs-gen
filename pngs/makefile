@@ -6,7 +6,6 @@ cc_opts=-std=c++11 -Wfatal-errors -I$(src)
 pdfs=../pdfs
 pdftopng=pdftoppm -png -r 500 
 
-
 v9: fig09-persp2.png
 	open $<
 
