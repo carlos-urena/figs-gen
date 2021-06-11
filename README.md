@@ -30,8 +30,9 @@ A scene is shown inside the perspective view frustum, aligned with the camera re
 
 <h2>Figure 7</h2>
 
-A cuboid (or orthoedron) is shown, it is the visible region when an orthographic projection is used. 
-As in fig 5, the coordinates of the cuboid vertexes are shown, in terms of l,r,b,t,n and f.
+A _cuboid_ (or _orthoedron_) is shown, it is the visible region when an orthographic projection is used. 
+As in fig 5, the coordinates of the cuboid vertexes are shown, in terms of _l_,_r_,_b_,_t_,_n_ and _f_. 
+Helps to understand the parameters for `glOrtho` function.
 
 <div align="center">
     <img src="pngs/fig07-cuboid1.png" width="400px"</img> 
@@ -41,7 +42,7 @@ As in fig 5, the coordinates of the cuboid vertexes are shown, in terms of l,r,b
 <h2>Figure 6</h2>
 
 The perspective view-frustum is shown, but here the hfovy angle (beta) is emphasized. It is also shown how to 
-compute l,r,b and t parameters from beta and n,f,a (aspect ratio). This is usefull to understand the parameters 
+compute _l_,_r_,_b_ and _t_ parameters from _beta_,_n_,_f_,_a_ (aspect ratio). This is useful to understand the parameters 
 for `gluPerspective` function. 
 
 <div align="center">
