@@ -41,7 +41,7 @@ As in fig 5, the coordinates of the cuboid vertexes are shown, in terms of l,r,b
 <h2>Figure 6</h2>
 
 The perspective view-frustum is shown, but here the hfovy angle (beta) is emphasized. It is also shown how to 
-compute l,r,b and t parameters from beta and n,f,a (aspect ratio). This is usefull to ubnserstand the parameters 
+compute l,r,b and t parameters from beta and n,f,a (aspect ratio). This is usefull to understand the parameters 
 for `gluPerspective` function. 
 
 <div align="center">
@@ -53,24 +53,50 @@ for `gluPerspective` function.
 The perspective view-frustum is shown, along with the coordinates of its vertexes, in terms of l,r,b,t,n and f. 
 These coordinates are relative to the camera reference system.
 
-
 <div align="center">
     <img src="pngs/fig05-frustum1.png" width="400px"</img> 
 </div>
 
-fig05-frustum1.png	
+
+<h2>Figure 4</h2>
+
+This figure shows how a vector (_s_) is rotated an angle (_beta_) around a unit-length axis vector (_e_). 
+The rotated vector (_t_) is a linear combination of the three vectors (_u_,_v_ and _w_) in the reference frame 
+introduced in previous figure 3.
+
+<div align="center">
+    <img src="pngs/fig04-rot3d.png" width="400px"</img> 
+</div>
 
 
-fig04-rot3d.png
+<h2>Figure 3</h2>
+
+In order to define rotation in 3D, it is neccesary to compute an orthogonal reference frame (_u_,_v_,_w_,_o_) which is 
+aligned with the original vector _s_ and axis _e_. This can be donde by using dot and cross products, but
+it is also possible to obtain the frame by just using the _P_ operator, as shown. 
+
+<div align="center">
+    <img src="pngs/fig03-perp3d.png" width="400px"</img> 
+</div>
 
 
-fig03-perp3d.png
+<h2>Figure 2</h2>
+
+The rotation in 2D is defined by using a combination of the original vector _u_ and its perpendicular vector _v_. This combination 
+uses the _sin_ and _cos_ functions, as shown.
+
+<div align="center">
+    <img src="pngs/fig02-rot2d.png" width="400px"</img> 
+</div>
 
 
-fig02-rot2d.png
+<h2>Figure 1</h2>
+
+In order to define the rotation in 2D, we can introduce the operator _P_, which outputs a perpendicular vector to another given vector. 
+This can be easily done by using the coordinates of the original in a Cartesian coordinate system, as it is shown here.
+
+<div align="center">
+    <img src="pngs/fig01-perp2d.png" width="400px"</img> 
+</div>
 
 
-fig01-perp2d.png
-
-
-fig00-test.png
