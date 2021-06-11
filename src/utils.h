@@ -505,9 +505,9 @@ void axes_z_neg( const std::string & subscript )
 {
    const std::string lw = "line width=0.16mm" ;
    
-   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[below] {$\\vux_" + subscript + "$}" );
    line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
-   line( {0,0,0}, {0,0,-1}, "->,>=latex,color=blue," +lw , "node[above] {$\\vuz_" + subscript + "$}" );
+   line( {0,0,0}, {0,0,-1}, "->,>=latex,color=blue," +lw , "node[right] {$\\vuz_" + subscript + "$}" );
    disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto_" + subscript + "$}" );
    //cout << "\\fill[fill=black] (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
    
