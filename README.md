@@ -12,14 +12,20 @@ Current figures are these:
 
 <h2>Figure 9</h2>
 
-Scene projected onto clip coordinates by using perspective projection
+The scene from fig.8 is shown projected onto the clip coordinates space, by using perspective projection
 
 <div align="center">
     <img src="pngs/fig09-persp2.png" width="400px"</img> 
 </div>
 	
 
-fig08-persp1.png	
+<h2>Figure 8</h2>
+
+A scene is shown inside the perspective view frustum, aligned with the camera reference frame.
+
+<div align="center">
+    <img src="pngs/fig08-persp1.png" width="400px"</img> 
+</div>
 
 
 fig07-cuboid1.png	
