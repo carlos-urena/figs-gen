@@ -34,22 +34,11 @@ int main( int argc, char *argv[] )
    const auto fm       = FrustumMesh { l, r, b, t, n, f };
    const auto view_vec = Vec3 { 1, 1, 1 };
 
-   cout
-      << "\\definecolor{verde}{rgb}{0,0.3,0}" << endl 
-      << "\\tikzset{isometrico/.style={x={(0.7cm,-0.45cm)},   " << endl
-      << "                             y={(0.0cm,0.95cm)},     " << endl
-      << "                             z={(-0.7cm,-0.45cm)}}} " << endl
-      // << "\\tikzset{isometrico/.style={x={(0.0cm,-0.0cm)},   " << endl
-      // << "                             y={(0.0cm,0.95cm)},     " << endl
-      // << "                             z={(-1.0cm,0.0cm)}}} " << endl
-      << "\\begin{tikzpicture}[scale=4,isometrico]" << endl ;
+   define_isometric_proj( view_vec );
+   
+   cout << "\\begin{tikzpicture}[scale=4,isometric_proj]" << endl ;
 
    fm.draw_style_2( view_vec );
-
-   // draw line along Z- axis from origin to center of front face on the near plane
-   //line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
-
-   // lines marking the width and heigth of frustum front face
 
    // filled triangle with 'beta' arc and bisectriz
 
@@ -63,7 +52,7 @@ int main( int argc, char *argv[] )
       << "      -- cycle ;" << endl 
       << "\\draw[color=black!30!white,line width=0.1mm] (0,0,0) -- (0,0," << -n << ") -- (" << r << ",0," << -n << ") ;" << endl ;
 
-   
+   // lines marking the width and heigth of frustum front face
    // width:
    line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
    line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );

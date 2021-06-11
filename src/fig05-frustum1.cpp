@@ -34,15 +34,9 @@ int main( int argc, char *argv[] )
    const auto fm       = FrustumMesh { l, r, b, t, n, f };
    const auto view_vec = Vec3 { 1, 1, 1 };
 
-   cout
-      << "\\definecolor{verde}{rgb}{0,0.3,0}" << endl 
-      << "\\tikzset{isometrico/.style={x={(0.7cm,-0.45cm)},   " << endl
-      << "                             y={(0.0cm,0.95cm)},     " << endl
-      << "                             z={(-0.7cm,-0.45cm)}}} " << endl
-      // << "\\tikzset{isometrico/.style={x={(0.0cm,-0.0cm)},   " << endl
-      // << "                             y={(0.0cm,0.95cm)},     " << endl
-      // << "                             z={(-1.0cm,0.0cm)}}} " << endl
-      << "\\begin{tikzpicture}[scale=4,isometrico]" << endl ;
+   define_isometric_proj( view_vec );
+   
+   cout << "\\begin{tikzpicture}[scale=4,isometric_proj]" << endl ;
 
    fm.draw_style_1( view_vec );
 
