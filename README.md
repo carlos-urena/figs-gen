@@ -11,7 +11,7 @@ Current figures are these:
 
 Fig 9: scene projected onto clip coordinates by using perspective projection
 
-![Fig 9: clip coordinates](pngs/fig09-persp2?raw=true "Fig 9: scene projected onto clip coordinates by using perspective projection")
+![Fig 9: clip coordinates](pngs/fig09-persp2.png?raw=true "Fig 9: scene projected onto clip coordinates by using perspective projection")
 
 
 	
