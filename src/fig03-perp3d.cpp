@@ -25,12 +25,23 @@ int main( int argc, char *argv[] )
       u = -e.cross( v ) ,
       t = s-u ;
 
+   define_isometric_proj( { 1.0, 1.0, 1.0 } );
+
    cout
       << "\\definecolor{verde}{rgb}{0,0.3,0}" << endl 
-      << "\\tikzset{isometrico/.style={x={(0.7cm,-0.45cm)},   " << endl
-      << "                             y={(0.0cm,0.95cm)},     " << endl
-      << "                             z={(-0.7cm,-0.45cm)}}} " << endl
-      << "\\begin{tikzpicture}[scale=2.5,isometrico]" << endl ;
+      << "\\begin{tikzpicture}[scale=2.5,isometric_proj]" << endl ;
+
+   // arc from u to v (to show they have same length)
+    const unsigned ns = 64 ;
+   cout << "   \\draw[color=gray,line width=0.15mm]" << endl ;
+   for( unsigned i = 0 ; i <= ns ; i++ )
+   {  const float ang  = 0.5f*M_PI*float(i)/float(ns) ;
+      const Vec3  vert = cos(ang)*u + sin( ang )*v ;
+      cout << "      " << vert ;
+      if ( i < ns ) cout << " -- " ;
+      cout << endl ;
+   }
+   cout << "    ;" << endl;
 
    cout 
       << "   \\draw[color=gray,line width=0.1mm]" << endl 

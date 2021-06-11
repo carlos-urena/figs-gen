@@ -32,17 +32,10 @@ int main( int argc, char *argv[] )
       w = u*cos_theta + v*sin_theta ,
       theta_p = 0.6f*(u*cos(theta_rad/2.0) + v*sin(theta_rad/2.0)) ;
 
-   cout
-      << "\\tikzset{isometrico/.style={x={(0.7cm,-0.45cm)},   " << endl
-      << "                             y={(0.0cm,0.95cm)},     " << endl
-      << "                             z={(-0.7cm,-0.45cm)}}} " << endl
-      << "\\begin{tikzpicture}[scale=2.5,isometrico]" << endl ;
+   define_isometric_proj( { 1.0, 1.0, 1.0 } ); 
 
-   // rejilla en el plano XY
-   // cout 
-   //    << "   \\begin{scope}[color=gray!50, line width=0.08mm]"  << endl 
-   //    << "        \\gridtresdxyii{1.1}" << endl 
-   //    << "   \\end{scope}" << endl ;
+   cout
+      << "\\begin{tikzpicture}[scale=2.5,isometric_proj]" << endl ;
 
    unsigned ns = 64 ;
    
