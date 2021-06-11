@@ -1,4 +1,6 @@
-# Procedurally generated PDF figures for Computer Graphics courses
+# figs-gen 
+
+## Procedurally generated PDF figures for Computer Graphics courses
 
 
 This repository contains C++ source code which is used to generate LaTex source, which, in turn is compiled onto PDF files. 
@@ -7,8 +9,11 @@ The latex source uses Tikz latex package. To create the PDFs, enter 'pdf' folder
 
 Current figures are these:
 
+Fig 9: scene projected onto clip coordinates by using perspective projection
 
-fig09-persp2.png
+![Fig 9: clip coordinates](pngs/fig09-persp2?raw=true "Fig 9: scene projected onto clip coordinates by using perspective projection")
+
+
 	
 
 fig08-persp1.png	
