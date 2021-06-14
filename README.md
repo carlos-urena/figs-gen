@@ -52,7 +52,7 @@ for `gluPerspective` function.
 <h2>Figure 5</h2>
 
 The perspective view-frustum is shown, along with the coordinates of its vertexes, in terms of _l_,_r_,_b_,_t_,_n_ and _f_. 
-These coordinates are relative to the camera reference system.
+These coordinates are relative to the camera reference system. This helps to understand the parameters for `glFrustum` function.
 
 <div align="center">
     <img src="pngs/fig05-frustum1.png" width="400px"</img> 

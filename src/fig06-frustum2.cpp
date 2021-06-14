@@ -35,10 +35,32 @@ int main( int argc, char *argv[] )
    const auto view_vec = Vec3 { 1, 1, 1 };
 
    define_isometric_proj( view_vec );
-   
-   cout << "\\begin{tikzpicture}[scale=4,isometric_proj]" << endl ;
 
-   fm.draw_style_2( view_vec );
+   // tikzpicture environment begins
+   cout << "\\begin{tikzpicture}[scale=5,isometric_proj]" << endl ;
+
+    // lines marking the width and heigth of frustum front face
+   // width:
+   // line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   // line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   // line( {l,b-0.3,-n}, {r,b-0.3,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2w$}" );
+  
+   line( {0.0,t,-n}, {0.0,t+0.3,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {r,t,-n},   {r,t+0.3,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {0.0,t+0.2,-n}, {r,t+0.2,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$w$}" );
+  
+
+   // height
+   // line( {l-0.4,b,-n}, {l,b,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   // line( {l-0.4,t,-n}, {l,t,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   // line( {l-0.25,b,-n},{l-0.25,t,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2h$}" );
+
+   line( {r,0.0,-n}, {r+0.3,0.0,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {r,t,-n},   {r+0.3,t,-n}, "line width=0.07mm,dashed,color=blue", "" );
+   line( {r+0.2,0.0,-n},{r+0.2,t,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$h$}" );
+   
+
+   fm.draw_style_3( view_vec );
 
    // filled triangle with 'beta' arc and bisectriz
 
@@ -52,17 +74,7 @@ int main( int argc, char *argv[] )
       << "      -- cycle ;" << endl 
       << "\\draw[color=black!30!white,line width=0.1mm] (0,0,0) -- (0,0," << -n << ") -- (" << r << ",0," << -n << ") ;" << endl ;
 
-   // lines marking the width and heigth of frustum front face
-   // width:
-   line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   line( {l,b-0.3,-n}, {r,b-0.3,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2w$}" );
   
-   // height
-   line( {l-0.4,b,-n}, {l,b,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   line( {l-0.4,t,-n}, {l,t,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   line( {l-0.25,b,-n},{l-0.25,t,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2h$}" );
-
    // angulo relleno correspondiente a hfovy
    const unsigned ns = 16 ;
    const float    hfovy_ang_rad = 2.0*std::atan2(0.5*(t-b),n) , 
@@ -92,7 +104,7 @@ int main( int argc, char *argv[] )
    cout << "     \\path " << Vec3{0.0,1.0,1.0} << endl 
         << "         node[anchor=center] {$\\begin{aligned}" << endl 
         << "           h\\,&=\\,n\\tan(\\beta/2) \\\\" << endl 
-        << "           w\\,&=\\,hr \\\\" << endl 
+        << "           w\\,&=\\,h\\cdot a \\\\" << endl 
         << "           l\\,&=-w \\\\" << endl 
         << "           r\\,&=+w \\\\" << endl
         << "           b\\,&=-h \\\\" << endl
