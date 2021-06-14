@@ -6,6 +6,8 @@ cc_opts=-std=c++11 -Wfatal-errors -I$(src)
 src=../src
 latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-error  --jobname borrar
 
+v10: fig10-ndc-dc.pdf	
+	open -a skim $<
 
 v9: fig09-persp2.pdf	
 	open -a skim $<
@@ -38,7 +40,7 @@ v0: fig00-test.pdf
 	open -a skim $<
 
 all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf fig05-frustum1.pdf\
-     fig06-frustum2.pdf fig07-cuboid1.pdf fig08-persp1.pdf fig09-persp2.pdf
+     fig06-frustum2.pdf fig07-cuboid1.pdf fig08-persp1.pdf fig09-persp2.pdf fig10-ndc-dc.pdf
 	open -a skim *.pdf
 
 fig%.pdf: fig%.tex $(src)/header.tex $(src)/footer.tex

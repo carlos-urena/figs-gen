@@ -297,17 +297,8 @@ class IndPolMesh
       // classify edges according to 'v'
       std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
       compute_edges_types( view_vec, edges_types ) ;
-
-      //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
-
-      // draw frustum back-facing edges (dashed)
-      draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
-
-      // draw frustum filled front-facing polygons
-      //draw_filled_ff_pols( view_vec, "fill=gray,opacity=0.2" );
+      draw_edges_type( 0, "line width=0.07mm,dashed", edges_types ); 
       draw_filled_shaded_ff_pols( view_vec, { 1.0f, 3.0f, 2.0f} );
-
-      // draw frustum front facing and contour edges
       draw_edges_type( 2, "line width=0.08mm,color=black", edges_types ); // front facing edges
       draw_edges_type( 1, "line width=0.08mm,color=black", edges_types ); // contour edges (thicker)
    }
@@ -320,17 +311,7 @@ class IndPolMesh
       // classify edges according to 'v'
       std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
       compute_edges_types( view_vec, edges_types ) ;
-
-      //fm.draw_normals( 0.4, "->,>=latex,line width=0.3mm,color=blue" );
-
-      // draw frustum back-facing edges (dashed)
-      //draw_edges_type( 0, "line width=0.07mm,dashed", edges_types );      
-
-      // draw frustum filled front-facing polygons
-      //draw_filled_ff_pols( view_vec, "fill=gray,opacity=0.2" );
       draw_filled_shaded_ff_pols( view_vec, { 1.0f, 3.0f, 2.0f} );
-
-      // draw frustum front facing and contour edges
       draw_edges_type( 2, "line width=0.08mm,color=black", edges_types ); // front facing edges
       draw_edges_type( 1, "line width=0.08mm,color=black", edges_types ); // contour edges (thicker)
    }

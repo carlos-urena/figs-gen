@@ -39,27 +39,16 @@ int main( int argc, char *argv[] )
    // tikzpicture environment begins
    cout << "\\begin{tikzpicture}[scale=5,isometric_proj]" << endl ;
 
-    // lines marking the width and heigth of frustum front face
-   // width:
-   // line( {l,b,-n}, {l,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   // line( {r,b,-n}, {r,b-0.4,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   // line( {l,b-0.3,-n}, {r,b-0.3,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2w$}" );
-  
+    // lines marking the half width and half height of frustum front face
+   
    line( {0.0,t,-n}, {0.0,t+0.3,-n}, "line width=0.07mm,dashed,color=blue", "" );
    line( {r,t,-n},   {r,t+0.3,-n}, "line width=0.07mm,dashed,color=blue", "" );
    line( {0.0,t+0.2,-n}, {r,t+0.2,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$w$}" );
   
-
-   // height
-   // line( {l-0.4,b,-n}, {l,b,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   // line( {l-0.4,t,-n}, {l,t,-n}, "line width=0.07mm,dashed,color=blue", "" );
-   // line( {l-0.25,b,-n},{l-0.25,t,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$2h$}" );
-
    line( {r,0.0,-n}, {r+0.3,0.0,-n}, "line width=0.07mm,dashed,color=blue", "" );
    line( {r,t,-n},   {r+0.3,t,-n}, "line width=0.07mm,dashed,color=blue", "" );
    line( {r+0.2,0.0,-n},{r+0.2,t,-n}, "<->,>=latex,line width=0.15mm,color=blue", " node[fill=white,pos=0.5,anchor=center] {$h$}" );
    
-
    fm.draw_style_3( view_vec );
 
    // filled triangle with 'beta' arc and bisectriz
