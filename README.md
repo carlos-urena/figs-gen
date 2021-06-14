@@ -41,7 +41,7 @@ Helps to understand the parameters for `glOrtho` function.
 
 <h2>Figure 6</h2>
 
-The perspective view-frustum is shown, but here the hfovy angle (beta) is emphasized. It is also shown how to 
+The perspective view-frustum is shown, but here the _vertical field of view_ (an angle, _beta_) is emphasized. It is also shown how to 
 compute _l_,_r_,_b_ and _t_ parameters from _beta_,_n_,_f_,_a_ (aspect ratio). This is useful to understand the parameters 
 for `gluPerspective` function. 
 
@@ -51,7 +51,7 @@ for `gluPerspective` function.
 
 <h2>Figure 5</h2>
 
-The perspective view-frustum is shown, along with the coordinates of its vertexes, in terms of l,r,b,t,n and f. 
+The perspective view-frustum is shown, along with the coordinates of its vertexes, in terms of _l_,_r_,_b_,_t_,_n_ and _f_. 
 These coordinates are relative to the camera reference system.
 
 <div align="center">
@@ -62,7 +62,7 @@ These coordinates are relative to the camera reference system.
 <h2>Figure 4</h2>
 
 This figure shows how a vector (_s_) is rotated an angle (_beta_) around a unit-length axis vector (_e_). 
-The rotated vector (_t_) is a linear combination of the three vectors (_u_,_v_ and _w_) in the reference frame 
+The rotated vector is _t_+_w_,  that is, it is a linear combination of the three vectors (_u_,_v_ and _w_) in the reference frame 
 introduced in previous figure 3.
 
 <div align="center">
