@@ -14,7 +14,7 @@ Current figures are these:
 <h2>Figure 10</h2>
 
 The **normalized device coordinates** range from 0 to _nx_ y X, from 0 to _ny_ in Y, and from 0 to 1 in Z. The origin is
-in the lower left vertex of the visible cuboid's front face. Integers _nx_ and _ny_ are the numbers of pixels columns and row, respectivally, 
+in the lower left vertex of the visible cuboid's front face. Integers _nx_ and _ny_ are the numbers of pixels columns and rows, respectively, 
 in the current viewport.
 
 <div align="center">
@@ -23,7 +23,7 @@ in the current viewport.
 
 <h2>Figure 9</h2>
 
-The scene from fig.8 is shown projected onto the clip coordinates space, after using a perspective projection projection matrix.
+The scene from fig.8 is shown projected onto the clip coordinates space, after using a perspective projection matrix.
 
 <div align="center">
     <img src="pngs/fig09-persp2.png" width="400px"</img> 
@@ -104,8 +104,8 @@ uses the _sin_ and _cos_ functions, as shown.
 
 <h2>Figure 1</h2>
 
-In order to define the rotation in 2D, we can introduce the operator _P_, which outputs a perpendicular vector to another given vector. 
-This can be easily done by using the coordinates of the original in a Cartesian coordinate system, as it is shown here.
+In order to define the rotation in 2D, we can introduce the operator _P_, which outputs a perpendicular vector to another given vector (but with the same length). 
+This can be easily done by using the coordinates of the original vector, in a Cartesian coordinate system, as it is shown here.
 
 <div align="center">
     <img src="pngs/fig01-perp2d.png" width="400px"</img> 
