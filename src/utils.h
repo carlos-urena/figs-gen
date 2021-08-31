@@ -2,6 +2,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <cmath>
 #include <initializer_list>
 #include <string>
 #include <vector>
@@ -505,6 +506,20 @@ void axes( const std::string & subscript )
 
 // ----------------------------------------------------------------------
 
+void axes_no_sub(  )
+{
+   const std::string lw = "line width=0.16mm" ;
+   
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {$\\vux$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy$}" );
+   line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[below] {$\\vuz$}" );
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {$\\pto$}" );
+   //cout << "\\fill[fill=black] (0,0) circle [radius=0.11mm] node[below] {$\\pto_" + subscript + "$};" << endl ;
+   
+}
+
+// ----------------------------------------------------------------------
+
 void axes_z_neg( const std::string & subscript )
 {
    const std::string lw = "line width=0.16mm" ;
@@ -526,7 +541,7 @@ void define_isometric_proj( const Vec3 & view_vec_nn )
    assert( lsq >  1e-2 );
     
    const Vec3   // camera coordinates axes, in world coordinates
-      z_cam = view_vec_nn/ std::sqrtf( lsq ) ,
+      z_cam = view_vec_nn/ std::sqrt( lsq ) ,
       x_cam = Vec3(0.0,1.0,0.0).cross( z_cam ).normalized() ,
       y_cam = z_cam.cross( x_cam ).normalized();
    

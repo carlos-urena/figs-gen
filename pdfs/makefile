@@ -5,43 +5,48 @@
 cc_opts=-std=c++11 -Wfatal-errors -I$(src)
 src=../src
 latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-error  --jobname borrar
+##verpdf="open -a skim"
+verpdf="evince"
+
+v11: fig11-cubo-lado-2.pdf	
+	$(verpdf) $<
 
 v10: fig10-ndc-dc.pdf	
-	open -a skim $<
+	$(verpdf) $<
 
 v9: fig09-persp2.pdf	
-	open -a skim $<
+	$(verpdf) $<
 
 v8: fig08-persp1.pdf	
-	open -a skim $<
+	$(verpdf) $<
 
 v7: fig07-cuboid1.pdf	
-	open -a skim $<
+	$(verpdf) $<
 
 v6: fig06-frustum2.pdf	
-	open -a skim $<
+	$(verpdf) $<
 
 v5: fig05-frustum1.pdf	
-	open -a skim $<
+	$(verpdf) $<
 
 v4: fig04-rot3d.pdf
-	open -a skim $<
+	$(verpdf) $<
 
 v3: fig03-perp3d.pdf
-	open -a skim $<
+	$(verpdf) $<
 
 v2: fig02-rot2d.pdf
-	open -a skim $<
+	$(verpdf) $<
 
 v1: fig01-perp2d.pdf
-	open -a skim $<
+	$(verpdf) $<
 
 v0: fig00-test.pdf
-	open -a skim $<
+	$(verpdf) $<
 
 all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf fig05-frustum1.pdf\
      fig06-frustum2.pdf fig07-cuboid1.pdf fig08-persp1.pdf fig09-persp2.pdf fig10-ndc-dc.pdf
-	open -a skim *.pdf
+	$(verpdf) *.pdf
 
 fig%.pdf: fig%.tex $(src)/header.tex $(src)/footer.tex
 	rm -rf borrar.*

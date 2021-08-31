@@ -1087,7 +1087,7 @@ inline Mat4 Mat4_Viewport_inv( int org_x, int org_y, int ancho, int alto )
 {
    return Mat4_Translation( { -1.0, -1.0, -1.0 } ) *
           Mat4_Scale( { 2.0, 2.0, 1.0 } )*
-          Mat4_Scale( { 1.0/float(ancho), 1.0/float(alto), 1.0 } )*
+          Mat4_Scale( { 1.0f/float(ancho), 1.0f/float(alto), 1.0 } )*
           Mat4_Translation( {-float(org_x), -float(org_y), 0.0 } ) ;
 }
 
