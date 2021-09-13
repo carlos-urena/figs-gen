@@ -6,7 +6,7 @@ cc_opts=-std=c++11 -Wfatal-errors -I$(src)
 src=../src
 latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-error  --jobname borrar
 ##verpdf="open -a skim"
-verpdf="evince"
+verpdf="open"
 
 v12: fig12-cubo-arbitr.pdf	
 	$(verpdf) $<

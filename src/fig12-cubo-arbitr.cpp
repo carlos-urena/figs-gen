@@ -28,8 +28,8 @@ int main( int argc, char *argv[] )
 
 
    constexpr float 
-      x0 =  2.0, x1 =  x0+1.0,
-      y0 =  1.0, y1 =  y0+0.8,
+      x0 =  2.5, x1 =  x0+1.0,
+      y0 =  1.2, y1 =  y0+0.8,
       z0 =  0.0, z1 =  z0+2.0 ;
 
    const auto cubo_cc  = CuboidMesh { x0, x1, y0, y1, z0, z1 };
@@ -63,18 +63,19 @@ int main( int argc, char *argv[] )
    // }
    
    
-   // draw axes, no subscript
-   axes_no_sub(  );
+   // draw axes, Z axis negated, no subscript
+   axes_z_neg_no_sub(  );
 
-   disk( {x0,y0,z1}, "blue", "radius=0.2mm", " node[anchor=north east] {$(x_0,y_0,z_1)$}" );
-   disk( {x1,y0,z1}, "blue", "radius=0.2mm", " node[anchor=north west] {$(x_1,y_0,z_1)$}" );
-   disk( {x0,y1,z1}, "blue", "radius=0.2mm", " node[anchor=south east] {$(x_0,y_1,z_1)$}" );
-   disk( {x1,y1,z1}, "blue", "radius=0.2mm", " node[anchor=north west] {$(x_1,y_1,z_1)$}" );
+// draw vertex coords (with inverted Zs)
+   disk( {x0,y0,z1}, "blue", "radius=0.2mm", " node[anchor=north east] {$(x_0,y_0,z_0)$}" );
+   disk( {x1,y0,z1}, "blue", "radius=0.2mm", " node[anchor=north west] {$(x_1,y_0,z_0)$}" );
+   disk( {x0,y1,z1}, "blue", "radius=0.2mm", " node[anchor=south east] {$(x_0,y_1,z_0)$}" );
+   disk( {x1,y1,z1}, "blue", "radius=0.2mm", " node[anchor=north west] {$(x_1,y_1,z_0)$}" );
 
-   disk( {x0,y0,z0}, "blue", "radius=0.2mm", " node[anchor=east]  {$(x_0,y_0,z_0)$}" );
-   disk( {x0,y1,z0}, "blue", "radius=0.2mm", " node[anchor=south] {$(x_0,y_1,z_0)$}" );
-   disk( {x1,y1,z0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(x_1,y_1,z_0)$}" );
-   disk( {x1,y0,z0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(x_1,y_0,z_0)$}" );
+   disk( {x0,y0,z0}, "blue", "radius=0.2mm", " node[anchor=east]  {$(x_0,y_0,z_1)$}" );
+   disk( {x0,y1,z0}, "blue", "radius=0.2mm", " node[anchor=south] {$(x_0,y_1,z_1)$}" );
+   disk( {x1,y1,z0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(x_1,y_1,z_1)$}" );
+   disk( {x1,y0,z0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(x_1,y_0,z_1)$}" );
 
    
    cout 
