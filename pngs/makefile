@@ -4,24 +4,30 @@
 
 cc_opts=-std=c++11 -Wfatal-errors -I$(src)
 pdfs=../pdfs
-pdftopng=pdftoppm -png -r 500 
+pdftopng=pdftoppm -png -r 500
 
-v10: fig10-ndc-dc.png 
+v12: fig12-cubo-arbitr.png
+	open $<
+
+v11: fig11-cubo-lado-2.png
+	open $<
+
+v10: fig10-ndc-dc.png
 	open $<
 
 v9: fig09-persp2.png
 	open $<
 
-v8: fig08-persp1.png	
+v8: fig08-persp1.png
 	open $<
 
-v7: fig07-cuboid1.png	
+v7: fig07-cuboid1.png
 	open $<
 
 v6: fig06-frustum2.png
 	open $<
 
-v5: fig05-frustum1.png	
+v5: fig05-frustum1.png
 	open $<
 
 v4: fig04-rot3d.png
@@ -40,7 +46,8 @@ v0: fig00-test.png
 	open $<
 
 all: fig01-perp2d.png fig02-rot2d.png fig03-perp3d.png fig04-rot3d.png fig05-frustum1.png\
-     fig06-frustum2.png fig07-cuboid1.png fig08-persp1.png fig09-persp2.png fig10-ndc-dc.png
+     fig06-frustum2.png fig07-cuboid1.png fig08-persp1.png fig09-persp2.png fig10-ndc-dc.png\
+     fig11-cubo-lado-2.png fig12-cubo-arbitr.png
 	open *.png
 
 fig%.png: $(pdfs)/fig%.pdf makefile

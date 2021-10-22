@@ -22,19 +22,19 @@ int main( int argc, char *argv[] )
    using namespace std ;
    using namespace vec_mat ;
 
-   cout 
-      << "\\documentclass[border=1mm]{standalone}" << endl 
+   cout
+      << "\\documentclass[border=1mm]{standalone}" << endl
       << "\\input{../src/header.tex}" << endl ;
 
    const auto cubo_cc  = CuboidMesh { -1.0, +1.0, -1.0, +1.0, -1.0, +1.0 };
-   const auto view_vec = Vec3 { 0.72, 0.81, 1.3 };
+   const auto view_vec = Vec3 { 0.72, 0.81, 2.0 };
 
    define_isometric_proj( view_vec );
    cout << "\\begin{tikzpicture}[scale=3,isometric_proj]" << endl ;
 
    cubo_cc.draw_style_2( view_vec );
-   
-   // // draw DC grid 
+
+   // // draw DC grid
    // const unsigned nx = 8, ny = 8 ;
 
    // for( unsigned ix = 0 ; ix <= nx ; ix++ )
@@ -55,23 +55,32 @@ int main( int argc, char *argv[] )
    //    const float cy = -1.0+2.0*((float(iy)+0.5)/float(ny)) ;
    //    disk( {cx,cy,1.0}, "gray", "radius=0.06mm", "" );
    // }
-   
-   
+
+
    // draw axes, no subscript
-   axes_no_sub(  );
+   //axes_z_neg_no_sub(  );
 
-   disk( {-1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north east] {$(-1,-1,+1)$}" );
-   disk( {+1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {$(+1,-1,+1)$}" );
-   disk( {-1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=south east] {$(-1,+1,+1)$}" );
-   disk( {+1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {$(+1,+1,+1)$}" );
+   const std::string lw = "line width=0.5mm" ;
 
-   disk( {-1.0,-1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=east]  {$(-1,-1,-1)$}" );
-   disk( {-1.0,+1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=south] {$(-1,+1,-1)$}" );
-   disk( {+1.0,+1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(+1,+1,-1)$}" );
-   disk( {+1.0,-1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(+1,-1,-1)$}" );
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {\\Large$\\vux$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {\\Large$\\vuy$}" );
+   line( {0,0,0}, {0,0,-1}, "->,>=latex,color=blue," +lw , "node[anchor=south west] {\\Large$\\vuz$}" );
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {\\Large$\\pto$}" );
 
-   
-   cout 
+   //
+
+   disk( {-1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north east] {$(-1,-1,-1)$}" );
+   disk( {+1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {$(+1,-1,-1)$}" );
+   disk( {-1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=south east] {$(-1,+1,-1)$}" );
+   disk( {+1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=west] {$(+1,+1,-1)$}" );
+
+   disk( {-1.0,-1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=east]  {$(-1,-1,+1)$}" );
+   disk( {-1.0,+1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=south] {$(-1,+1,+1)$}" );
+   disk( {+1.0,+1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(+1,+1,+1)$}" );
+   disk( {+1.0,-1.0,-1.0}, "blue", "radius=0.2mm", " node[anchor=west]  {$(+1,-1,+1)$}" );
+
+
+   cout
       << "\\end{tikzpicture}"
       << "\\end{document}" << endl ;
 }
