@@ -50,6 +50,17 @@ int main( int argc, char *argv[] )
    define_isometric_proj( view_vec );
    cout << "\\begin{tikzpicture}[scale=4,isometric_proj]" << endl ;
 
+   // draw CC axes 
+   const float lx = 2.0, ly = 2.0 ;
+   const std::string subscript = "{\\small\\mbox{\\!cc}}" ;
+   const std::string lw = "line width=0.35mm" ;
+
+   
+   line( {0.0,0.0,0.0}, {1.0,0.0,0.0}, "->,>=latex,color=red," +lw, "node[below] {\\huge$\\vux_" + subscript + "$}" );
+   line( {0.0,0.0,0.0}, {0.0,1.0,0.0}, "->,>=latex,color=green!50!black," +lw , "node[left] {\\huge$\\vuy_" + subscript + "$}" );
+   line( {0.0,0.0,0.0}, {0.0,0.0,-1.0}, "->,>=latex,color=blue," +lw , "node[above right] {\\huge$\\vuz_" + subscript + "$}" );
+   //disk( {-1.0,-1.0,1.0}, "black", "radius=0.2mm", " node[anchor=north east] {$\\pto_" + subscript + "$}" );
+
    muros_ca_1.draw_style_1( view_vec );
    muros_ca_2.draw_style_1( view_vec );
    muros_ca_3.draw_style_1( view_vec );
@@ -60,7 +71,9 @@ int main( int argc, char *argv[] )
    //line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
 
    // draw axes
-   axes_z_neg( "{\\mbox{\\tiny\\!cc}}" );
+   //axes_z_neg( "{\\mbox{\\tiny\\!cc}}" );
+
+   
    
    cout 
       << "\\end{tikzpicture}"

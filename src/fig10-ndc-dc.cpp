@@ -35,17 +35,17 @@ int main( int argc, char *argv[] )
    cubo_cc.draw_style_2( view_vec );
    
    // draw DC grid 
-   const unsigned nx = 8, ny = 8 ;
+   const unsigned nx = 6, ny = 6 ;
 
    for( unsigned ix = 0 ; ix <= nx ; ix++ )
    {
       const float cx = -1.0+2.0*(float(ix)/float(nx)) ;
-      line( {cx,-1.0,+1.0}, {cx,+1.0,+1.0}, "line width=0.1mm,color=black", "" );
+      line( {cx,-1.0,+1.0}, {cx,+1.0,+1.0}, "line width=0.12mm,color=black", "" );
    }
    for( unsigned iy = 0 ; iy <= ny ; iy++ )
    {
       const float cy = -1.0+2.0*(float(iy)/float(ny)) ;
-      line( {-1.0,cy,+1.0}, {+1.0,cy,+1.0}, "line width=0.1mm,color=black", "" );
+      line( {-1.0,cy,+1.0}, {+1.0,cy,+1.0}, "line width=0.12mm,color=black", "" );
    }
 
    for( unsigned ix = 0 ; ix < nx ; ix++ )
@@ -62,25 +62,25 @@ int main( int argc, char *argv[] )
 
    // draw dc axes 
    const float lx = 2.0/nx, ly = 2.0/ny ;
-   const std::string subscript = "{\\mbox{\\tiny\\!dc}}" ;
-   const std::string lw = "line width=0.22mm" ;
+   const std::string subscript = "{\\small\\mbox{\\!dc}}" ;
+   const std::string lw = "line width=0.35mm" ;
 
    
-   line( {-1.0,-1.0,1.0}, {-1.0+lx,-1.0,1.0}, "->,>=latex,color=red," +lw, "node[below] {$\\vux_" + subscript + "$}" );
-   line( {-1.0,-1.0,1.0}, {-1.0,-1.0+ly,1.0}, "->,>=latex,color=green!50!black," +lw , "node[left] {$\\vuy_" + subscript + "$}" );
-   line( {-1.0,-1.0,1.0}, {-1.0,-1.0,-1.0}, "->,>=latex,color=blue," +lw , "node[left] {$\\vuz_" + subscript + "$}" );
+   line( {-1.0,-1.0,1.0}, {-1.0+lx,-1.0,1.0}, "->,>=latex,color=red," +lw, "node[below] {\\huge$\\vux_" + subscript + "$}" );
+   line( {-1.0,-1.0,1.0}, {-1.0,-1.0+ly,1.0}, "->,>=latex,color=green!50!black," +lw , "node[left] {\\huge$\\vuy_" + subscript + "$}" );
+   line( {-1.0,-1.0,1.0}, {-1.0,-1.0,-1.0}, "->,>=latex,color=blue," +lw , "node[above right] {\\huge$\\vuz_" + subscript + "$}" );
    //disk( {-1.0,-1.0,1.0}, "black", "radius=0.2mm", " node[anchor=north east] {$\\pto_" + subscript + "$}" );
 
 
-   disk( {-1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north east] {$(0,0,0)$}" );
-   disk( {+1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {$(n_x,0,0)$}" );
-   disk( {-1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=south east] {$(0,n_y,0)$}" );
-   disk( {+1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {$(n_x,n_y,0)$}" );
+   disk( {-1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north east] {\\large$(0,0,0)$}" );
+   disk( {+1.0,-1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {\\large$(n_x,0,0)$}" );
+   disk( {-1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=south east] {\\large$(0,n_y,0)$}" );
+   disk( {+1.0,+1.0,1.0}, "blue", "radius=0.2mm", " node[anchor=north west] {\\large$(n_x,n_y,0)$}" );
 
-   disk( {-1.0,-1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=west] {$(0,0,1)$}" );
-   disk( {-1.0,+1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=south] {$(0,n_y,1)$}" );
-   disk( {+1.0,+1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=west] {$(n_x,n_y,1)$}" );
-   disk( {+1.0,-1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=west] {$(n_x,0,1)$}" );
+   disk( {-1.0,-1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=north west] {\\large$(0,0,1)$}" );
+   disk( {-1.0,+1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=south] {\\large$(0,n_y,1)$}" );
+   disk( {+1.0,+1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=west] {\\large$(n_x,n_y,1)$}" );
+   disk( {+1.0,-1.0,-1.0}, "blue", "radius=0.2mm", "node[anchor=west] {\\large$(n_x,0,1)$}" );
 
    
    cout 
