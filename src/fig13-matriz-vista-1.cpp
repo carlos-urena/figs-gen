@@ -32,7 +32,7 @@ int main( int argc, char *argv[] )
    define_isometric_proj( view_vec );
    cout << "\\begin{tikzpicture}[scale=3.5,isometric_proj]" << endl ;
 
-   // inverse view matrix
+   // view matrix
    // .....
 
    // draw EC axes 
