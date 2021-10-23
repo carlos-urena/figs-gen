@@ -28,7 +28,7 @@ In OpenGL, the default (initial) value for the **modelview** and **projection** 
 
 <h2>Figure 10</h2>
 
-The **normalized device coordinates** range from 0 to _nx_ y X, from 0 to _ny_ in Y, and from 0 to 1 in Z. The origin is
+The **device coordinates** (DC) range from 0 to _nx_ y X, from 0 to _ny_ in Y, and from 0 to 1 in Z. The origin is
 in the lower left vertex of the visible cuboid's front face. Integers _nx_ and _ny_ are the numbers of pixels columns and rows, respectively,
 in the current viewport.
 
@@ -38,7 +38,7 @@ in the current viewport.
 
 <h2>Figure 9</h2>
 
-The scene from fig.8 is shown projected onto the clip coordinates space, after using a perspective projection matrix.
+The scene from fig.8 is shown after projected onto the **normalized device coordinates** (NDC) space, after using a perspective projection matrix.
 
 <div align="center">
     <img src="pngs/fig09-persp2.png" width="400px"</img>
@@ -47,7 +47,7 @@ The scene from fig.8 is shown projected onto the clip coordinates space, after u
 
 <h2>Figure 8</h2>
 
-A scene is shown inside the perspective view frustum, aligned with the camera reference frame.
+A scene is shown inside the perspective view frustum, in the **eye coordinates** (EC) space (thus aligned with the camera reference frame).
 
 <div align="center">
     <img src="pngs/fig08-persp1.png" width="400px"</img>

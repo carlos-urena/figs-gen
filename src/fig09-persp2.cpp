@@ -52,7 +52,7 @@ int main( int argc, char *argv[] )
 
    // draw CC axes 
    const float lx = 2.0, ly = 2.0 ;
-   const std::string subscript = "{\\small\\mbox{\\!cc}}" ;
+   const std::string subscript = "{\\small\\mbox{\\!ndc}}" ;
    const std::string lw = "line width=0.35mm" ;
 
    
