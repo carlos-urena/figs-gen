@@ -105,7 +105,16 @@ int main( int argc, char *argv[] )
   
 
    // draw axes
-   axes( "{\\mbox{c}}" );
+   //axes( "{\\mbox{c}}" );
+   const std::string 
+      lw        = "line width=0.3mm", 
+      size      = "\\Large",
+      subscript = "{\\small\\mbox{ec}}" ;
+   
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {" + size + "$\\vux_" + subscript + "$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {" + size + "$\\vuy_" + subscript + "$}" );
+   line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above left] {" + size + "$\\vuz_" + subscript + "$}" );
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {" + size + "$\\pto_" + subscript + "$}" );
    
    cout 
       << "\\end{tikzpicture}"

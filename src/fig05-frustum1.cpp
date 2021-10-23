@@ -44,8 +44,17 @@ int main( int argc, char *argv[] )
    line( {0,0,0}, {0,0,-n}, "line width=0.15mm,color=blue!50!red", "" );
 
    // draw axes
-   axes( "{\\mbox{c}}" );
+   //axes( "{\\mbox{c}}" );
+   const std::string 
+      lw        = "line width=0.3mm", 
+      size      = "\\Large",
+      subscript = "{\\small\\mbox{ec}}" ;
    
+   line( {0,0,0}, {1,0,0}, "->,>=latex,color=red," +lw, "node[right] {" + size + "$\\vux_" + subscript + "$}" );
+   line( {0,0,0}, {0,1,0}, "->,>=latex,color=green!50!black," +lw , "node[above] {" + size + "$\\vuy_" + subscript + "$}" );
+   line( {0,0,0}, {0,0,1}, "->,>=latex,color=blue," +lw , "node[above left] {" + size + "$\\vuz_" + subscript + "$}" );
+   disk( Vec3{0.0,0.0,0.0}, "black", "radius=0.2mm", " node[anchor=north] {" + size + "$\\pto_" + subscript + "$}" );
+
    // draw projectors from origin towards frustum edges
    const std::string & st = "line width=0.07mm,dashed,color=gray" ;
    line( {0,0,0}, {l,t,-n}, st, "" );
@@ -68,10 +77,10 @@ int main( int argc, char *argv[] )
    cout << "\\path " << fm.vertexes[2] << " node[blue,anchor=east] {$(l,t,-n)$} ;" << endl ;
    cout << "\\path " << fm.vertexes[3] << " node[blue,anchor=north west] {$(r,t,-n)$} ;" << endl ;
 
-   cout << "\\path " << fm.vertexes[4] << " node[red,anchor=south west] {$(sl,sb,-f)$} ;" << endl ;
-   cout << "\\path " << fm.vertexes[5] << " node[red,anchor=west] {$(sr,sb,-f)$} ;" << endl ;
-   cout << "\\path " << fm.vertexes[6] << " node[red,anchor=west] {$(sl,st,-f)$} ;" << endl ;
-   cout << "\\path " << fm.vertexes[7] << " node[red,anchor=west] {$(sr,st,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[4] << " node[red,anchor=south west] {$(s\\cdot l,s\\cdot b,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[5] << " node[red,anchor=west]       {$(s\\cdot r,s\\cdot b,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[6] << " node[red,anchor=west]       {$(s\\cdot l,s\\cdot t,-f)$} ;" << endl ;
+   cout << "\\path " << fm.vertexes[7] << " node[red,anchor=west]       {$(s\\cdot r,s\\cdot t,-f)$} ;" << endl ;
 
    cout << "\\path " << (fm.vertexes[5]+Vec3(0.0,-0.5,0.0)) << " node[anchor=east] {$s\\,=\\,f/n$} ;" << endl ;
 
