@@ -484,10 +484,21 @@ void line( const Vec3 & org, const Vec3 & dest, const std::string & style, const
       << "         "<< org << " -- " << dest << " " << end_node << " ;" << endl ;
 }
 
+void line( const Vec4 & org, const Vec4 & dest, const std::string & style, const std::string & end_node  )
+{
+   line( Vec3( org[0], org[1], org[2]), Vec3( dest[0], dest[1], dest[2]), style, end_node );
+}
+
 void disk( const Vec3 & center, const std::string & color, const std::string & style, const std::string & node )
 {
    using namespace std ;
    cout << "\\fill[fill=" << color << "] " << center << " circle[" << style << "] "<< node << ";" << endl ;
+
+}
+
+void disk( const Vec4 & center, const std::string & color, const std::string & style, const std::string & node )
+{
+   disk( Vec3( center[0], center[1], center[2] ), color, style, node );
 
 }
 // ----------------------------------------------------------------------
