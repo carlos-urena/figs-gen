@@ -58,31 +58,43 @@ int main( int argc, char *argv[] )
       z_wc = view_mat*Vec4( 0.0, 0.0, 1.0, 0.0 ),
       o_wc = view_mat*Vec4( 0.0, 0.0, 0.0, 1.0 ),
 
-      o_ec = view_mat*Vec4( oec[0], oec[1], oec[2], 1.0 ),
-      x_ec = view_mat*Vec4( xec[0], xec[1], xec[2], 0.0 ),
-      y_ec = view_mat*Vec4( yec[0], yec[1], yec[2], 0.0 ),
-      z_ec = view_mat*Vec4( zec[0], zec[1], zec[2], 0.0 ),
+      o_ec = view_mat*Vec4( oec[0], oec[1], oec[2], 1.0 ), // (0,0,0) - pero lo dejo así para ver ue va bien la matriz
+      x_ec = view_mat*Vec4( xec[0], xec[1], xec[2], 0.0 ), // (1,0,0)
+      y_ec = view_mat*Vec4( yec[0], yec[1], yec[2], 0.0 ), // (0,1,0)
+      z_ec = view_mat*Vec4( zec[0], zec[1], zec[2], 0.0 ), // (0,0,1)
 
       at_ec4 = view_mat*Vec4( at[0], at[1], at[2], 1.0 ),
       n_ec4  = view_mat*Vec4( n[0], n[1], n[2], 0.0 ) ;
 
+   const Vec4
+      u_wc4  = { 0.0,  0.7, 0.0, 0.0 } ,
+      uo_wc4 = {-0.7, -0.1, 0.0, 1.0 } ,  // point where 'u' is placed (u's origin )
+      u_ec4  = view_mat*u_wc4,
+      uo_ec4 = view_mat*uo_wc4 ;
+
    const Vec3 
       at_ec = { at_ec4[0], at_ec4[1], at_ec4[2] },
-      n_ec  = { n_ec4[0],  n_ec4[1],  n_ec4[2]  } ;
+      n_ec  = { n_ec4[0],  n_ec4[1],  n_ec4[2]  } ,
+      u_ec  = { u_ec4[0],  u_ec4[1],  u_ec4[2]  } ,
+      uo_ec = { uo_ec4[0], uo_ec4[1], uo_ec4[2]  } ;
 
    
 
    const auto 
       casita = InstancedMesh { MurosCasita {1.4},  view_mat*Mat4_Translation( {0.2, 0.0, 0.2} )*Mat4_Scale( { 0.3, 0.5, 0.6} ) } ;
 
-   // draw n vector 
+   // draw n vector and label 
    line( at_ec, at_ec + n_ec, "->,>=latex,color=magenta,line width=0.35mm", " ");
+   const Vec3 pos_ec = at_ec + 0.5f*n_ec ;
+   cout << "\\path " << pos_ec << " node[below] {\\color{magenta}$\\fln$};" << endl ;
    // draw at point 
    disk( at_ec, "black", "radius=0.2mm", " node[below] {$\\pta$}" ); 
 
-   // draw label for n vector 
-   const Vec3 pos_ec = at_ec + 0.5f*n_ec ;
-   cout << "\\path " << pos_ec << " node[below] {\\color{magenta}$\\fln$};" << endl ;
+   // draw u vector and label
+   
+   line( uo_ec, uo_ec+u_ec, "->,>=latex,color=magenta,line width=0.35mm", " ");
+   const Vec3 posu_ec = uo_ec + 0.5f*u_ec ;
+   cout << "\\path " << posu_ec << " node[right] {\\color{magenta}$\\flu$};" << endl ;
    
 
    // settings for the axes

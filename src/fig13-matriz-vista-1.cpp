@@ -37,7 +37,8 @@ int main( int argc, char *argv[] )
    const Vec3
       at = { 0.35, 0.0, 0.8 } ,
       n  = { -1.0, 0.15, 1.0 }, //{ -0.5, 0.3, 0.9 } ,
-      u  = { 0.0, 1.0, 0.0 } ;
+      u  = { 0.0, 0.7, 0.0 } ,
+      uo = {-0.7,-0.1,0.0} ;  // point where 'u' is placed (u's origin )
 
    const Vec3 
       zec = n.normalized(),
@@ -67,14 +68,22 @@ int main( int argc, char *argv[] )
    const auto 
       casita = InstancedMesh { MurosCasita {1.4},  Mat4_Translation( {0.2, 0.0, 0.2} )*Mat4_Scale( { 0.3, 0.5, 0.6} ) } ;
 
-   // draw n vector 
+   // draw n vector and label 
    line( at, oec, "->,>=latex,color=magenta,line width=0.35mm", " ");
-   // draw at point 
-   disk( at, "black", "radius=0.2mm", " node[below] {$\\pta$}" ); 
-
-   // draw label for n vector 
    const Vec3 pos = at+ 0.5f*n ;
    cout << "\\path " << pos << " node[below] {\\color{magenta}$\\fln$};" << endl ;
+
+   // draw at point 
+   disk( at, "magenta", "radius=0.2mm", " node[below] {\\color{magenta}$\\pta$}" ); 
+
+   // draw u vector and label
+   
+   line( uo, uo+u, "->,>=latex,color=magenta,line width=0.35mm", " ");
+   const Vec3 posu = uo + 0.5f*u ;
+   cout << "\\path " << posu << " node[right] {\\color{magenta}$\\flu$};" << endl ;
+   
+
+
    
 
    // settings for the axes
@@ -84,9 +93,9 @@ int main( int argc, char *argv[] )
    // draw WCC frame
 
    line( o_wc, x_wc, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
-   line( o_wc, y_wc, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
+   line( o_wc, y_wc, "->,>=latex,color=green!50!black," +lw , "node[left] {$\\vuy_" + subscript + "$}" );
    line( o_wc, z_wc, "->,>=latex,color=blue," +lw , "node[above left] {$\\vuz_" + subscript + "$}" );
-   disk( o_wc, "black", "radius=0.2mm", " node[above left] {$\\pto_" + subscript + "$}" );
+   disk( o_wc, "black", "radius=0.2mm", " node[below] {$\\pto_" + subscript + "$}" );
 
    // draw house ...
    casita.draw_style_1( view_vec );
