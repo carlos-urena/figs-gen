@@ -8,6 +8,9 @@ latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-er
 ##verpdf="open -a skim"
 verpdf="open"
 
+v14: fig14-matriz-vista-2.pdf	
+	$(verpdf) $<
+
 v13: fig13-matriz-vista-1.pdf	
 	$(verpdf) $<
 
@@ -52,7 +55,7 @@ v0: fig00-test.pdf
 
 all: fig01-perp2d.pdf fig02-rot2d.pdf fig03-perp3d.pdf fig04-rot3d.pdf fig05-frustum1.pdf\
      fig06-frustum2.pdf fig07-cuboid1.pdf fig08-persp1.pdf fig09-persp2.pdf fig10-ndc-dc.pdf\
-	 fig11-cubo-lado-2.pdf	fig12-cubo-arbitr.pdf  fig13-matriz-vista-1
+	 fig11-cubo-lado-2.pdf	fig12-cubo-arbitr.pdf  fig13-matriz-vista-1.pdf fig14-matriz-vista-2.pdf
 	$(verpdf) *.pdf
 
 fig%.pdf: fig%.tex $(src)/header.tex $(src)/footer.tex

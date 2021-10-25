@@ -1070,6 +1070,25 @@ inline Mat4 Mat4_Columns( const Vec3 colum[3] )
    }
    return res ;
 }
+
+//----------------------------------------------------------------------
+// construir lamatriz 4x4 dando sus 4 columnas
+
+inline Mat4 Mat4_Columns( const Vec3 & c0, const Vec3 & c1, const Vec3 & c2, const Vec3 & c3 )
+{
+   Mat4 res = MAT_Ident() ;
+
+   for( unsigned i = 0 ; i < 3 ; i++ )  // 'i' run over rows (except the 4th row, which is 0,0,0,1)
+   {
+      res(i,0) = c0[i] ; 
+      res(i,1) = c1[i] ; 
+      res(i,2) = c2[i] ; 
+      res(i,3) = c3[i] ;
+   }  
+   
+   return res ;
+}
+
 // ---------------------------------------------------------------------
 // matriz del viewport  (deja las Z igual: entre -1 y 1)
 
@@ -1121,6 +1140,7 @@ inline float Mat4_Determinant3x3( const Mat4 & m )
           - m(0,1)*m(1,0)*m(2,2)
           - m(0,2)*m(1,1)*m(2,0) ;
 }
+
 
 // --------------------------------------------------------------------
 // calcula la inversa de una matriz 4x4 (sin términos de proyección)
