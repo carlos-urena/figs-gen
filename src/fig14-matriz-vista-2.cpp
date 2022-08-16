@@ -121,10 +121,6 @@ int main( int argc, char *argv[] )
       line( p0, p1, "color=white!80!black,line width=0.15mm","");
    }
 
-   // draw a small camera at ECC frame origin
-
-
-
    // draw n vector and label 
    line( at_ec, at_ec + n_ec, "->,>=latex,color=magenta,line width=0.35mm", " ");
    const Vec3 pos_ec = at_ec + 0.5f*n_ec ;
@@ -132,23 +128,23 @@ int main( int argc, char *argv[] )
    // draw at point 
    disk( at_ec, "black", "radius=0.2mm", " node[below] {$\\pta$}" ); 
 
-   // draw u vector and label
+   // draw u vector and label (removed)
    
-   line( uo_ec, uo_ec+u_ec, "->,>=latex,color=magenta,line width=0.35mm", " ");
-   const Vec3 posu_ec = uo_ec + 0.5f*u_ec ;
-   cout << "\\path " << posu_ec << " node[right] {\\color{magenta}$\\flu$};" << endl ;
+   // line( uo_ec, uo_ec+u_ec, "->,>=latex,color=magenta,line width=0.35mm", " ");
+   // const Vec3 posu_ec = uo_ec + 0.5f*u_ec ;
+   // cout << "\\path " << posu_ec << " node[right] {\\color{magenta}$\\flu$};" << endl ;
    
 
    // settings for the axes
    std::string subscript = "{\\small\\mbox{wc}}" ;
    std::string lw = "line width=0.35mm" ;
 
-   // draw WCC frame
+   // draw WCC frame (removed)
 
-   line( o_wc, o_wc+x_wc, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
-   line( o_wc, o_wc+y_wc, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
-   line( o_wc, o_wc+z_wc, "->,>=latex,color=blue," +lw , "node[left] {$\\vuz_" + subscript + "$}" );
-   disk( o_wc, "black", "radius=0.2mm", " node[above left] {$\\pto_" + subscript + "$}" );
+   // line( o_wc, o_wc+x_wc, "->,>=latex,color=red," +lw, "node[right] {$\\vux_" + subscript + "$}" );
+   // line( o_wc, o_wc+y_wc, "->,>=latex,color=green!50!black," +lw , "node[above] {$\\vuy_" + subscript + "$}" );
+   // line( o_wc, o_wc+z_wc, "->,>=latex,color=blue," +lw , "node[left] {$\\vuz_" + subscript + "$}" );
+   // disk( o_wc, "black", "radius=0.2mm", " node[above left] {$\\pto_" + subscript + "$}" );
 
    // draw house ...
    casita.draw_style_1( view_vec );
