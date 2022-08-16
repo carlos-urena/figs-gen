@@ -316,6 +316,20 @@ class IndPolMesh
       draw_edges_type( 2, "line width=0.08mm,color=black", edges_types ); // front facing edges
       draw_edges_type( 1, "line width=0.08mm,color=black", edges_types ); // contour edges (thicker)
    }
+
+   // ------------------------------------------------------------
+   // draw the mesh by using a particular style, named as 'style 4'
+
+   void draw_style_4( const Vec3 & view_vec ) const 
+   {
+      // classify edges according to 'v'
+      std::vector<unsigned> edges_types ; // for each edge: 0 -> backfacing, 1 -> contour, 2--> front facing, 3 --> single adjacent polygon  
+      compute_edges_types( view_vec, edges_types ) ;
+      //draw_filled_shaded_ff_pols( view_vec, { 1.0f, 3.0f, 2.0f} );
+      draw_edges_type( 0, "line width=0.04mm,color=black!50!white", edges_types );  // back facing edges
+      draw_edges_type( 2, "line width=0.06mm,color=black", edges_types ); // front facing edges
+      draw_edges_type( 1, "line width=0.06mm,color=black", edges_types ); // contour edges (thicker)
+   }
    
 } ;
 
@@ -472,6 +486,8 @@ class MurosCasita : public IndPolMesh
    }
 
 } ;
+
+
 
 // **********************************************************************
 // aux funcs

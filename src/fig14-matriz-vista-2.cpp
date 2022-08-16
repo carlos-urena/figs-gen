@@ -80,8 +80,50 @@ int main( int argc, char *argv[] )
 
    
 
-   const auto 
-      casita = InstancedMesh { MurosCasita {1.4},  view_mat*Mat4_Translation( {0.2, 0.0, 0.2} )*Mat4_Scale( { 0.3, 0.5, 0.6} ) } ;
+   const auto casita = InstancedMesh 
+   { 
+      MurosCasita {1.4},  
+      view_mat*Mat4_Translation( {0.2, 0.0, 0.2} )*Mat4_Scale( { 0.3, 0.5, 0.6} ) 
+   } ;
+
+
+    constexpr float ccwx = 0.4, ccwy = 0.3, ccwz = 0.04 ;
+
+   const auto camara_caja = InstancedMesh 
+   {  
+      CuboidMesh( -ccwx/2.0, +ccwx/2.0, -ccwy/2.0, +ccwy/2.0, 0.0, ccwz ), 
+      MAT_Ident()
+   } ;
+
+   const float cfn = 0.3, s = 0.15 ;
+   const auto  camara_frustum = InstancedMesh 
+   {
+      FrustumMesh( -s*cfn, +s*cfn, -s*cfn, +s*cfn, cfn, 0.5 ),
+      Mat4_Translation( Vec3( 0.0, 0.0, cfn )) 
+   } ;
+
+
+   // draw grid in plane Y=0 for the WCC frame
+   const unsigned nx = 20,  nz = 20 ;
+   const float    wx = 1.0, wz = 1.0 ;
+
+   for( unsigned ix = 0 ; ix < nx ; ix++ )
+   {
+      Vec4 p0 = o_wc + (wx*float(ix)/float(nx-1))*x_wc,
+           p1 = p0   + wz*z_wc ;
+      line( p0, p1, "color=white!80!black,line width=0.15mm","");
+   }
+
+   for( unsigned iz = 0 ; iz < nz ; iz++ )
+   {
+      Vec4 p0 = o_wc + (wz*float(iz)/float(nz-1))*z_wc,
+           p1 = p0   + wx*x_wc ;
+      line( p0, p1, "color=white!80!black,line width=0.15mm","");
+   }
+
+   // draw a small camera at ECC frame origin
+
+
 
    // draw n vector and label 
    line( at_ec, at_ec + n_ec, "->,>=latex,color=magenta,line width=0.35mm", " ");
@@ -122,6 +164,9 @@ int main( int argc, char *argv[] )
    line( o_ec, o_ec+z_ec, "->,>=latex,color=blue," +lw , "node[left] {$\\vuz_" + subscript + "$}" );
    disk( o_ec, "black", "radius=0.2mm", " node[above left] {$\\pto_" + subscript + "$}" );
 
+    // draw small camera at origin of eye coordinate frame
+   camara_caja.draw_style_4( view_vec );
+   camara_frustum.draw_style_4( view_vec );
    
    cout 
       << "\\end{tikzpicture}"
