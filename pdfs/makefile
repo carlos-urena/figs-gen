@@ -8,6 +8,10 @@ latex_opts=-shell-escape -interaction nonstopmode  --halt-on-error -file-line-er
 ##verpdf="open -a skim"
 verpdf="open"
 
+
+v15: fig15-refl.pdf	
+	$(verpdf) $<
+
 v14: fig14-matriz-vista-2.pdf	
 	$(verpdf) $<
 
