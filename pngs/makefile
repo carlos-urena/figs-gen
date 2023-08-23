@@ -6,6 +6,9 @@ cc_opts=-std=c++11 -Wfatal-errors -I$(src)
 pdfs=../pdfs
 pdftopng=pdftoppm -png -r 500
 
+v15: fig15-refl.png
+	open $<
+
 v14: fig14-matriz-vista-2.png
 	open $<
 
