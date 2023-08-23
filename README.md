@@ -13,7 +13,7 @@ Current figures are these:
 
 <h2>Figure 15</h2>
 
-In order to make a **reflection transformation** of a vector (to the other side of a plane), we decompose the vector in  parallel and perpendicular components (relative to the plane). The parallel component is conserved, while the perpendicular component changes its sign. 
+In order to make a **reflection transformation** of a vector (to the other side of a plane), we decompose the vector in  parallel and perpendicular components (relative to the vector \textit{n}, normal to the plane). The parallel component is conserved, while the perpendicular component changes its sign. 
 <div align="center">
     <img src="pngs/fig15-refl.png" width="400px"</img>
 </div>
